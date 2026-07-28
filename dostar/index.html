@@ -466,7 +466,9 @@
       root.setAttribute('lang', l);
       var b = box.getElementsByTagName('button');
       for (var i = 0; i < b.length; i++){
-        b[i].className = (b[i].getAttribute('data-set') === l) ? 'on' : '';
+        var on = b[i].getAttribute('data-set') === l;
+        b[i].className = on ? 'on' : '';
+        b[i].setAttribute('aria-pressed', on ? 'true' : 'false');
       }
       if (save) { try { localStorage.setItem(KEY, l); } catch(e){} }
     }

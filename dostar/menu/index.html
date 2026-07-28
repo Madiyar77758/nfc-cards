@@ -270,7 +270,9 @@
 
   @media (min-width:520px){
     body{ padding:44px 20px; }
-    .hub{ min-height:0; border-radius:26px; overflow:hidden;
+    /* overflow:clip, а не hidden: hidden делает контейнер прокручиваемым
+       и ломает position:sticky у ленты категорий. */
+    .hub{ min-height:0; border-radius:26px; overflow:clip;
           box-shadow:0 2px 8px rgba(21,32,27,.05), 0 40px 70px -36px rgba(14,71,53,.4); }
   }
   @media (prefers-reduced-motion: reduce){
@@ -764,7 +766,9 @@
       document.title = TITLE[l] + ' — ' + name;
       var b = box.getElementsByTagName('button');
       for (var i = 0; i < b.length; i++){
-        b[i].className = (b[i].getAttribute('data-set') === l) ? 'on' : '';
+        var on = b[i].getAttribute('data-set') === l;
+        b[i].className = on ? 'on' : '';
+        b[i].setAttribute('aria-pressed', on ? 'true' : 'false');
       }
       if (save) { try { localStorage.setItem(KEY, l); } catch(e){} }
     }
@@ -799,18 +803,35 @@
       else if (right > nav.scrollLeft + nav.clientWidth) nav.scrollTo({ left: right - nav.clientWidth, behavior: 'smooth' });
     }
 
-    activate(0);
-    if (!('IntersectionObserver' in window)) return;
+    var current = -1;
+    function pick(){
+      var y = (window.pageYOffset || document.documentElement.scrollTop) + 78;
+      var i = 0;
+      for (var k = 0; k < sections.length; k++){
+        var s = sections[k];
+        if (!s) continue;
+        var top = s.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop);
+        if (top <= y) i = k;
+      }
+      // У самого низа страницы всегда горит последний раздел: он короткий
+      // и его начало до полосы внимания не доезжает.
+      var doc = document.documentElement;
+      if (window.innerHeight + (window.pageYOffset || doc.scrollTop) >= doc.scrollHeight - 8) {
+        i = sections.length - 1;
+      }
+      if (i !== current){ current = i; activate(i); }
+    }
 
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if (!e.isIntersecting) return;
-        var i = sections.indexOf(e.target);
-        if (i > -1) activate(i);
-      });
-    }, { rootMargin: '-60px 0px -70% 0px', threshold: 0 });
+    var ticking = false;
+    function onScroll(){
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function(){ pick(); ticking = false; });
+    }
 
-    sections.forEach(function(s){ if (s) io.observe(s); });
+    pick();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
   })();
 </script>
 
