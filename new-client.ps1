@@ -81,8 +81,14 @@ if (-not (Test-Path $outDir)) {
 [System.IO.File]::WriteAllText($outFile, $html, $utf8NoBom)
 
 if ($ownMenu) {
+    # Название попадает и в JavaScript (заголовок вкладки при смене языка),
+    # поэтому отдельно готовим экранированный вариант.
+    $nameJson = '"' + $Name.Replace('\', '\\').Replace('"', '\"') + '"'
+
     $menuHtml = [System.IO.File]::ReadAllText($menuTemplate, [System.Text.Encoding]::UTF8)
-    $menuHtml = $menuHtml.Replace('{{NAME}}', $Name).Replace('{{INITIALS}}', $Initials)
+    $menuHtml = $menuHtml.Replace('{{NAME_JSON}}', $nameJson).
+                          Replace('{{NAME}}',      $Name).
+                          Replace('{{INITIALS}}',  $Initials)
     if (-not (Test-Path $menuDir)) {
         New-Item -ItemType Directory -Path $menuDir | Out-Null
     }

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" data-lang="ru">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -42,6 +42,12 @@
     overscroll-behavior:none;
   }
 
+  /* ---------- три языка: показываем один, без JS работает русский ---------- */
+  .i18n > i{ font-style:normal; display:none; }
+  html[data-lang="ru"] .i18n > i[lang="ru"],
+  html[data-lang="kk"] .i18n > i[lang="kk"],
+  html[data-lang="uz"] .i18n > i[lang="uz"]{ display:inline; }
+
   .hub{
     max-width:430px;
     margin:0 auto;
@@ -70,9 +76,15 @@
     opacity:.07;
     pointer-events:none;
   }
-  .back{
+  .topbar{
     position:relative;
-    z-index:2;
+    z-index:3;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .back{
     display:inline-flex;
     align-items:center;
     gap:7px;
@@ -86,6 +98,33 @@
     touch-action:manipulation;
   }
   .back:active{ color:#fff; }
+
+  .lang{
+    display:flex;
+    gap:2px;
+    padding:2px;
+    border-radius:999px;
+    background:rgba(255,255,255,.14);
+  }
+  .lang button{
+    appearance:none;
+    border:0;
+    margin:0;
+    padding:6px 11px;
+    min-height:32px;
+    border-radius:999px;
+    background:transparent;
+    color:rgba(255,255,255,.72);
+    font:inherit;
+    font-size:11.5px;
+    font-weight:700;
+    letter-spacing:.06em;
+    cursor:pointer;
+    transition:background .15s ease, color .15s ease;
+    touch-action:manipulation;
+  }
+  .lang button.on{ background:var(--paper); color:var(--brand); }
+
   .titles{ position:relative; z-index:2; margin-top:4px; }
   .titles h1{
     margin:0;
@@ -226,7 +265,8 @@
   .foot .home:active{ background:var(--brand-tint); }
   .foot small{ font-size:11px; color:var(--ink-3); }
 
-  :where(a):focus-visible{ outline:2px solid var(--brand); outline-offset:2px; }
+  :where(a,button):focus-visible{ outline:2px solid var(--brand); outline-offset:2px; }
+  .band :where(a,button):focus-visible{ outline-color:#fff; }
 
   @media (min-width:520px){
     body{ padding:44px 20px; }
@@ -244,12 +284,20 @@
 <div class="hub">
 
   <header class="band">
-    <a class="back" href="../">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
-      Назад
-    </a>
+    <div class="topbar">
+      <a class="back" href="../">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+        <span class="i18n"><i lang="ru">Назад</i><i lang="kk">Артқа</i><i lang="uz">Орқага</i></span>
+      </a>
+      <div class="lang" id="lang" role="group" aria-label="Тіл / Til / Язык">
+        <button type="button" data-set="ru">RU</button>
+        <button type="button" data-set="kk">ҚАЗ</button>
+        <button type="button" data-set="uz">ЎЗ</button>
+      </div>
+    </div>
+
     <div class="titles">
-      <h1>Меню</h1>
+      <h1 class="i18n"><i lang="ru">Меню</i><i lang="kk">Мәзір</i><i lang="uz">Меню</i></h1>
       <p>Чайхана Достар</p>
     </div>
 
@@ -264,7 +312,6 @@
         <ellipse cx="409" cy="52" rx="31" ry="29"/>
       </g>
 
-      <!-- пиала с чаем, подрезана сверху -->
       <g>
         <circle cx="166" cy="32" r="20" fill="#F4F1EA"/>
         <circle cx="166" cy="32" r="16.5" fill="none" stroke="#2C6E8F" stroke-width="1.1" opacity=".5"/>
@@ -272,7 +319,6 @@
         <ellipse cx="161" cy="27" rx="4.5" ry="2.4" fill="#D6A059" opacity=".55" transform="rotate(-32 161 27)"/>
       </g>
 
-      <!-- салат, подрезан справа -->
       <g>
         <circle cx="409" cy="46" r="30" fill="#F4F1EA"/>
         <circle cx="409" cy="46" r="26" fill="none" stroke="#2C6E8F" stroke-width="1.1" opacity=".45"/>
@@ -290,7 +336,6 @@
         </g>
       </g>
 
-      <!-- тандырная лепёшка -->
       <g>
         <circle cx="250" cy="56" r="40" fill="#D9AC63"/>
         <circle cx="250" cy="56" r="40" fill="none" stroke="#BE8C45" stroke-width="1.4"/>
@@ -309,7 +354,6 @@
         </g>
       </g>
 
-      <!-- плов -->
       <g>
         <circle cx="97" cy="122" r="57" fill="#F4F1EA"/>
         <circle cx="97" cy="122" r="50" fill="none" stroke="#2C6E8F" stroke-width="1.4" opacity=".5"/>
@@ -336,7 +380,6 @@
         </g>
       </g>
 
-      <!-- чайник, вид сверху -->
       <g>
         <path d="M372 128q16 4 16 12t-16 12z" fill="#F4F1EA"/>
         <path d="M318 122q-16-6-16 4t16 6z" fill="none" stroke="#F4F1EA" stroke-width="7" stroke-linecap="round"/>
@@ -352,7 +395,6 @@
         <circle cx="347" cy="134" r="4.5" fill="#2C6E8F" opacity=".45"/>
       </g>
 
-      <!-- пиала рядом с чайником -->
       <g>
         <circle cx="252" cy="152" r="22" fill="#F4F1EA"/>
         <circle cx="252" cy="152" r="18" fill="none" stroke="#2C6E8F" stroke-width="1.1" opacity=".5"/>
@@ -363,13 +405,13 @@
   </header>
 
   <nav class="cats" id="cats">
-    <a href="#osnovnye">Основные</a>
-    <a href="#pervye">Первые</a>
-    <a href="#salaty">Салаты</a>
-    <a href="#vypechka">Выпечка</a>
-    <a href="#chay">Чай</a>
-    <a href="#napitki">Напитки</a>
-    <a href="#deserty">Десерты</a>
+    <a href="#osnovnye" class="i18n"><i lang="ru">Основные</i><i lang="kk">Негізгі</i><i lang="uz">Асосий</i></a>
+    <a href="#pervye" class="i18n"><i lang="ru">Первые</i><i lang="kk">Сорпалар</i><i lang="uz">Суюқ</i></a>
+    <a href="#salaty" class="i18n"><i lang="ru">Салаты</i><i lang="kk">Салаттар</i><i lang="uz">Салатлар</i></a>
+    <a href="#vypechka" class="i18n"><i lang="ru">Выпечка</i><i lang="kk">Нан</i><i lang="uz">Нон</i></a>
+    <a href="#chay" class="i18n"><i lang="ru">Чай</i><i lang="kk">Шай</i><i lang="uz">Чой</i></a>
+    <a href="#napitki" class="i18n"><i lang="ru">Напитки</i><i lang="kk">Сусындар</i><i lang="uz">Ичимликлар</i></a>
+    <a href="#deserty" class="i18n"><i lang="ru">Десерты</i><i lang="kk">Тәттілер</i><i lang="uz">Ширинликлар</i></a>
   </nav>
 
   <main>
@@ -399,38 +441,38 @@
           </g>
         </svg>
         <div>
-          <h2>Основные блюда</h2>
-          <p class="hint">Готовим на живом огне, в казане и тандыре</p>
+          <h2 class="i18n"><i lang="ru">Основные блюда</i><i lang="kk">Негізгі тағамдар</i><i lang="uz">Асосий таомлар</i></h2>
+          <p class="hint i18n"><i lang="ru">Готовим на живом огне, в казане и тандыре</i><i lang="kk">Отта, қазанда және тандырда дайындаймыз</i><i lang="uz">Оловда, қозонда ва тандирда тайёрлаймиз</i></p>
         </div>
       </div>
 
       <div class="item">
-        <div class="line"><span class="name">Плов<span class="hit">хит</span></span><span class="dots"></span><span class="price">1 800 ₸</span></div>
-        <p class="desc">Рис девзира, баранина, жёлтая морковь, головка чеснока</p>
+        <div class="line"><span class="name"><span class="i18n"><i lang="ru">Плов</i><i lang="kk">Палау</i><i lang="uz">Ош</i></span><span class="hit">хит</span></span><span class="dots"></span><span class="price">1 800 ₸</span></div>
+        <p class="desc i18n"><i lang="ru">Рис девзира, баранина, жёлтая морковь, головка чеснока</i><i lang="kk">Девзира күріші, қой еті, сары сәбіз, сарымсақ басы</i><i lang="uz">Девзира гуручи, қўй гўшти, сариқ сабзи, саримсоқ боши</i></p>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Бешбармак<span class="hit">хит</span></span><span class="dots"></span><span class="price">4 500 ₸</span></div>
-        <p class="desc">На двоих. Конина и баранина, домашняя раскатка, лук в сорпе</p>
+        <div class="line"><span class="name"><span class="i18n"><i lang="ru">Бешбармак</i><i lang="kk">Бесбармақ</i><i lang="uz">Бешбармоқ</i></span><span class="hit">хит</span></span><span class="dots"></span><span class="price">4 500 ₸</span></div>
+        <p class="desc i18n"><i lang="ru">На двоих. Конина и баранина, домашняя раскатка, лук в сорпе</i><i lang="kk">Екі адамға. Жылқы және қой еті, үй қамыры, сорпадағы пияз</i><i lang="uz">Икки кишига. От ва қўй гўшти, уй хамири, сорпадаги пиёз</i></p>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Лагман</span><span class="dots"></span><span class="price">1 700 ₸</span></div>
-        <p class="desc">Тянутая лапша, говядина, болгарский перец, редька</p>
+        <div class="line"><span class="name i18n"><i lang="ru">Лагман</i><i lang="kk">Лағман</i><i lang="uz">Лағмон</i></span><span class="dots"></span><span class="price">1 700 ₸</span></div>
+        <p class="desc i18n"><i lang="ru">Тянутая лапша, говядина, болгарский перец, редька</i><i lang="kk">Созылмалы кеспе, сиыр еті, тәтті бұрыш, шомыр</i><i lang="uz">Чўзма угра, мол гўшти, қалампир, турп</i></p>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Куырдак</span><span class="dots"></span><span class="price">2 000 ₸</span></div>
-        <p class="desc">Баранина с картофелем и луком, обжаренные в казане</p>
+        <div class="line"><span class="name i18n"><i lang="ru">Куырдак</i><i lang="kk">Қуырдақ</i><i lang="uz">Қовурдоқ</i></span><span class="dots"></span><span class="price">2 000 ₸</span></div>
+        <p class="desc i18n"><i lang="ru">Баранина с картофелем и луком, обжаренные в казане</i><i lang="kk">Қазанда қуырылған қой еті, картоп, пияз</i><i lang="uz">Қозонда қовурилган қўй гўшти, картошка, пиёз</i></p>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Манты, 5 шт</span><span class="dots"></span><span class="price">1 600 ₸</span></div>
-        <p class="desc">Рубленая баранина с курдюком, тесто вручную</p>
+        <div class="line"><span class="name i18n"><i lang="ru">Манты, 5 шт</i><i lang="kk">Манты, 5 дана</i><i lang="uz">Манти, 5 дона</i></span><span class="dots"></span><span class="price">1 600 ₸</span></div>
+        <p class="desc i18n"><i lang="ru">Рубленая баранина с курдюком, тесто вручную</i><i lang="kk">Туралған қой еті мен құйрық майы, қамыр қолмен</i><i lang="uz">Майдаланган қўй гўшти ва дум ёғи, хамир қўлда</i></p>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Шашлык из баранины</span><span class="dots"></span><span class="price">1 800 ₸</span></div>
-        <p class="desc">Порция 200 г, маринад на луковом соке</p>
+        <div class="line"><span class="name i18n"><i lang="ru">Шашлык из баранины</i><i lang="kk">Қой етінен шашлык</i><i lang="uz">Қўй гўштидан шашлик</i></span><span class="dots"></span><span class="price">1 800 ₸</span></div>
+        <p class="desc i18n"><i lang="ru">Порция 200 г, маринад на луковом соке</i><i lang="kk">200 г, пияз сөлінде маринадталған</i><i lang="uz">200 г, пиёз шарбатида маринадланган</i></p>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Шашлык из курицы</span><span class="dots"></span><span class="price">1 400 ₸</span></div>
-        <p class="desc">Порция 200 г, с луком и лепёшкой</p>
+        <div class="line"><span class="name i18n"><i lang="ru">Шашлык из курицы</i><i lang="kk">Тауық етінен шашлык</i><i lang="uz">Товуқ гўштидан шашлик</i></span><span class="dots"></span><span class="price">1 400 ₸</span></div>
+        <p class="desc i18n"><i lang="ru">Порция 200 г, с луком и лепёшкой</i><i lang="kk">200 г, пияз және нанмен</i><i lang="uz">200 г, пиёз ва нон билан</i></p>
       </div>
     </section>
 
@@ -453,22 +495,22 @@
           </g>
         </svg>
         <div>
-          <h2>Первые блюда</h2>
-          <p class="hint">Подаём в кесе, с лепёшкой</p>
+          <h2 class="i18n"><i lang="ru">Первые блюда</i><i lang="kk">Сорпалар</i><i lang="uz">Суюқ таомлар</i></h2>
+          <p class="hint i18n"><i lang="ru">Подаём в кесе, с лепёшкой</i><i lang="kk">Кесеге құйып, нанмен береміз</i><i lang="uz">Косада, нон билан берамиз</i></p>
         </div>
       </div>
 
       <div class="item">
-        <div class="line"><span class="name">Сорпа</span><span class="dots"></span><span class="price">1 200 ₸</span></div>
-        <p class="desc">Наваристый бульон на бараньей кости, зелень, лук</p>
+        <div class="line"><span class="name i18n"><i lang="ru">Сорпа</i><i lang="kk">Сорпа</i><i lang="uz">Сорпа</i></span><span class="dots"></span><span class="price">1 200 ₸</span></div>
+        <p class="desc i18n"><i lang="ru">Наваристый бульон на бараньей кости, зелень, лук</i><i lang="kk">Қой сүйегіне қайнатылған сорпа, көк, пияз</i><i lang="uz">Қўй суягида қайнатилган сорпа, кўкат, пиёз</i></p>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Шурпа</span><span class="dots"></span><span class="price">1 400 ₸</span></div>
-        <p class="desc">С крупно резанными овощами и бараниной</p>
+        <div class="line"><span class="name i18n"><i lang="ru">Шурпа</i><i lang="kk">Шорпа</i><i lang="uz">Шўрва</i></span><span class="dots"></span><span class="price">1 400 ₸</span></div>
+        <p class="desc i18n"><i lang="ru">С крупно резанными овощами и бараниной</i><i lang="kk">Ірі туралған көкөніс пен қой еті</i><i lang="uz">Йирик тўғралган сабзавот ва қўй гўшти</i></p>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Кеспе</span><span class="dots"></span><span class="price">1 300 ₸</span></div>
-        <p class="desc">Домашняя лапша в мясном бульоне</p>
+        <div class="line"><span class="name i18n"><i lang="ru">Кеспе</i><i lang="kk">Кеспе</i><i lang="uz">Кесма</i></span><span class="dots"></span><span class="price">1 300 ₸</span></div>
+        <p class="desc i18n"><i lang="ru">Домашняя лапша в мясном бульоне</i><i lang="kk">Ет сорпасындағы үй кеспесі</i><i lang="uz">Гўшт сорпасидаги уй уграси</i></p>
       </div>
     </section>
 
@@ -492,25 +534,25 @@
           </g>
         </svg>
         <div>
-          <h2>Салаты и закуски</h2>
-          <p class="hint">Овощи с рынка, режем перед подачей</p>
+          <h2 class="i18n"><i lang="ru">Салаты и закуски</i><i lang="kk">Салаттар мен тіскебасар</i><i lang="uz">Салатлар ва газаклар</i></h2>
+          <p class="hint i18n"><i lang="ru">Овощи с рынка, режем перед подачей</i><i lang="kk">Базардан алынған көкөніс, беру алдында тураймыз</i><i lang="uz">Бозордан келган сабзавот, беришдан олдин тўғраймиз</i></p>
         </div>
       </div>
 
       <div class="item">
-        <div class="line"><span class="name">Ачичук</span><span class="dots"></span><span class="price">900 ₸</span></div>
-        <p class="desc">Помидоры, тонкий лук, зелёный перец</p>
+        <div class="line"><span class="name i18n"><i lang="ru">Ачичук</i><i lang="kk">Ашшы-шүшік</i><i lang="uz">Аччиқ-чучук</i></span><span class="dots"></span><span class="price">900 ₸</span></div>
+        <p class="desc i18n"><i lang="ru">Помидоры, тонкий лук, зелёный перец</i><i lang="kk">Қызанақ, жұқа пияз, жасыл бұрыш</i><i lang="uz">Помидор, юпқа пиёз, кўк қалампир</i></p>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Салат «Шымкент»</span><span class="dots"></span><span class="price">1 300 ₸</span></div>
-        <p class="desc">Телятина, свежие овощи, гранат, кунжут</p>
+        <div class="line"><span class="name i18n"><i lang="ru">Салат «Шымкент»</i><i lang="kk">«Шымкент» салаты</i><i lang="uz">«Шимкент» салати</i></span><span class="dots"></span><span class="price">1 300 ₸</span></div>
+        <p class="desc i18n"><i lang="ru">Телятина, свежие овощи, гранат, кунжут</i><i lang="kk">Бұзау еті, балғын көкөніс, анар, күнжіт</i><i lang="uz">Бузоқ гўшти, янги сабзавот, анор, кунжут</i></p>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Ассорти солений</span><span class="dots"></span><span class="price">1 000 ₸</span></div>
-        <p class="desc">Помидоры, огурцы, капуста, черемша</p>
+        <div class="line"><span class="name i18n"><i lang="ru">Ассорти солений</i><i lang="kk">Тұздалған көкөніс</i><i lang="uz">Туршак ассортиси</i></span><span class="dots"></span><span class="price">1 000 ₸</span></div>
+        <p class="desc i18n"><i lang="ru">Помидоры, огурцы, капуста, черемша</i><i lang="kk">Қызанақ, қияр, қырыққабат, жабайы сарымсақ</i><i lang="uz">Помидор, бодринг, карам, ёввойи саримсоқ</i></p>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Морковь по-корейски</span><span class="dots"></span><span class="price">700 ₸</span></div>
+        <div class="line"><span class="name i18n"><i lang="ru">Морковь по-корейски</i><i lang="kk">Кәрісше сәбіз</i><i lang="uz">Корейча сабзи</i></span><span class="dots"></span><span class="price">700 ₸</span></div>
       </div>
     </section>
 
@@ -534,20 +576,20 @@
           </g>
         </svg>
         <div>
-          <h2>Хлеб и выпечка</h2>
-          <p class="hint">Из тандыра, каждые два часа</p>
+          <h2 class="i18n"><i lang="ru">Хлеб и выпечка</i><i lang="kk">Нан және тоқаштар</i><i lang="uz">Нон ва пишириқлар</i></h2>
+          <p class="hint i18n"><i lang="ru">Из тандыра, каждые два часа</i><i lang="kk">Тандырдан, әр екі сағат сайын</i><i lang="uz">Тандирдан, ҳар икки соатда</i></p>
         </div>
       </div>
 
       <div class="item">
-        <div class="line"><span class="name">Самса, 1 шт<span class="hit">хит</span></span><span class="dots"></span><span class="price">400 ₸</span></div>
-        <p class="desc">Слоёное тесто, баранина с луком</p>
+        <div class="line"><span class="name"><span class="i18n"><i lang="ru">Самса, 1 шт</i><i lang="kk">Самса, 1 дана</i><i lang="uz">Сомса, 1 дона</i></span><span class="hit">хит</span></span><span class="dots"></span><span class="price">400 ₸</span></div>
+        <p class="desc i18n"><i lang="ru">Слоёное тесто, баранина с луком</i><i lang="kk">Қатпарлы қамыр, пиязбен қой еті</i><i lang="uz">Қатламли хамир, пиёзли қўй гўшти</i></p>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Лепёшка тандырная</span><span class="dots"></span><span class="price">300 ₸</span></div>
+        <div class="line"><span class="name i18n"><i lang="ru">Лепёшка тандырная</i><i lang="kk">Тандыр нан</i><i lang="uz">Тандир нон</i></span><span class="dots"></span><span class="price">300 ₸</span></div>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Токаш</span><span class="dots"></span><span class="price">250 ₸</span></div>
+        <div class="line"><span class="name i18n"><i lang="ru">Токаш</i><i lang="kk">Тоқаш</i><i lang="uz">Тоқач</i></span><span class="dots"></span><span class="price">250 ₸</span></div>
       </div>
     </section>
 
@@ -567,28 +609,28 @@
           <ellipse cx="45" cy="45" rx="4" ry="2.2" fill="#8E5518" opacity=".4" transform="rotate(-32 45 45)"/>
         </svg>
         <div>
-          <h2>Чай</h2>
-          <p class="hint">Чайник — на компанию до четырёх человек</p>
+          <h2 class="i18n"><i lang="ru">Чай</i><i lang="kk">Шай</i><i lang="uz">Чой</i></h2>
+          <p class="hint i18n"><i lang="ru">Чайник — на компанию до четырёх человек</i><i lang="kk">Шәйнек — төрт адамға дейін</i><i lang="uz">Чойнак — тўрт кишига</i></p>
         </div>
       </div>
 
       <div class="item">
-        <div class="line"><span class="name">Чай с молоком, чайник<span class="hit">хит</span></span><span class="dots"></span><span class="price">900 ₸</span></div>
-        <p class="desc">Как дома: крепкая заварка, топлёное молоко, щепотка соли</p>
+        <div class="line"><span class="name"><span class="i18n"><i lang="ru">Чай с молоком, чайник</i><i lang="kk">Сүтті шай, шәйнек</i><i lang="uz">Сутли чой, чойнак</i></span><span class="hit">хит</span></span><span class="dots"></span><span class="price">900 ₸</span></div>
+        <p class="desc i18n"><i lang="ru">Как дома: крепкая заварка, топлёное молоко, щепотка соли</i><i lang="kk">Үйдегідей: қою шай, қайнатылған сүт, шөкім тұз</i><i lang="uz">Уйдагидек: қуюқ чой, қайнатилган сут, бир чимдим туз</i></p>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Чай чёрный, чайник</span><span class="dots"></span><span class="price">600 ₸</span></div>
+        <div class="line"><span class="name i18n"><i lang="ru">Чай чёрный, чайник</i><i lang="kk">Қара шай, шәйнек</i><i lang="uz">Қора чой, чойнак</i></span><span class="dots"></span><span class="price">600 ₸</span></div>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Чай зелёный, чайник</span><span class="dots"></span><span class="price">600 ₸</span></div>
+        <div class="line"><span class="name i18n"><i lang="ru">Чай зелёный, чайник</i><i lang="kk">Көк шай, шәйнек</i><i lang="uz">Кўк чой, чойнак</i></span><span class="dots"></span><span class="price">600 ₸</span></div>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Чай с чабрецом</span><span class="dots"></span><span class="price">800 ₸</span></div>
-        <p class="desc">Горный чабрец, мёд подаём отдельно</p>
+        <div class="line"><span class="name i18n"><i lang="ru">Чай с чабрецом</i><i lang="kk">Киікоты қосылған шай</i><i lang="uz">Тоғ райҳонли чой</i></span><span class="dots"></span><span class="price">800 ₸</span></div>
+        <p class="desc i18n"><i lang="ru">Горный чабрец, мёд подаём отдельно</i><i lang="kk">Тау киікоты, бал бөлек беріледі</i><i lang="uz">Тоғ райҳони, асал алоҳида берилади</i></p>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Чай облепиховый</span><span class="dots"></span><span class="price">1 000 ₸</span></div>
-        <p class="desc">Облепиха, имбирь, апельсин</p>
+        <div class="line"><span class="name i18n"><i lang="ru">Чай облепиховый</i><i lang="kk">Шырғанақ шайы</i><i lang="uz">Чаканда чойи</i></span><span class="dots"></span><span class="price">1 000 ₸</span></div>
+        <p class="desc i18n"><i lang="ru">Облепиха, имбирь, апельсин</i><i lang="kk">Шырғанақ, зімбір, апельсин</i><i lang="uz">Чаканда, занжабил, апельсин</i></p>
       </div>
     </section>
 
@@ -617,42 +659,42 @@
           </g>
         </svg>
         <div>
-          <h2>Напитки</h2>
-          <p class="hint">Холодные, из погреба и своей кухни</p>
+          <h2 class="i18n"><i lang="ru">Напитки</i><i lang="kk">Сусындар</i><i lang="uz">Ичимликлар</i></h2>
+          <p class="hint i18n"><i lang="ru">Холодные, из погреба и своей кухни</i><i lang="kk">Салқын, өз асханамыздан</i><i lang="uz">Совуқ, ўз ошхонамиздан</i></p>
         </div>
       </div>
 
       <div class="item">
-        <div class="line"><span class="name">Кумыс</span><span class="dots"></span><span class="price">1 000 ₸</span></div>
-        <p class="desc">Кобылье молоко, выдержка три дня</p>
+        <div class="line"><span class="name i18n"><i lang="ru">Кумыс</i><i lang="kk">Қымыз</i><i lang="uz">Қимиз</i></span><span class="dots"></span><span class="price">1 000 ₸</span></div>
+        <p class="desc i18n"><i lang="ru">Кобылье молоко, выдержка три дня</i><i lang="kk">Бие сүті, үш күн ашытылған</i><i lang="uz">Бия сути, уч кун ачитилган</i></p>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Шубат</span><span class="dots"></span><span class="price">1 000 ₸</span></div>
-        <p class="desc">Верблюжье молоко, густой и прохладный</p>
+        <div class="line"><span class="name i18n"><i lang="ru">Шубат</i><i lang="kk">Шұбат</i><i lang="uz">Шубат</i></span><span class="dots"></span><span class="price">1 000 ₸</span></div>
+        <p class="desc i18n"><i lang="ru">Верблюжье молоко, густой и прохладный</i><i lang="kk">Түйе сүті, қою әрі салқын</i><i lang="uz">Туя сути, қуюқ ва совуқ</i></p>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Айран</span><span class="dots"></span><span class="price">500 ₸</span></div>
+        <div class="line"><span class="name i18n"><i lang="ru">Айран</i><i lang="kk">Айран</i><i lang="uz">Айрон</i></span><span class="dots"></span><span class="price">500 ₸</span></div>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Максым</span><span class="dots"></span><span class="price">500 ₸</span></div>
+        <div class="line"><span class="name i18n"><i lang="ru">Максым</i><i lang="kk">Мақсым</i><i lang="uz">Мақсим</i></span><span class="dots"></span><span class="price">500 ₸</span></div>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Лимонад домашний<span class="hit">хит</span></span><span class="dots"></span><span class="price">800 ₸</span></div>
-        <p class="desc">Лимон, мята, лёд. Графин на компанию — 2 000 ₸</p>
+        <div class="line"><span class="name"><span class="i18n"><i lang="ru">Лимонад домашний</i><i lang="kk">Үй лимонады</i><i lang="uz">Уй лимонади</i></span><span class="hit">хит</span></span><span class="dots"></span><span class="price">800 ₸</span></div>
+        <p class="desc i18n"><i lang="ru">Лимон, мята, лёд. Графин на компанию — 2 000 ₸</i><i lang="kk">Лимон, жалбыз, мұз. Графин — 2 000 ₸</i><i lang="uz">Лимон, ялпиз, муз. Графин — 2 000 ₸</i></p>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Компот из сухофруктов</span><span class="dots"></span><span class="price">400 ₸</span></div>
+        <div class="line"><span class="name i18n"><i lang="ru">Компот из сухофруктов</i><i lang="kk">Кептірілген жеміс компоты</i><i lang="uz">Қоқи мева компоти</i></span><span class="dots"></span><span class="price">400 ₸</span></div>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Сок свежевыжатый</span><span class="dots"></span><span class="price">1 200 ₸</span></div>
-        <p class="desc">Апельсин, яблоко или морковь</p>
+        <div class="line"><span class="name i18n"><i lang="ru">Сок свежевыжатый</i><i lang="kk">Жаңа сығылған шырын</i><i lang="uz">Янги сиқилган шарбат</i></span><span class="dots"></span><span class="price">1 200 ₸</span></div>
+        <p class="desc i18n"><i lang="ru">Апельсин, яблоко или морковь</i><i lang="kk">Апельсин, алма немесе сәбіз</i><i lang="uz">Апельсин, олма ёки сабзи</i></p>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Кофе</span><span class="dots"></span><span class="price">700 ₸</span></div>
-        <p class="desc">Эспрессо, американо, капучино</p>
+        <div class="line"><span class="name i18n"><i lang="ru">Кофе</i><i lang="kk">Кофе</i><i lang="uz">Кофе</i></span><span class="dots"></span><span class="price">700 ₸</span></div>
+        <p class="desc i18n"><i lang="ru">Эспрессо, американо, капучино</i><i lang="kk">Эспрессо, американо, капучино</i><i lang="uz">Эспрессо, американо, капучино</i></p>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Вода, 0,5 л</span><span class="dots"></span><span class="price">300 ₸</span></div>
+        <div class="line"><span class="name i18n"><i lang="ru">Вода, 0,5 л</i><i lang="kk">Су, 0,5 л</i><i lang="uz">Сув, 0,5 л</i></span><span class="dots"></span><span class="price">300 ₸</span></div>
       </div>
     </section>
 
@@ -677,19 +719,19 @@
           </g>
         </svg>
         <div>
-          <h2>Десерты</h2>
-          <p class="hint">К чаю, по-домашнему</p>
+          <h2 class="i18n"><i lang="ru">Десерты</i><i lang="kk">Тәттілер</i><i lang="uz">Ширинликлар</i></h2>
+          <p class="hint i18n"><i lang="ru">К чаю, по-домашнему</i><i lang="kk">Шайға, үй дәмімен</i><i lang="uz">Чойга, уйдагидек</i></p>
         </div>
       </div>
 
       <div class="item">
-        <div class="line"><span class="name">Чак-чак</span><span class="dots"></span><span class="price">800 ₸</span></div>
+        <div class="line"><span class="name i18n"><i lang="ru">Чак-чак</i><i lang="kk">Шәк-шәк</i><i lang="uz">Чак-чак</i></span><span class="dots"></span><span class="price">800 ₸</span></div>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Мёд с грецким орехом</span><span class="dots"></span><span class="price">1 200 ₸</span></div>
+        <div class="line"><span class="name i18n"><i lang="ru">Мёд с грецким орехом</i><i lang="kk">Жаңғақпен бал</i><i lang="uz">Ёнғоқли асал</i></span><span class="dots"></span><span class="price">1 200 ₸</span></div>
       </div>
       <div class="item">
-        <div class="line"><span class="name">Курага и урюк</span><span class="dots"></span><span class="price">900 ₸</span></div>
+        <div class="line"><span class="name i18n"><i lang="ru">Курага и урюк</i><i lang="kk">Кептірілген өрік</i><i lang="uz">Туршак ва ўрик қоқи</i></span><span class="dots"></span><span class="price">900 ₸</span></div>
       </div>
     </section>
 
@@ -698,14 +740,51 @@
   <footer class="foot">
     <a class="home" href="../">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
-      Вернуться к Чайхана Достар
+      <span class="i18n"><i lang="ru">На главную</i><i lang="kk">Басты бетке</i><i lang="uz">Бош саҳифага</i></span>
     </a>
-    <small>Цены указаны в тенге. Обслуживание включено.</small>
+    <small class="i18n"><i lang="ru">Цены указаны в тенге. Обслуживание включено.</i><i lang="kk">Бағалар теңгемен. Қызмет ақысы қосылған.</i><i lang="uz">Нархлар теңгеда. Хизмат ҳақи киритилган.</i></small>
   </footer>
 
 </div>
 
 <script>
+  /* ---------- язык ---------- */
+  (function(){
+    var KEY = 'nfchub-lang';
+    var OK  = { ru:1, kk:1, uz:1 };
+    var TITLE = { ru:'Меню', kk:'Мәзір', uz:'Меню' };
+    var name = "Чайхана Достар";
+    var box  = document.getElementById('lang');
+
+    function set(l, save){
+      if (!OK[l]) l = 'ru';
+      var root = document.documentElement;
+      root.setAttribute('data-lang', l);
+      root.setAttribute('lang', l);
+      document.title = TITLE[l] + ' — ' + name;
+      var b = box.getElementsByTagName('button');
+      for (var i = 0; i < b.length; i++){
+        b[i].className = (b[i].getAttribute('data-set') === l) ? 'on' : '';
+      }
+      if (save) { try { localStorage.setItem(KEY, l); } catch(e){} }
+    }
+
+    var saved = null;
+    try { saved = localStorage.getItem(KEY); } catch(e){}
+    if (!saved){
+      var n = (navigator.language || 'ru').toLowerCase();
+      saved = n.indexOf('kk') === 0 ? 'kk' : (n.indexOf('uz') === 0 ? 'uz' : 'ru');
+    }
+    set(saved, false);
+
+    box.addEventListener('click', function(e){
+      var t = e.target;
+      while (t && t !== box && t.tagName !== 'BUTTON') t = t.parentNode;
+      if (t && t.tagName === 'BUTTON') set(t.getAttribute('data-set'), true);
+    });
+  })();
+
+  /* ---------- подсветка раздела при прокрутке ---------- */
   (function(){
     var nav      = document.getElementById('cats');
     var links    = Array.prototype.slice.call(nav.querySelectorAll('a'));

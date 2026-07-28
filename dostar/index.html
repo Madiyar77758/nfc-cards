@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" data-lang="ru">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -43,6 +43,43 @@
     overscroll-behavior:none;
   }
   a{ -webkit-touch-callout:none; }
+
+  /* ---------- три языка: показываем один, без JS работает русский ---------- */
+  .i18n > i{ font-style:normal; display:none; }
+  html[data-lang="ru"] .i18n > i[lang="ru"],
+  html[data-lang="kk"] .i18n > i[lang="kk"],
+  html[data-lang="uz"] .i18n > i[lang="uz"]{ display:inline; }
+
+  .lang{
+    position:absolute;
+    z-index:3;
+    top:calc(14px + env(safe-area-inset-top));
+    right:var(--pad);
+    display:flex;
+    gap:2px;
+    padding:2px;
+    border-radius:999px;
+    background:rgba(255,255,255,.14);
+  }
+  .lang button{
+    appearance:none;
+    border:0;
+    margin:0;
+    padding:6px 11px;
+    min-height:32px;
+    border-radius:999px;
+    background:transparent;
+    color:rgba(255,255,255,.72);
+    font:inherit;
+    font-size:11.5px;
+    font-weight:700;
+    letter-spacing:.06em;
+    cursor:pointer;
+    transition:background .15s ease, color .15s ease;
+    touch-action:manipulation;
+  }
+  .lang button.on{ background:var(--paper); color:var(--brand); }
+  .lang button:focus-visible{ outline:2px solid #fff; outline-offset:2px; }
 
   .hub{
     max-width:430px;
@@ -249,6 +286,11 @@
 <div class="hub">
 
   <header class="band">
+    <div class="lang" id="lang" role="group" aria-label="Тіл / Til / Язык">
+      <button type="button" data-set="ru">RU</button>
+      <button type="button" data-set="kk">ҚАЗ</button>
+      <button type="button" data-set="uz">ЎЗ</button>
+    </div>
     <div class="brand">
       <div class="mark" aria-hidden="true">ЧД</div>
       <h1>Чайхана Достар</h1>
@@ -348,7 +390,10 @@
         <path d="M20 5.6A1.6 1.6 0 0 0 18.4 4H13v16h5.4a1.6 1.6 0 0 0 1.6-1.6z"/>
         <path d="M6.8 8.4h2M6.8 11.4h2M15.2 8.4h2M15.2 11.4h2"/>
       </svg>
-      <span class="txt"><span class="t">Меню</span><span class="s">Каталог блюд и цены</span></span>
+      <span class="txt">
+        <span class="t i18n"><i lang="ru">Меню</i><i lang="kk">Мәзір</i><i lang="uz">Меню</i></span>
+        <span class="s i18n"><i lang="ru">Каталог блюд и цены</i><i lang="kk">Тағамдар мен бағалар</i><i lang="uz">Таомлар ва нархлар</i></span>
+      </span>
       <svg class="chev" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
     </a>
 
@@ -360,7 +405,10 @@
           <circle cx="12" cy="12" r="4"/>
           <circle cx="17.3" cy="6.7" r="1.05" fill="currentColor" stroke="none"/>
         </svg>
-        <span class="txt"><span class="t">Instagram</span><span class="s">Фото и новинки</span></span>
+        <span class="txt">
+          <span class="t">Instagram</span>
+          <span class="s i18n"><i lang="ru">Фото и новинки</i><i lang="kk">Фото және жаңалықтар</i><i lang="uz">Фото ва янгиликлар</i></span>
+        </span>
         <svg class="chev" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
       </a>
 
@@ -369,7 +417,10 @@
           <path d="M13.6 3v11.5a3.65 3.65 0 1 1-3.2-3.62"/>
           <path d="M13.6 3.5c.55 2.65 2.25 4.25 4.95 4.45"/>
         </svg>
-        <span class="txt"><span class="t">TikTok</span><span class="s">Видео из заведения</span></span>
+        <span class="txt">
+          <span class="t">TikTok</span>
+          <span class="s i18n"><i lang="ru">Видео из заведения</i><i lang="kk">Мекеменің видеосы</i><i lang="uz">Масканинг видеолари</i></span>
+        </span>
         <svg class="chev" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
       </a>
 
@@ -378,7 +429,10 @@
           <path d="M12 21.2c3.9-4.1 6-7.25 6-10.15a6 6 0 1 0-12 0c0 2.9 2.1 6.05 6 10.15Z"/>
           <circle cx="12" cy="10.8" r="2.4"/>
         </svg>
-        <span class="txt"><span class="t">2GIS</span><span class="s">Адрес, маршрут, отзывы</span></span>
+        <span class="txt">
+          <span class="t">2GIS</span>
+          <span class="s i18n"><i lang="ru">Адрес, маршрут, отзывы</i><i lang="kk">Мекенжай, бағыт, пікірлер</i><i lang="uz">Манзил, йўналиш, фикрлар</i></span>
+        </span>
         <svg class="chev" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
       </a>
 
@@ -391,13 +445,47 @@
           <path d="M10 6a12 12 0 0 1 0 12"/>
           <path d="M14 3.5a16.5 16.5 0 0 1 0 17"/>
         </svg>
-        Открыто по NFC-карте
+        <span class="i18n"><i lang="ru">Открыто по NFC-карте</i><i lang="kk">NFC-картамен ашылды</i><i lang="uz">NFC-карта орқали очилди</i></span>
       </span>
     </footer>
 
   </main>
 
 </div>
+
+<script>
+  (function(){
+    var KEY = 'nfchub-lang';
+    var OK  = { ru:1, kk:1, uz:1 };
+    var box = document.getElementById('lang');
+
+    function set(l, save){
+      if (!OK[l]) l = 'ru';
+      var root = document.documentElement;
+      root.setAttribute('data-lang', l);
+      root.setAttribute('lang', l);
+      var b = box.getElementsByTagName('button');
+      for (var i = 0; i < b.length; i++){
+        b[i].className = (b[i].getAttribute('data-set') === l) ? 'on' : '';
+      }
+      if (save) { try { localStorage.setItem(KEY, l); } catch(e){} }
+    }
+
+    var saved = null;
+    try { saved = localStorage.getItem(KEY); } catch(e){}
+    if (!saved){
+      var n = (navigator.language || 'ru').toLowerCase();
+      saved = n.indexOf('kk') === 0 ? 'kk' : (n.indexOf('uz') === 0 ? 'uz' : 'ru');
+    }
+    set(saved, false);
+
+    box.addEventListener('click', function(e){
+      var t = e.target;
+      while (t && t !== box && t.tagName !== 'BUTTON') t = t.parentNode;
+      if (t && t.tagName === 'BUTTON') set(t.getAttribute('data-set'), true);
+    });
+  })();
+</script>
 
 </body>
 </html>
