@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>MADIYAR — NFC-карты для заведений</title>
+<meta name="description" content="Гость прикладывает карту на столе — и попадает на меню, соцсети и отзывы в 2ГИС. Шымкент." />
+<meta name="theme-color" content="#0E4735" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="ru_KZ" />
+<meta property="og:title" content="MADIYAR — NFC-карты для заведений" />
+<meta property="og:description" content="Гость прикладывает карту — и оставляет отзыв в 2ГИС." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230E4735'/%3E%3C/svg%3E" />
+
+<!--
+  ============================================================
+  ЛИЧНАЯ СТРАНИЦА. Что заменить:
+    1. Ссылку WhatsApp — подставить свой номер в wa.me/
+    2. Ссылку Instagram
+  ============================================================
+-->
+
+<style>
+  :root{
+    color-scheme: light;
+    --bg:#E7EBE7;
+    --paper:#FFFFFF;
+    --brand:#0E4735;
+    --brand-2:#175C45;
+    --brand-tint:#EDF3F0;
+    --gold:#B8892F;
+    --ink:#15201B;
+    --ink-2:#58655E;
+    --ink-3:#95A09A;
+    --line:#E8EDE9;
+    --pad:20px;
+    --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height:1.45;
+    -webkit-font-smoothing:antialiased;
+    -webkit-tap-highlight-color:transparent;
+    overscroll-behavior:none;
+  }
+
+  .hub{
+    max-width:430px;
+    margin:0 auto;
+    min-height:100vh;
+    min-height:100dvh;
+    display:flex;
+    flex-direction:column;
+    background:var(--paper);
+    overflow:hidden;
+  }
+
+  .band{
+    position:relative;
+    padding:calc(52px + env(safe-area-inset-top)) var(--pad) 44px;
+    text-align:center;
+    color:#fff;
+    overflow:hidden;
+    background:
+      radial-gradient(125% 100% at 50% -25%, rgba(255,255,255,.15), rgba(255,255,255,0) 62%),
+      var(--brand);
+  }
+  .band::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:var(--grain);
+    opacity:.07;
+    pointer-events:none;
+  }
+  .brand{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:18px;
+    animation:fade .7s ease .05s both;
+  }
+  @keyframes fade{ from{opacity:0} to{opacity:1} }
+
+  .logo{ width:82px; height:82px; }
+  .logo .wave{ animation:pulse 2.6s ease-in-out infinite; }
+  .logo .w2{ animation-delay:.18s; }
+  .logo .w3{ animation-delay:.36s; }
+  @keyframes pulse{
+    0%,70%,100%{ opacity:.35; }
+    35%        { opacity:1;   }
+  }
+
+  .band h1{
+    margin:0;
+    font-size:33px;
+    font-weight:800;
+    letter-spacing:.16em;
+    text-indent:.16em;
+    line-height:1.05;
+  }
+  .rule{ width:26px; height:2px; background:var(--gold); border-radius:2px; }
+  .tag{
+    margin:0;
+    font-size:13.5px;
+    color:rgba(255,255,255,.82);
+    max-width:22em;
+  }
+  .city{
+    margin:0;
+    font-size:10.5px;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:.26em;
+    color:rgba(255,255,255,.6);
+  }
+
+  .sheet{
+    position:relative;
+    z-index:1;
+    margin-top:-24px;
+    padding:26px var(--pad) calc(24px + env(safe-area-inset-bottom));
+    background:var(--paper);
+    border-radius:26px 26px 0 0;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    animation:lift .6s cubic-bezier(.2,.8,.25,1) .12s both;
+  }
+  @keyframes lift{ from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
+
+  .pitch{
+    margin:0 0 4px;
+    padding:15px 16px;
+    border-radius:14px;
+    background:var(--brand-tint);
+    font-size:14px;
+    line-height:1.45;
+    color:var(--ink-2);
+  }
+  .pitch b{ color:var(--ink); }
+
+  .cta{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    min-height:64px;
+    padding:14px 18px;
+    border-radius:16px;
+    background:var(--brand);
+    color:#fff;
+    text-decoration:none;
+    box-shadow:0 1px 2px rgba(14,71,53,.18), 0 12px 26px -14px rgba(14,71,53,.6);
+    transition:transform .13s ease, background .13s ease;
+    touch-action:manipulation;
+  }
+  .cta:active{ transform:scale(.985); background:var(--brand-2); }
+  .cta .t{ font-size:18px; font-weight:600; letter-spacing:-.012em; }
+  .cta .s{ font-size:13px; color:rgba(255,255,255,.7); }
+
+  .group{ border:1px solid var(--line); border-radius:16px; overflow:hidden; }
+  .row{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    min-height:62px;
+    padding:12px 16px;
+    color:inherit;
+    text-decoration:none;
+    background:var(--paper);
+    transition:background .13s ease;
+    touch-action:manipulation;
+  }
+  .row + .row{ border-top:1px solid var(--line); }
+  .row:active{ background:var(--brand-tint); }
+
+  .txt{ display:flex; flex-direction:column; gap:1px; min-width:0; }
+  .txt .t{ font-size:16px; font-weight:600; letter-spacing:-.008em; }
+  .txt .s{ font-size:12.5px; color:var(--ink-3); }
+  .ico{ flex:none; color:var(--ink-2); }
+  .cta .ico{ color:rgba(255,255,255,.9); }
+  .chev{ margin-left:auto; flex:none; color:#C6D0CA; }
+  .cta .chev{ color:rgba(255,255,255,.55); }
+
+  :where(a):focus-visible{ outline:2px solid var(--brand); outline-offset:2px; }
+  @media (hover:hover){
+    .row:hover{ background:var(--brand-tint); }
+    .cta:hover{ background:var(--brand-2); }
+  }
+
+  .foot{
+    margin-top:auto;
+    padding-top:22px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:7px;
+    text-align:center;
+    font-size:11px;
+    color:var(--ink-3);
+  }
+
+  @media (min-width:520px){
+    body{ padding:44px 20px; }
+    .hub{ min-height:0; border-radius:26px;
+          box-shadow:0 2px 8px rgba(21,32,27,.05), 0 40px 70px -36px rgba(14,71,53,.4); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hub">
+
+  <header class="band">
+    <div class="brand">
+      <!-- Знак: буква M, из которой расходится сигнал NFC -->
+      <svg class="logo" viewBox="0 0 64 64" fill="none" aria-label="MADIYAR">
+        <path d="M14 45V21l10 13 10-13v24"
+              stroke="#fff" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <g stroke="#fff" stroke-width="3.2" stroke-linecap="round">
+          <path class="wave w1" d="M42 27a10 10 0 0 1 0 11"/>
+          <path class="wave w2" d="M48 23a17 17 0 0 1 0 19" opacity=".7"/>
+          <path class="wave w3" d="M54 19a24 24 0 0 1 0 27" opacity=".45"/>
+        </g>
+      </svg>
+
+      <h1>MADIYAR</h1>
+      <span class="rule" aria-hidden="true"></span>
+      <p class="tag">NFC-карты и цифровое меню для кафе и чайхан</p>
+      <p class="city">Шымкент</p>
+    </div>
+  </header>
+
+  <main class="sheet">
+
+    <p class="pitch">
+      Гость на столе прикладывает карту — и сразу попадает на меню, соцсети
+      и <b>форму отзыва в 2ГИС</b>. Ничего не скачивает, ничего не набирает.
+    </p>
+
+    <a class="cta" href="../dostar/">
+      <svg class="ico" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="4" width="18" height="16" rx="3"/>
+        <path d="M8 9h8M8 13h5"/>
+      </svg>
+      <span class="txt">
+        <span class="t">Живой пример</span>
+        <span class="s">Так будет выглядеть ваша страница</span>
+      </span>
+      <svg class="chev" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+    </a>
+
+    <div class="group">
+
+      <a class="row" href="../dostar/menu/">
+        <svg class="ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 5.6A1.6 1.6 0 0 1 5.6 4H11v16H5.6A1.6 1.6 0 0 1 4 18.4z"/>
+          <path d="M20 5.6A1.6 1.6 0 0 0 18.4 4H13v16h5.4a1.6 1.6 0 0 0 1.6-1.6z"/>
+        </svg>
+        <span class="txt">
+          <span class="t">Пример меню</span>
+          <span class="s">Три языка, рисунки, без фотографий из интернета</span>
+        </span>
+        <svg class="chev" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+      </a>
+
+      <!-- ЗАМЕНИТЬ: свой номер после wa.me/ без плюса и пробелов -->
+      <a class="row" href="https://wa.me/77000000000" target="_blank" rel="noopener">
+        <svg class="ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5Z"/>
+          <path d="M8.6 9.2c.3 2.6 2.4 4.9 5.1 5.5"/>
+        </svg>
+        <span class="txt">
+          <span class="t">WhatsApp</span>
+          <span class="s">Написать и договориться о встрече</span>
+        </span>
+        <svg class="chev" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+      </a>
+
+      <!-- ЗАМЕНИТЬ: свой инстаграм -->
+      <a class="row" href="https://instagram.com/" target="_blank" rel="noopener">
+        <svg class="ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="5.3"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.3" cy="6.7" r="1.05" fill="currentColor" stroke="none"/>
+        </svg>
+        <span class="txt">
+          <span class="t">Instagram</span>
+          <span class="s">Работы и отзывы заведений</span>
+        </span>
+        <svg class="chev" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+      </a>
+
+    </div>
+
+    <footer class="foot">
+      <span>Шымкент · Сайрам · Тұрар Рысқұлов</span>
+    </footer>
+
+  </main>
+
+</div>
+
+</body>
+</html>

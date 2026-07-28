@@ -22,7 +22,10 @@ param(
     [string]$TikTok    = '#',
     [string]$Gis       = '#',
     [string]$BaseUrl   = 'https://madiyar77758.github.io/nfc-cards',
-    [switch]$Force
+    [switch]$Force,
+    # Только печатные материалы: страницу и меню не трогать.
+    # Нужно для своих страниц, написанных вручную.
+    [switch]$PrintOnly
 )
 
 $root         = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -36,13 +39,16 @@ $cardTemplate = Join-Path $root '_template\card\index.html'
 $cardDir      = Join-Path $outDir 'card'
 $cardFile     = Join-Path $cardDir 'index.html'
 $qrFile       = Join-Path $cardDir 'qr.svg'
+$signTemplate = Join-Path $root '_template\sign\index.html'
+$signDir      = Join-Path $outDir 'sign'
+$signFile     = Join-Path $signDir 'index.html'
 $qrScript     = Join-Path $root 'make-qr.js'
 $clientUrl    = ($BaseUrl.TrimEnd('/')) + "/$Slug/"
 
 if (-not (Test-Path $template)) {
     throw "Не найден шаблон: $template"
 }
-if ((Test-Path $outFile) -and (-not $Force)) {
+if ((Test-Path $outFile) -and (-not $Force) -and (-not $PrintOnly)) {
     throw "Страница $Slug уже есть. Добавь -Force, если правда хочешь перезаписать."
 }
 
@@ -65,27 +71,32 @@ if ([string]::IsNullOrWhiteSpace($Menu)) {
 }
 
 $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
-$html = [System.IO.File]::ReadAllText($template, [System.Text.Encoding]::UTF8)
-
-$map = @{
-    '{{NAME}}'          = $Name
-    '{{INITIALS}}'      = $Initials
-    '{{CITY}}'          = $City
-    '{{URL_MENU}}'      = $Menu
-    '{{URL_INSTAGRAM}}' = $Instagram
-    '{{URL_TIKTOK}}'    = $TikTok
-    '{{URL_2GIS}}'      = $Gis
-}
-foreach ($key in $map.Keys) {
-    $html = $html.Replace($key, $map[$key])
-}
 
 if (-not (Test-Path $outDir)) {
     New-Item -ItemType Directory -Path $outDir | Out-Null
 }
 
-# UTF-8 без BOM — иначе некоторые хостинги отдают кракозябры.
-[System.IO.File]::WriteAllText($outFile, $html, $utf8NoBom)
+if (-not $PrintOnly) {
+    $html = [System.IO.File]::ReadAllText($template, [System.Text.Encoding]::UTF8)
+
+    $map = @{
+        '{{NAME}}'          = $Name
+        '{{INITIALS}}'      = $Initials
+        '{{CITY}}'          = $City
+        '{{URL_MENU}}'      = $Menu
+        '{{URL_INSTAGRAM}}' = $Instagram
+        '{{URL_TIKTOK}}'    = $TikTok
+        '{{URL_2GIS}}'      = $Gis
+    }
+    foreach ($key in $map.Keys) {
+        $html = $html.Replace($key, $map[$key])
+    }
+
+    # UTF-8 без BOM — иначе некоторые хостинги отдают кракозябры.
+    [System.IO.File]::WriteAllText($outFile, $html, $utf8NoBom)
+} else {
+    $ownMenu = $false
+}
 
 if ($ownMenu) {
     # Название попадает и в JavaScript (заголовок вкладки при смене языка),
@@ -123,17 +134,38 @@ if (Test-Path $cardTemplate) {
     }
 }
 
+# Квадратная подставка на стол: тот же QR, крупнее.
+if (Test-Path $signTemplate) {
+    $signHtml = [System.IO.File]::ReadAllText($signTemplate, [System.Text.Encoding]::UTF8)
+    $signHtml = $signHtml.Replace('{{NAME}}',     $Name).
+                          Replace('{{INITIALS}}', $Initials).
+                          Replace('{{CITY}}',     $City).
+                          Replace('{{URL}}',      $clientUrl)
+
+    if (-not (Test-Path $signDir)) {
+        New-Item -ItemType Directory -Path $signDir | Out-Null
+    }
+    [System.IO.File]::WriteAllText($signFile, $signHtml, $utf8NoBom)
+}
+
 Write-Host ""
-Write-Host "  Готово: $outFile" -ForegroundColor Green
-Write-Host "  Заведение: $Name ($Initials), $City"
-if ($ownMenu) {
-    Write-Host "  Меню:      $menuFile" -ForegroundColor Green
-    Write-Host "             блюда в нём — образец, замени на настоящие" -ForegroundColor DarkYellow
+Write-Host "  $Name ($Initials), $City" -ForegroundColor Green
+if ($PrintOnly) {
+    Write-Host "  Страница:  не трогали (-PrintOnly)" -ForegroundColor DarkGray
 } else {
-    Write-Host "  Меню:      внешняя ссылка $Menu"
+    Write-Host "  Страница:  $outFile" -ForegroundColor Green
+    if ($ownMenu) {
+        Write-Host "  Меню:      $menuFile" -ForegroundColor Green
+        Write-Host "             блюда в нём — образец, замени на настоящие" -ForegroundColor DarkYellow
+    } else {
+        Write-Host "  Меню:      внешняя ссылка $Menu"
+    }
 }
 if (Test-Path $cardFile) {
-    Write-Host "  Макет:     $cardFile" -ForegroundColor Green
+    Write-Host "  Карта:     $cardFile" -ForegroundColor Green
+}
+if (Test-Path $signFile) {
+    Write-Host "  Подставка: $signFile" -ForegroundColor Green
 }
 if ((Test-Path $cardTemplate) -and (-not $qrOk)) {
     Write-Host "  QR собрать не удалось — нужен Node.js и 'npm install'" -ForegroundColor Red

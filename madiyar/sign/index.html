@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Подставка — MADIYAR</title>
+<meta name="robots" content="noindex" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230E4735'/%3E%3C/svg%3E" />
+
+<style>
+  :root{
+    --brand:#0E4735;
+    --gold:#B8892F;
+    --ink:#15201B;
+    --ink-3:#8B968F;
+    --line:#E3E9E4;
+    --side:150mm;     /* сторона квадрата, переключается кнопками */
+  }
+  *,*::before,*::after{ box-sizing:border-box; }
+  body{
+    margin:0;
+    padding:32px 20px 60px;
+    background:#EEF1EE;
+    color:var(--ink);
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height:1.5;
+  }
+  .wrap{ max-width:680px; margin:0 auto; }
+  .wrap > h1{
+    margin:0 0 6px;
+    font-family:Georgia,"Noto Serif","Times New Roman",serif;
+    font-weight:400;
+    font-size:26px;
+  }
+  .lead{ margin:0 0 22px; color:var(--ink-3); font-size:14px; }
+
+  /* ---------- квадратная подставка ---------- */
+  .sign{
+    position:relative;
+    width:var(--side);
+    height:var(--side);
+    background:#fff;
+    border-radius:6mm;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 2px 4px rgba(21,32,27,.1), 0 22px 50px -20px rgba(14,71,53,.45);
+  }
+
+  /* Круги расходятся из-под кода — жест касания, читается без слов */
+  .rings{
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:calc(var(--side) * 1.75);
+    height:calc(var(--side) * 1.75);
+    transform:translate(-50%, -54%);
+    pointer-events:none;
+  }
+
+  .sign .qr{
+    position:relative;
+    width:calc(var(--side) * .42);
+    height:calc(var(--side) * .42);
+    padding:calc(var(--side) * .022);
+    background:#fff;
+    border-radius:calc(var(--side) * .02);
+  }
+  .sign .qr img{ width:100%; height:100%; display:block; }
+
+  .sign .call{
+    position:relative;
+    margin:calc(var(--side) * .045) 0 0;
+    display:flex;
+    align-items:center;
+    gap:calc(var(--side) * .022);
+    font-size:calc(var(--side) * .038);
+    font-weight:700;
+    letter-spacing:-.01em;
+    color:var(--brand);
+  }
+  .sign .call svg{ flex:none; }
+
+  .sign .other{
+    position:relative;
+    margin:calc(var(--side) * .017) 0 0;
+    text-align:center;
+    font-size:calc(var(--side) * .024);
+    line-height:1.5;
+    color:var(--ink-3);
+  }
+  .sign .other span{ display:block; }
+
+  .sign .brand{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:calc(var(--side) * .052);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:calc(var(--side) * .022);
+  }
+  .sign .brand .mark{
+    width:calc(var(--side) * .054);
+    height:calc(var(--side) * .054);
+    border-radius:50%;
+    background:var(--brand);
+    color:#fff;
+    display:grid;
+    place-items:center;
+    font-family:Georgia,"Noto Serif","Times New Roman",serif;
+    font-size:calc(var(--side) * .024);
+  }
+  .sign .brand b{
+    font-family:Georgia,"Noto Serif","Times New Roman",serif;
+    font-weight:400;
+    font-size:calc(var(--side) * .036);
+    letter-spacing:-.01em;
+  }
+
+  .sign .city{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:calc(var(--side) * .022);
+    text-align:center;
+    font-size:calc(var(--side) * .018);
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.24em;
+    color:var(--ink-3);
+  }
+
+  .stage{ display:flex; justify-content:center; padding:22px 0; }
+
+  /* ---------- настройки ---------- */
+  .opts{
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:#fff;
+    padding:16px 18px;
+    margin-bottom:14px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .opts .lbl{
+    flex:none;
+    font-size:11px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    color:var(--ink-3);
+  }
+  .opts button{
+    appearance:none;
+    padding:8px 14px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    background:#fff;
+    color:var(--ink);
+    font:inherit;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .opts button.on{ background:var(--brand); border-color:var(--brand); color:#fff; }
+
+  body.s90  { --side:90mm;  }
+  body.s120 { --side:120mm; }
+  body.s150 { --side:150mm; }
+
+  .note{
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:#fff;
+    padding:18px 20px;
+    font-size:13.5px;
+  }
+  .note h3{ margin:0 0 8px; font-size:14px; }
+  .note ul{ margin:0; padding-left:18px; }
+  .note li + li{ margin-top:5px; }
+  .note code{
+    font-family:ui-monospace,"Cascadia Mono",Menlo,Consolas,monospace;
+    font-size:12px;
+    background:#F1F5F2;
+    padding:1px 5px;
+    border-radius:4px;
+    word-break:break-all;
+  }
+  .print{
+    display:inline-flex;
+    margin-top:18px;
+    padding:12px 20px;
+    border:0;
+    border-radius:12px;
+    background:var(--brand);
+    color:#fff;
+    font:inherit;
+    font-size:14.5px;
+    font-weight:600;
+    cursor:pointer;
+  }
+
+  @media print{
+    @page{ size:A4 portrait; margin:10mm; }
+    body{ padding:0; background:#fff; }
+    .wrap > h1, .lead, .note, .opts{ display:none; }
+    .stage{ padding:0; }
+    .sign{ box-shadow:none; border:.2mm dashed #B9C6BC; break-inside:avoid; }
+  }
+</style>
+</head>
+<body class="s150">
+
+<div class="wrap">
+  <h1>Подставка на стол</h1>
+  <p class="lead">Квадрат с расходящимися кругами: гость понимает, что нужно приложить телефон, ещё не прочитав ни слова. QR ведёт туда же, куда метка.</p>
+
+  <div class="opts">
+    <span class="lbl">Сторона</span>
+    <button type="button" data-side="s90">90 мм</button>
+    <button type="button" data-side="s120">120 мм</button>
+    <button type="button" data-side="s150">150 мм</button>
+  </div>
+
+  <div class="stage">
+    <div class="sign">
+      <svg class="rings" viewBox="0 0 400 400" fill="none" aria-hidden="true">
+        <g stroke="#0E4735" stroke-width="1.6">
+          <circle cx="200" cy="200" r="70"  opacity=".30"/>
+          <circle cx="200" cy="200" r="94"  opacity=".26"/>
+          <circle cx="200" cy="200" r="118" opacity=".22"/>
+          <circle cx="200" cy="200" r="142" opacity=".18"/>
+          <circle cx="200" cy="200" r="166" opacity=".14"/>
+          <circle cx="200" cy="200" r="190" opacity=".10"/>
+        </g>
+        <g stroke="#B8892F" stroke-width="2.4" stroke-linecap="round" opacity=".55">
+          <path d="M262 168a52 52 0 0 1 0 64"/>
+          <path d="M280 152a76 76 0 0 1 0 96"/>
+        </g>
+      </svg>
+
+      <div class="qr">
+        <img src="../card/qr.svg" alt="QR-код на страницу заведения" />
+      </div>
+
+      <p class="call">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+          <path d="M6 8.5a7.5 7.5 0 0 1 0 7"/>
+          <path d="M10 6a12 12 0 0 1 0 12"/>
+          <path d="M14 3.5a16.5 16.5 0 0 1 0 17"/>
+        </svg>
+        Приложите телефон
+      </p>
+      <p class="other">
+        <span>или наведите камеру на код</span>
+        <span lang="kk">Телефонды жақындатыңыз</span>
+        <span lang="uz">Телефонни яқинлаштиринг</span>
+      </p>
+
+      <div class="brand">
+        <span class="mark">M</span>
+        <b>MADIYAR</b>
+      </div>
+      <div class="city">Шымкент</div>
+    </div>
+  </div>
+
+  <div class="note">
+    <h3>Про печать</h3>
+    <ul>
+      <li>Ссылка в коде: <code>https://madiyar77758.github.io/nfc-cards/madiyar/</code></li>
+      <li>Бумага от 250 г/м² или фотобумага. Тонкий лист коробится от чайника и заваливается в подставке.</li>
+      <li>Покрытие только матовое: глянец бликует под лампами, и камера перестаёт ловить код.</li>
+      <li><b>NFC-метку клеить на обратную сторону</b>, ровно по центру кругов — тогда телефон срабатывает там, куда показывает рисунок.</li>
+      <li>90 мм — под пиалу или на угол стола. 150 мм — на стойку и кассу.</li>
+    </ul>
+    <button class="print" type="button" onclick="window.print()">Печать на лист A4</button>
+  </div>
+</div>
+
+<script>
+  (function(){
+    var opts = document.querySelector('.opts');
+    function apply(cls){
+      document.body.className = cls;
+      var b = opts.getElementsByTagName('button');
+      for (var i = 0; i < b.length; i++){
+        b[i].className = (b[i].getAttribute('data-side') === cls) ? 'on' : '';
+      }
+    }
+    opts.addEventListener('click', function(e){
+      var t = e.target;
+      while (t && t.tagName !== 'BUTTON' && t !== this) t = t.parentNode;
+      if (t && t.tagName === 'BUTTON') apply(t.getAttribute('data-side'));
+    });
+    apply('s150');
+  })();
+</script>
+
+</body>
+</html>
