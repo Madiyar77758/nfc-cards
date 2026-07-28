@@ -162,6 +162,49 @@
 
   .sheet{ display:none; }
 
+  /* ---------- настройки печати (только на экране) ---------- */
+  .opts{
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:#fff;
+    padding:16px 18px;
+    margin-bottom:14px;
+  }
+  .opts .row{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .opts .row + .row{ margin-top:12px; }
+  .opts .lbl{
+    flex:none;
+    width:96px;
+    font-size:11px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    color:var(--ink-3);
+  }
+  .opts button{
+    appearance:none;
+    padding:8px 14px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    background:#fff;
+    color:var(--ink);
+    font:inherit;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .opts button.on{ background:var(--brand); border-color:var(--brand); color:#fff; }
+
+  /* наклейка чуть меньше карты — иначе края задираются */
+  body.inset .stage .card,
+  body.inset .sheet .card{ transform:scale(.946); }
+  body.nomarks .sheet .card{ border-color:transparent; }
+
+  /* ---------- печать: 8 карт на лист A4 ---------- */
+  @media print{
+    .opts{ display:none; }
+  }
+
   /* ---------- печать: 8 карт на лист A4 ---------- */
   @media print{
     @page{ size:A4 portrait; margin:9mm; }
@@ -214,14 +257,28 @@
     </div>
   </div>
 
+  <div class="opts">
+    <div class="row">
+      <span class="lbl">Размер</span>
+      <button type="button" data-opt="size" data-val="full">На всю карту · 85,6 × 54</button>
+      <button type="button" data-opt="size" data-val="inset">Наклейка с полем · 81 × 51</button>
+    </div>
+    <div class="row">
+      <span class="lbl">Линии реза</span>
+      <button type="button" data-opt="marks" data-val="on">Показать</button>
+      <button type="button" data-opt="marks" data-val="off">Скрыть</button>
+    </div>
+  </div>
+
   <div class="note">
     <h3>Что дальше</h3>
     <ul>
       <li>Ссылка внутри QR и внутри метки одна и та же: <code>{{URL}}</code></li>
       <li>Коррекция ошибок у кода максимальная — читается, даже если четверть закрыта царапиной или бликом.</li>
       <li>QR отдельным файлом лежит рядом: <code>qr.svg</code>. Вектор, годится для печати любого размера.</li>
-      <li>Печать на белом пластике дешевле всего. На чёрном нужна УФ-печать белилами — дороже.</li>
-      <li>QR меньше 20 мм на карте не делай: дешёвые камеры перестают ловить.</li>
+      <li><b>Самоклейку бери под свой принтер</b> — для струйного и для лазерного это разные материалы, перепутать нельзя.</li>
+      <li>Матовая плёнка холодной ламинации сверху обязательна: без неё чай и пальцы убьют печать за неделю.</li>
+      <li>Наклейка «с полем» на 2–3 мм меньше карты — так края не задираются на столе.</li>
     </ul>
     <button class="print" type="button" onclick="window.print()">
       Печать — 8 карт на лист A4
@@ -238,6 +295,33 @@
     var card  = document.querySelector('.stage .card');
     var sheet = document.getElementById('sheet');
     for (var i = 0; i < 8; i++) sheet.appendChild(card.cloneNode(true));
+  })();
+
+  // Переключатели размера наклейки и линий реза.
+  (function(){
+    var state = { size: 'full', marks: 'on' };
+
+    function apply(){
+      document.body.className =
+        (state.size  === 'inset' ? 'inset '   : '') +
+        (state.marks === 'off'   ? 'nomarks ' : '');
+
+      var b = document.querySelectorAll('.opts button');
+      for (var i = 0; i < b.length; i++){
+        var opt = b[i].getAttribute('data-opt');
+        b[i].className = (state[opt] === b[i].getAttribute('data-val')) ? 'on' : '';
+      }
+    }
+
+    document.querySelector('.opts').addEventListener('click', function(e){
+      var t = e.target;
+      while (t && t.tagName !== 'BUTTON' && t !== this) t = t.parentNode;
+      if (!t || t.tagName !== 'BUTTON') return;
+      state[t.getAttribute('data-opt')] = t.getAttribute('data-val');
+      apply();
+    });
+
+    apply();
   })();
 </script>
 
