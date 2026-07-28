@@ -21,6 +21,7 @@ param(
     [string]$Instagram = '#',
     [string]$TikTok    = '#',
     [string]$Gis       = '#',
+    [string]$BaseUrl   = 'https://madiyar77758.github.io/nfc-cards',
     [switch]$Force
 )
 
@@ -31,6 +32,12 @@ $outDir       = Join-Path $root $Slug
 $outFile      = Join-Path $outDir 'index.html'
 $menuDir      = Join-Path $outDir 'menu'
 $menuFile     = Join-Path $menuDir 'index.html'
+$cardTemplate = Join-Path $root '_template\card\index.html'
+$cardDir      = Join-Path $outDir 'card'
+$cardFile     = Join-Path $cardDir 'index.html'
+$qrFile       = Join-Path $cardDir 'qr.svg'
+$qrScript     = Join-Path $root 'make-qr.js'
+$clientUrl    = ($BaseUrl.TrimEnd('/')) + "/$Slug/"
 
 if (-not (Test-Path $template)) {
     throw "Не найден шаблон: $template"
@@ -95,6 +102,27 @@ if ($ownMenu) {
     [System.IO.File]::WriteAllText($menuFile, $menuHtml, $utf8NoBom)
 }
 
+# Печатный макет карты плюс QR с той же ссылкой, что и в метке:
+# у части телефонов NFC просто нет, для них работает только код.
+$qrOk = $false
+if (Test-Path $cardTemplate) {
+    $cardHtml = [System.IO.File]::ReadAllText($cardTemplate, [System.Text.Encoding]::UTF8)
+    $cardHtml = $cardHtml.Replace('{{NAME}}',     $Name).
+                          Replace('{{INITIALS}}', $Initials).
+                          Replace('{{CITY}}',     $City).
+                          Replace('{{URL}}',      $clientUrl)
+
+    if (-not (Test-Path $cardDir)) {
+        New-Item -ItemType Directory -Path $cardDir | Out-Null
+    }
+    [System.IO.File]::WriteAllText($cardFile, $cardHtml, $utf8NoBom)
+
+    if (Test-Path $qrScript) {
+        & node $qrScript $clientUrl $qrFile
+        $qrOk = ($LASTEXITCODE -eq 0)
+    }
+}
+
 Write-Host ""
 Write-Host "  Готово: $outFile" -ForegroundColor Green
 Write-Host "  Заведение: $Name ($Initials), $City"
@@ -104,6 +132,13 @@ if ($ownMenu) {
 } else {
     Write-Host "  Меню:      внешняя ссылка $Menu"
 }
+if (Test-Path $cardFile) {
+    Write-Host "  Макет:     $cardFile" -ForegroundColor Green
+}
+if ((Test-Path $cardTemplate) -and (-not $qrOk)) {
+    Write-Host "  QR собрать не удалось — нужен Node.js и 'npm install'" -ForegroundColor Red
+}
 Write-Host ""
-Write-Host "  В карту писать:  https://madiyar77758.github.io/nfc-cards/$Slug/" -ForegroundColor Cyan
+Write-Host "  В карту писать:  $clientUrl" -ForegroundColor Cyan
+Write-Host "  Макет на печать: $($clientUrl)card/" -ForegroundColor Cyan
 Write-Host ""

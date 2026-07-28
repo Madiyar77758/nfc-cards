@@ -1,0 +1,26 @@
+{
+  "name": "nfc-cards",
+  "version": "1.0.0",
+  "description": "Пластиковая карта на столе → касание → страница со ссылками заведения. Метка хранит только ссылку, сама страница лежит здесь.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Madiyar77758/nfc-cards.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Madiyar77758/nfc-cards/issues"
+  },
+  "homepage": "https://github.com/Madiyar77758/nfc-cards#readme",
+  "dependencies": {
+    "jsqr": "^1.4.0",
+    "pngjs": "^7.0.0",
+    "qrcode": "^1.5.4"
+  }
+}
