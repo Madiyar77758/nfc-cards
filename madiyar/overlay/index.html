@@ -15,9 +15,9 @@
     --line:#E3E9E4;
     --side:110mm;
     /* положение кода на картинке, в процентах стороны */
-    --qx:34.2;
-    --qy:33.6;
-    --qs:32.2;
+    --qx:31.2;
+    --qy:31.3;
+    --qs:39.8;
     --cover:#FAF6EC;
   }
   *,*::before,*::after{ box-sizing:border-box; }
@@ -200,18 +200,18 @@
     </div>
     <div class="row">
       <span class="lbl">Слева</span>
-      <input type="range" id="qx" min="0" max="70" step="0.1" value="34.2" />
-      <output id="ox">34.2%</output>
+      <input type="range" id="qx" min="0" max="70" step="0.1" value="31.2" />
+      <output id="ox">31.2%</output>
     </div>
     <div class="row">
       <span class="lbl">Сверху</span>
-      <input type="range" id="qy" min="0" max="70" step="0.1" value="33.6" />
-      <output id="oy">33.6%</output>
+      <input type="range" id="qy" min="0" max="70" step="0.1" value="31.3" />
+      <output id="oy">31.3%</output>
     </div>
     <div class="row">
       <span class="lbl">Размер</span>
-      <input type="range" id="qs" min="10" max="60" step="0.1" value="32.2" />
-      <output id="os">32.2%</output>
+      <input type="range" id="qs" min="10" max="60" step="0.1" value="39.8" />
+      <output id="os">39.8%</output>
     </div>
     <div class="row">
       <span class="lbl">Подложка</span>
@@ -259,7 +259,7 @@
     var body = document.body;
     var opts = document.querySelector('.opts');
 
-    var state = { side:'s110', qx:34.2, qy:33.6, qs:32.2, cover:'#FAF6EC' };
+    var state = { side:'s110', qx:31.2, qy:31.3, qs:39.8, cover:'#FAF6EC' };
     try {
       var saved = JSON.parse(localStorage.getItem(KEY) || 'null');
       if (saved) for (var k in saved) if (k in state) state[k] = saved[k];
