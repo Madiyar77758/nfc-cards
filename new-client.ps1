@@ -46,6 +46,9 @@ $signFile      = Join-Path $signDir 'index.html'
 $plateTemplate = Join-Path $root '_template\plate\index.html'
 $plateDir      = Join-Path $outDir 'plate'
 $plateFile     = Join-Path $plateDir 'index.html'
+$ovlTemplate   = Join-Path $root '_template\overlay\index.html'
+$ovlDir        = Join-Path $outDir 'overlay'
+$ovlFile       = Join-Path $ovlDir 'index.html'
 $qrScript     = Join-Path $root 'make-qr.js'
 $clientUrl    = ($BaseUrl.TrimEnd('/')) + "/$Slug/"
 
@@ -167,6 +170,19 @@ if (Test-Path $plateTemplate) {
     [System.IO.File]::WriteAllText($plateFile, $plateHtml, $utf8NoBom)
 }
 
+# Готовая картинка клиента плюс рабочий QR поверх нарисованного.
+if (Test-Path $ovlTemplate) {
+    $ovlHtml = [System.IO.File]::ReadAllText($ovlTemplate, [System.Text.Encoding]::UTF8)
+    $ovlHtml = $ovlHtml.Replace('{{NAME}}', $Name).
+                        Replace('{{SLUG}}', $Slug).
+                        Replace('{{URL}}',  $clientUrl)
+
+    if (-not (Test-Path $ovlDir)) {
+        New-Item -ItemType Directory -Path $ovlDir | Out-Null
+    }
+    [System.IO.File]::WriteAllText($ovlFile, $ovlHtml, $utf8NoBom)
+}
+
 Write-Host ""
 Write-Host "  $Name ($Initials), $City" -ForegroundColor Green
 if ($PrintOnly) {
@@ -188,6 +204,12 @@ if (Test-Path $signFile) {
 }
 if (Test-Path $plateFile) {
     Write-Host "  Табличка:  $plateFile" -ForegroundColor Green
+}
+if (Test-Path $ovlFile) {
+    Write-Host "  Картинка:  $ovlFile" -ForegroundColor Green
+    if (-not ((Test-Path (Join-Path $ovlDir 'bg.png')) -or (Test-Path (Join-Path $ovlDir 'bg.jpg')))) {
+        Write-Host "             положи рядом свой рисунок как bg.png" -ForegroundColor DarkYellow
+    }
 }
 if ((Test-Path $cardTemplate) -and (-not $qrOk)) {
     Write-Host "  QR собрать не удалось — нужен Node.js и 'npm install'" -ForegroundColor Red
