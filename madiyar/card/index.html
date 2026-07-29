@@ -202,13 +202,14 @@
 
   /* ---------- печать: 8 карт на лист A4 ---------- */
   @media print{
-    .opts{ display:none; }
-  }
-
-  /* ---------- печать: 8 карт на лист A4 ---------- */
-  @media print{
+    /* Без этого браузер выбрасывает все фоновые заливки. */
+    *,*::before,*::after{
+      -webkit-print-color-adjust:exact;
+      print-color-adjust:exact;
+    }
     @page{ size:A4 portrait; margin:9mm; }
     body{ padding:0; background:#fff; }
+    .opts{ display:none; }
     .wrap{ display:none; }
     .sheet{
       display:grid;

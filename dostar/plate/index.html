@@ -292,12 +292,19 @@
 
   .plate.copy{ display:none; }
   @media print{
+    /* Браузер по умолчанию выбрасывает фоновые заливки при печати:
+       без этого пропадают зелёная шапка и кружок NFC. */
+    *,*::before,*::after{
+      -webkit-print-color-adjust:exact;
+      print-color-adjust:exact;
+    }
     @page{ size:A4 portrait; margin:9mm; }
     body{ padding:0; background:#fff; }
     .wrap > h1, .lead, .note, .opts{ display:none; }
     .stage{ padding:0; display:flex; flex-wrap:wrap; gap:5mm; justify-content:center; align-content:flex-start; }
     .plate{ box-shadow:none; break-inside:avoid; }
-    .plate.copy{ display:block; }
+    /* именно flex, а не block: block затирает раскладку таблички */
+    .plate.copy{ display:flex; }
   }
 </style>
 </head>
