@@ -21,6 +21,7 @@ param(
     [string]$Instagram = '#',
     [string]$TikTok    = '#',
     [string]$Gis       = '#',
+    [string]$Subtitle  = 'чайхана',
     [string]$BaseUrl   = 'https://madiyar77758.github.io/nfc-cards',
     [switch]$Force,
     # Только печатные материалы: страницу и меню не трогать.
@@ -39,9 +40,12 @@ $cardTemplate = Join-Path $root '_template\card\index.html'
 $cardDir      = Join-Path $outDir 'card'
 $cardFile     = Join-Path $cardDir 'index.html'
 $qrFile       = Join-Path $cardDir 'qr.svg'
-$signTemplate = Join-Path $root '_template\sign\index.html'
-$signDir      = Join-Path $outDir 'sign'
-$signFile     = Join-Path $signDir 'index.html'
+$signTemplate  = Join-Path $root '_template\sign\index.html'
+$signDir       = Join-Path $outDir 'sign'
+$signFile      = Join-Path $signDir 'index.html'
+$plateTemplate = Join-Path $root '_template\plate\index.html'
+$plateDir      = Join-Path $outDir 'plate'
+$plateFile     = Join-Path $plateDir 'index.html'
 $qrScript     = Join-Path $root 'make-qr.js'
 $clientUrl    = ($BaseUrl.TrimEnd('/')) + "/$Slug/"
 
@@ -148,6 +152,21 @@ if (Test-Path $signTemplate) {
     [System.IO.File]::WriteAllText($signFile, $signHtml, $utf8NoBom)
 }
 
+# Нарядная табличка с аркой, чайником и иконками разделов.
+if (Test-Path $plateTemplate) {
+    $plateHtml = [System.IO.File]::ReadAllText($plateTemplate, [System.Text.Encoding]::UTF8)
+    $plateHtml = $plateHtml.Replace('{{NAME}}',     $Name).
+                            Replace('{{SUBTITLE}}', $Subtitle).
+                            Replace('{{INITIALS}}', $Initials).
+                            Replace('{{CITY}}',     $City).
+                            Replace('{{URL}}',      $clientUrl)
+
+    if (-not (Test-Path $plateDir)) {
+        New-Item -ItemType Directory -Path $plateDir | Out-Null
+    }
+    [System.IO.File]::WriteAllText($plateFile, $plateHtml, $utf8NoBom)
+}
+
 Write-Host ""
 Write-Host "  $Name ($Initials), $City" -ForegroundColor Green
 if ($PrintOnly) {
@@ -166,6 +185,9 @@ if (Test-Path $cardFile) {
 }
 if (Test-Path $signFile) {
     Write-Host "  Подставка: $signFile" -ForegroundColor Green
+}
+if (Test-Path $plateFile) {
+    Write-Host "  Табличка:  $plateFile" -ForegroundColor Green
 }
 if ((Test-Path $cardTemplate) -and (-not $qrOk)) {
     Write-Host "  QR собрать не удалось — нужен Node.js и 'npm install'" -ForegroundColor Red

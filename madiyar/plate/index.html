@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Табличка — MADIYAR</title>
+<meta name="robots" content="noindex" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2321402F'/%3E%3C/svg%3E" />
+
+<style>
+  :root{
+    --cream:#F6F0E2;
+    --cream-2:#EFE6D2;
+    --green:#21402F;
+    --green-2:#16301F;
+    --gold:#BC9A55;
+    --gold-2:#8C6E33;
+    --ink:#26302A;
+    --ink-3:#8B968F;
+    --line:#E3E9E4;
+    --side:110mm;
+  }
+  *,*::before,*::after{ box-sizing:border-box; }
+  body{
+    margin:0;
+    padding:32px 20px 60px;
+    background:#EEF1EE;
+    color:var(--ink);
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height:1.5;
+  }
+  .wrap{ max-width:700px; margin:0 auto; }
+  .wrap > h1{
+    margin:0 0 6px;
+    font-family:Georgia,"Noto Serif","Times New Roman",serif;
+    font-weight:400;
+    font-size:26px;
+  }
+  .lead{ margin:0 0 22px; color:var(--ink-3); font-size:14px; }
+
+  /* ==================== табличка ==================== */
+  .plate{
+    position:relative;
+    width:var(--side);
+    height:var(--side);
+    background:var(--cream);
+    border-radius:calc(var(--side) * .035);
+    overflow:hidden;
+    box-shadow:0 2px 5px rgba(21,32,27,.14), 0 24px 54px -22px rgba(33,64,47,.5);
+    font-size:calc(var(--side) / 110);   /* 1em = 1 мм при стороне 110 */
+  }
+  .deco{ position:absolute; inset:0; width:100%; height:100%; }
+
+  /* --- рамка --- */
+  .frame{
+    position:absolute;
+    inset:2.6em;
+    border:.42em solid var(--gold);
+    border-radius:1.6em;
+    pointer-events:none;
+  }
+  .frame::after{
+    content:"";
+    position:absolute;
+    inset:.55em;
+    border:.16em solid var(--gold);
+    border-radius:1.1em;
+    opacity:.55;
+  }
+
+  /* --- содержимое --- */
+  .inner{
+    position:absolute;
+    inset:2.6em;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+
+  .teapot{ width:11.5em; height:9em; margin-top:3.4em; }
+
+  .title{
+    margin:.9em 0 0;
+    font-family:Georgia,"Noto Serif","Times New Roman",serif;
+    font-weight:400;
+    font-size:7.6em;
+    line-height:1;
+    letter-spacing:.1em;
+    text-indent:.1em;
+    color:var(--green-2);
+  }
+  .sub{
+    margin:1.5em 0 0;
+    display:flex;
+    align-items:center;
+    gap:1.1em;
+    font-family:Georgia,"Noto Serif","Times New Roman",serif;
+    font-size:3.1em;
+    letter-spacing:.24em;
+    text-indent:.24em;
+    color:var(--gold-2);
+  }
+  .sub i{
+    display:block;
+    width:2.4em;
+    height:.09em;
+    background:currentColor;
+    opacity:.75;
+  }
+
+  /* --- код --- */
+  .qr{
+    margin-top:2.6em;
+    width:38em;
+    height:38em;
+    padding:1.5em;
+    background:#fff;
+    border:.34em solid var(--gold);
+    border-radius:.9em;
+  }
+  .qr img{ width:100%; height:100%; display:block; }
+
+  /* --- иконки по бокам --- */
+  .side{
+    position:absolute;
+    top:36.5em;
+    display:flex;
+    flex-direction:column;
+    gap:3.1em;
+    align-items:center;
+  }
+  .side.l{ left:1.2em; }
+  .side.r{ right:1.2em; }
+
+  .pill{ display:flex; flex-direction:column; align-items:center; gap:.75em; }
+  .pill .ring{
+    width:8.4em;
+    height:8.4em;
+    border-radius:50%;
+    border:.32em solid var(--gold);
+    background:var(--cream-2);
+    display:grid;
+    place-items:center;
+    color:var(--green-2);
+  }
+  .pill .ring svg{ width:4.4em; height:4.4em; }
+  .pill span{
+    font-size:2.3em;
+    font-weight:700;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--green-2);
+    white-space:nowrap;
+  }
+
+  /* --- призыв --- */
+  .call{
+    margin-top:2.4em;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:.5em;
+  }
+  .call .waves{ width:6.4em; height:4.4em; color:var(--green-2); }
+  .call b{
+    font-size:3.2em;
+    font-weight:800;
+    letter-spacing:.13em;
+    text-indent:.13em;
+    color:var(--green-2);
+  }
+  .call small{
+    font-size:2.5em;
+    color:#5E6A60;
+  }
+
+  .thanks{
+    margin-top:1.6em;
+    text-align:center;
+    font-family:Georgia,"Noto Serif","Times New Roman",serif;
+    font-style:italic;
+    font-size:3.4em;
+    line-height:1.25;
+    color:var(--gold-2);
+  }
+  .heart{ display:block; margin:.35em auto 0; width:1em; height:1em; color:var(--gold-2); }
+
+  /* ==================== настройки ==================== */
+  .opts{
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:#fff;
+    padding:16px 18px;
+    margin-bottom:14px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .opts .lbl{
+    flex:none;
+    font-size:11px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    color:var(--ink-3);
+  }
+  .opts button{
+    appearance:none;
+    padding:8px 14px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    background:#fff;
+    color:var(--ink);
+    font:inherit;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .opts button.on{ background:var(--green); border-color:var(--green); color:#fff; }
+
+  body.s90  { --side:90mm;  }
+  body.s110 { --side:110mm; }
+  body.s150 { --side:150mm; }
+
+  .stage{ display:flex; justify-content:center; padding:22px 0; }
+
+  .note{
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:#fff;
+    padding:18px 20px;
+    font-size:13.5px;
+  }
+  .note h3{ margin:0 0 8px; font-size:14px; }
+  .note ul{ margin:0; padding-left:18px; }
+  .note li + li{ margin-top:5px; }
+  .note code{
+    font-family:ui-monospace,"Cascadia Mono",Menlo,Consolas,monospace;
+    font-size:12px;
+    background:#F1F5F2;
+    padding:1px 5px;
+    border-radius:4px;
+    word-break:break-all;
+  }
+  .print{
+    display:inline-flex;
+    margin-top:18px;
+    padding:12px 20px;
+    border:0;
+    border-radius:12px;
+    background:var(--green);
+    color:#fff;
+    font:inherit;
+    font-size:14.5px;
+    font-weight:600;
+    cursor:pointer;
+  }
+
+  @media print{
+    @page{ size:A4 portrait; margin:9mm; }
+    body{ padding:0; background:#fff; }
+    .wrap > h1, .lead, .note, .opts{ display:none; }
+    .stage{ padding:0; display:flex; flex-wrap:wrap; gap:5mm; justify-content:center; align-content:flex-start; }
+    .plate{ box-shadow:none; break-inside:avoid; }
+    .plate.copy{ display:block; }
+  }
+  .plate.copy{ display:none; }
+</style>
+</head>
+<body class="s110">
+
+<div class="wrap">
+  <h1>Настольная табличка</h1>
+  <p class="lead">Метка внутри, QR снаружи. Иконки показывают, что откроется, — гость видит пользу до того, как приложит телефон.</p>
+
+  <div class="opts">
+    <span class="lbl">Сторона</span>
+    <button type="button" data-side="s90">90 мм</button>
+    <button type="button" data-side="s110">110 мм</button>
+    <button type="button" data-side="s150">150 мм</button>
+  </div>
+
+  <div class="stage">
+    <div class="plate">
+
+      <svg class="deco" viewBox="0 0 400 400" fill="none" aria-hidden="true">
+        <!-- зелёные углы: прямоугольник сверху с вырезанной аркой -->
+        <path d="M0 0H400V196H382V126C382 76 330 46 270 61C230 72 215 56 200 36C185 56 170 72 130 61C70 46 18 76 18 126V196H0Z"
+              fill="#21402F"/>
+        <!-- золотая филигрань по зелёному -->
+        <g stroke="#BC9A55" stroke-width="1" opacity=".5">
+          <path d="M24 24h84M24 24v84M46 24v46M24 46h46M70 24v22M24 70h22M46 92h62M92 46v62"/>
+          <path d="M376 24h-84M376 24v84M354 24v46M376 46h-46M330 24v22M376 70h-22M354 92h-62M308 46v62"/>
+          <circle cx="46" cy="46" r="7"/><circle cx="354" cy="46" r="7"/>
+          <circle cx="92" cy="92" r="5"/><circle cx="308" cy="92" r="5"/>
+        </g>
+        <!-- контур арки золотом -->
+        <path d="M18 196V126C18 76 70 46 130 61C170 72 185 56 200 36C215 56 230 72 270 61C330 46 382 76 382 126V196"
+              stroke="#BC9A55" stroke-width="2.4"/>
+
+        <!-- силуэт города снизу -->
+        <g fill="#21402F" opacity=".9">
+          <path d="M0 400v-38h10v-22h6v22h10v38z"/>
+          <path d="M30 400v-30c0-14 10-22 22-22s22 8 22 22v30z"/>
+          <path d="M46 352c0-10 6-16 6-16s6 6 6 16z"/>
+          <path d="M82 400v-46h8v-26h5v26h8v46z"/>
+          <path d="M300 400v-46h8v-26h5v26h8v46z"/>
+          <path d="M330 400v-30c0-14 10-22 22-22s22 8 22 22v30z"/>
+          <path d="M346 352c0-10 6-16 6-16s6 6 6 16z"/>
+          <path d="M382 400v-38h10v-22h6v22h10v38z"/>
+          <path d="M110 400v-24c0-20 16-34 36-34s36 14 36 34v24z"/>
+          <path d="M218 400v-24c0-20 16-34 36-34s36 14 36 34v24z"/>
+          <path d="M190 400v-52c0-24 20-40 42-40s42 16 42 40v52z" opacity=".0"/>
+          <rect x="0" y="392" width="400" height="8"/>
+        </g>
+      </svg>
+
+      <div class="frame"></div>
+
+      <div class="inner">
+
+        <!-- чайник -->
+        <svg class="teapot" viewBox="0 0 100 80" fill="none" aria-hidden="true">
+          <path d="M50 3c-3.6 0-6.5 2.9-6.5 6.5S46.4 16 50 16c1 0 2-.24 2.8-.66a5.2 5.2 0 1 1 0-9.68A6.46 6.46 0 0 0 50 3z" fill="#21402F"/>
+          <path d="M26 40c-9-3-14-10-12-18l5 1.6c-1.2 5.6 2.6 10.4 9.6 12.4z" fill="#21402F"/>
+          <path d="M76 34c11-1.6 12 14 0 17l-1.6-4.6c6-1.4 5.6-8.4-.4-7.8z" fill="#21402F"/>
+          <ellipse cx="50" cy="47" rx="27" ry="21" fill="#21402F"/>
+          <path d="M31 30h38c0-5-8.6-8-19-8s-19 3-19 8z" fill="#21402F"/>
+          <circle cx="50" cy="19" r="3.2" fill="#21402F"/>
+          <g stroke="#BC9A55" stroke-width="1.5" opacity=".85">
+            <path d="M40 44c4-5 16-5 20 0M40 52c4 5 16 5 20 0"/>
+            <circle cx="50" cy="48" r="3"/>
+          </g>
+        </svg>
+
+        <h2 class="title">MADIYAR</h2>
+        <p class="sub"><i></i>чайхана<i></i></p>
+
+        <div class="qr"><img src="../card/qr.svg" alt="QR-код" /></div>
+
+        <div class="call">
+          <svg class="waves" viewBox="0 0 32 22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+            <path d="M11 7a7 7 0 0 1 0 8"/>
+            <path d="M17 4a12 12 0 0 1 0 14"/>
+            <path d="M23 1a17 17 0 0 1 0 20"/>
+          </svg>
+          <b>Приложите телефон</b>
+          <small>или отсканируйте QR-код</small>
+        </div>
+
+        <p class="thanks">
+          Спасибо,<br />что вы с нами!
+          <svg class="heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M12 20s-7-4.6-7-9.4A4.1 4.1 0 0 1 12 8a4.1 4.1 0 0 1 7 2.6C19 15.4 12 20 12 20Z"/>
+          </svg>
+        </p>
+
+      </div>
+
+      <!-- иконки слева -->
+      <div class="side l">
+        <span class="pill">
+          <span class="ring">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.6A1.6 1.6 0 0 1 5.6 4H11v16H5.6A1.6 1.6 0 0 1 4 18.4z"/><path d="M20 5.6A1.6 1.6 0 0 0 18.4 4H13v16h5.4a1.6 1.6 0 0 0 1.6-1.6z"/></svg>
+          </span>
+          <span>Меню</span>
+        </span>
+        <span class="pill">
+          <span class="ring">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.7 5.9 6.3.7-4.7 4.3 1.3 6.3L12 17l-5.6 3.2 1.3-6.3L3 9.6l6.3-.7z"/></svg>
+          </span>
+          <span>Отзывы</span>
+        </span>
+        <span class="pill">
+          <span class="ring">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5.3"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1.05" fill="currentColor" stroke="none"/></svg>
+          </span>
+          <span>Instagram</span>
+        </span>
+      </div>
+
+      <!-- иконки справа -->
+      <div class="side r">
+        <span class="pill">
+          <span class="ring">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M2.5 8.5a15 15 0 0 1 19 0"/><path d="M5.5 12a11 11 0 0 1 13 0"/><path d="M8.5 15.4a6.5 6.5 0 0 1 7 0"/><circle cx="12" cy="19" r="1.4" fill="currentColor" stroke="none"/></svg>
+          </span>
+          <span>Wi-Fi</span>
+        </span>
+        <span class="pill">
+          <span class="ring">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13.6 3v11.5a3.65 3.65 0 1 1-3.2-3.62"/><path d="M13.6 3.5c.55 2.65 2.25 4.25 4.95 4.45"/></svg>
+          </span>
+          <span>TikTok</span>
+        </span>
+        <span class="pill">
+          <span class="ring">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="3" y="8" width="18" height="5"/><rect x="4.5" y="13" width="15" height="8"/><path d="M12 8v13"/><path d="M12 8S10.5 4 8.2 4a2.2 2.2 0 0 0 0 4.4M12 8s1.5-4 3.8-4a2.2 2.2 0 0 1 0 4.4"/></svg>
+          </span>
+          <span>Акции</span>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="note">
+    <h3>Про печать</h3>
+    <ul>
+      <li>Ссылка в коде: <code>https://madiyar77758.github.io/nfc-cards/madiyar/</code></li>
+      <li>Бумага от 200 г/м², матовая. Печать → NFC-стикер на изнанку → в пакет для ламинации → под ламинатор.</li>
+      <li>Метку клеить <b>по центру, за кодом</b> — туда, куда человек и приложит телефон.</li>
+      <li>Обрезать, оставив 2–3 мм прозрачного поля от плёнки, углы скруглить дыроколом.</li>
+      <li>Записать метку <b>до</b> ламинации: после уже не переделать.</li>
+    </ul>
+    <button class="print" type="button" onclick="window.print()">Печать</button>
+  </div>
+</div>
+
+<script>
+  (function(){
+    // Вторая копия для печатного листа.
+    var stage = document.querySelector('.stage');
+    var copy  = stage.firstElementChild.cloneNode(true);
+    copy.className = 'plate copy';
+    stage.appendChild(copy);
+
+    var opts = document.querySelector('.opts');
+    function apply(cls){
+      document.body.className = cls;
+      var b = opts.getElementsByTagName('button');
+      for (var i = 0; i < b.length; i++){
+        b[i].className = (b[i].getAttribute('data-side') === cls) ? 'on' : '';
+      }
+    }
+    opts.addEventListener('click', function(e){
+      var t = e.target;
+      while (t && t.tagName !== 'BUTTON' && t !== this) t = t.parentNode;
+      if (t && t.tagName === 'BUTTON') apply(t.getAttribute('data-side'));
+    });
+    apply('s110');
+  })();
+</script>
+
+</body>
+</html>
