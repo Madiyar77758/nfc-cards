@@ -21,6 +21,8 @@ param(
     [string]$Instagram = '#',
     [string]$TikTok    = '#',
     [string]$Gis       = '#',
+    # Ссылка сразу на форму отзыва. Не задали — берём карточку 2GIS.
+    [string]$Review    = '',
     [string]$Subtitle  = 'чайхана',
     [string]$BaseUrl   = 'https://madiyar77758.github.io/nfc-cards',
     [switch]$Force,
@@ -94,6 +96,7 @@ if (-not $PrintOnly) {
         '{{URL_INSTAGRAM}}' = $Instagram
         '{{URL_TIKTOK}}'    = $TikTok
         '{{URL_2GIS}}'      = $Gis
+        '{{URL_REVIEW}}'    = $(if ([string]::IsNullOrWhiteSpace($Review)) { $Gis } else { $Review })
     }
     foreach ($key in $map.Keys) {
         $html = $html.Replace($key, $map[$key])
