@@ -5,17 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Табличка — MADIYAR</title>
 <meta name="robots" content="noindex" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2321402F'/%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231E3A2B'/%3E%3C/svg%3E" />
 
 <style>
   :root{
-    --cream:#F6F0E2;
-    --cream-2:#EFE6D2;
-    --green:#21402F;
-    --green-2:#16301F;
-    --gold:#BC9A55;
-    --gold-2:#8C6E33;
-    --ink:#26302A;
+    --cream:#F7F2E4;
+    --edge:#2B2119;
+    --green:#1E3A2B;
+    --gold:#B9924E;
+    --gold-2:#8E6D33;
+    --sand:#E4D4B0;
+    --dark:#1A1A17;
     --ink-3:#8B968F;
     --line:#E3E9E4;
     --side:110mm;
@@ -25,7 +25,7 @@
     margin:0;
     padding:32px 20px 60px;
     background:#EEF1EE;
-    color:var(--ink);
+    color:#26302A;
     font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     line-height:1.5;
   }
@@ -44,146 +44,125 @@
     width:var(--side);
     height:var(--side);
     background:var(--cream);
-    border-radius:calc(var(--side) * .035);
+    border:.9% solid var(--edge);
+    border-radius:3.4%;
     overflow:hidden;
-    box-shadow:0 2px 5px rgba(21,32,27,.14), 0 24px 54px -22px rgba(33,64,47,.5);
-    font-size:calc(var(--side) / 110);   /* 1em = 1 мм при стороне 110 */
+    box-shadow:0 2px 5px rgba(21,32,27,.16), 0 24px 54px -22px rgba(30,58,43,.5);
+    font-size:calc(var(--side) / 100);   /* 1em = 1% стороны */
   }
   .deco{ position:absolute; inset:0; width:100%; height:100%; }
 
-  /* --- рамка --- */
-  .frame{
+  /* всё содержимое ставим по месту, как на образце */
+  .plate > .at{
     position:absolute;
-    inset:2.6em;
-    border:.42em solid var(--gold);
-    border-radius:1.6em;
-    pointer-events:none;
-  }
-  .frame::after{
-    content:"";
-    position:absolute;
-    inset:.55em;
-    border:.16em solid var(--gold);
-    border-radius:1.1em;
-    opacity:.55;
-  }
-
-  /* --- содержимое --- */
-  .inner{
-    position:absolute;
-    inset:2.6em;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-  }
-
-  .teapot{ width:11.5em; height:9em; margin-top:3.4em; }
-
-  .title{
-    margin:.9em 0 0;
-    font-family:Georgia,"Noto Serif","Times New Roman",serif;
-    font-weight:400;
-    font-size:7.6em;
-    line-height:1;
-    letter-spacing:.1em;
-    text-indent:.1em;
-    color:var(--green-2);
-  }
-  .sub{
-    margin:1.5em 0 0;
-    display:flex;
-    align-items:center;
-    gap:1.1em;
-    font-family:Georgia,"Noto Serif","Times New Roman",serif;
-    font-size:3.1em;
-    letter-spacing:.24em;
-    text-indent:.24em;
-    color:var(--gold-2);
-  }
-  .sub i{
-    display:block;
-    width:2.4em;
-    height:.09em;
-    background:currentColor;
-    opacity:.75;
-  }
-
-  /* --- код --- */
-  .qr{
-    margin-top:2.6em;
-    width:38em;
-    height:38em;
-    padding:1.5em;
-    background:#fff;
-    border:.34em solid var(--gold);
-    border-radius:.9em;
-  }
-  .qr img{ width:100%; height:100%; display:block; }
-
-  /* --- иконки по бокам --- */
-  .side{
-    position:absolute;
-    top:36.5em;
-    display:flex;
-    flex-direction:column;
-    gap:3.1em;
-    align-items:center;
-  }
-  .side.l{ left:1.2em; }
-  .side.r{ right:1.2em; }
-
-  .pill{ display:flex; flex-direction:column; align-items:center; gap:.75em; }
-  .pill .ring{
-    width:8.4em;
-    height:8.4em;
-    border-radius:50%;
-    border:.32em solid var(--gold);
-    background:var(--cream-2);
-    display:grid;
-    place-items:center;
-    color:var(--green-2);
-  }
-  .pill .ring svg{ width:4.4em; height:4.4em; }
-  .pill span{
-    font-size:2.3em;
-    font-weight:700;
-    letter-spacing:.09em;
-    text-transform:uppercase;
-    color:var(--green-2);
+    left:50%;
+    transform:translateX(-50%);
+    text-align:center;
     white-space:nowrap;
   }
 
-  /* --- призыв --- */
-  .call{
-    margin-top:2.4em;
+  .teapot{ top:5.5%; width:16%; height:13%; }
+  .teapot svg{ width:100%; height:100%; display:block; }
+
+  .title{
+    top:20%;
+    margin:0;
+    font-family:Georgia,"Noto Serif","Times New Roman",serif;
+    font-weight:400;
+    font-size:8.6em;
+    line-height:1;
+    letter-spacing:.11em;
+    text-indent:.11em;
+    color:var(--dark);
+  }
+  .sub{
+    top:29.4%;
+    margin:0;
+    display:flex;
+    align-items:center;
+    gap:1.4em;
+    font-family:Georgia,"Noto Serif","Times New Roman",serif;
+    font-size:3.2em;
+    letter-spacing:.34em;
+    text-indent:.34em;
+    color:var(--gold-2);
+  }
+  .sub i{ display:block; width:3.4em; height:.08em; background:currentColor; opacity:.8; }
+  .sub em{ display:block; width:.42em; height:.42em; border-radius:50%; background:currentColor; }
+
+  .qr{
+    top:35.5%;
+    width:40%;
+    height:40%;
+    padding:1.6%;
+    background:#fff;
+    border:.5em solid var(--gold);
+    border-radius:1.4%;
+  }
+  .qr img{ width:100%; height:100%; display:block; }
+
+  /* --- иконки --- */
+  .side{
+    position:absolute;
+    top:35%;
     display:flex;
     flex-direction:column;
+    gap:4.4%;
     align-items:center;
-    gap:.5em;
   }
-  .call .waves{ width:6.4em; height:4.4em; color:var(--green-2); }
-  .call b{
-    font-size:3.2em;
+  .side.l{ left:3.4%; }
+  .side.r{ right:3.4%; }
+
+  .pill{ display:flex; flex-direction:column; align-items:center; gap:.8em; }
+  .pill .ring{
+    width:9.4em;
+    height:9.4em;
+    border-radius:50%;
+    border:.42em solid var(--gold);
+    display:grid;
+    place-items:center;
+    color:var(--dark);
+  }
+  .pill .ring svg{ width:4.8em; height:4.8em; }
+  .pill span{
+    font-size:2.4em;
+    font-weight:700;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--dark);
+  }
+
+  /* --- призыв --- */
+  .waves{ top:73%; width:7%; height:5%; color:var(--dark); }
+  .waves svg{ width:100%; height:100%; display:block; }
+
+  .call{
+    top:79.4%;
+    margin:0;
+    font-size:3.4em;
     font-weight:800;
-    letter-spacing:.13em;
-    text-indent:.13em;
-    color:var(--green-2);
+    letter-spacing:.14em;
+    text-indent:.14em;
+    color:var(--dark);
   }
-  .call small{
-    font-size:2.5em;
-    color:#5E6A60;
+  .call2{
+    top:84.4%;
+    margin:0;
+    font-size:2.7em;
+    color:#4E4A42;
   }
 
   .thanks{
-    margin-top:1.6em;
-    text-align:center;
+    top:88.6%;
+    margin:0;
     font-family:Georgia,"Noto Serif","Times New Roman",serif;
     font-style:italic;
-    font-size:3.4em;
-    line-height:1.25;
+    font-size:3.5em;
+    line-height:1.22;
     color:var(--gold-2);
   }
-  .heart{ display:block; margin:.35em auto 0; width:1em; height:1em; color:var(--gold-2); }
+  .heart{ top:95.4%; width:3.4%; height:3.4%; color:var(--gold-2); }
+  .heart svg{ width:100%; height:100%; display:block; }
 
   /* ==================== настройки ==================== */
   .opts{
@@ -211,7 +190,7 @@
     border:1px solid var(--line);
     border-radius:999px;
     background:#fff;
-    color:var(--ink);
+    color:#26302A;
     font:inherit;
     font-size:13px;
     font-weight:600;
@@ -257,6 +236,7 @@
     cursor:pointer;
   }
 
+  .plate.copy{ display:none; }
   @media print{
     @page{ size:A4 portrait; margin:9mm; }
     body{ padding:0; background:#fff; }
@@ -265,7 +245,6 @@
     .plate{ box-shadow:none; break-inside:avoid; }
     .plate.copy{ display:block; }
   }
-  .plate.copy{ display:none; }
 </style>
 </head>
 <body class="s110">
@@ -285,77 +264,94 @@
     <div class="plate">
 
       <svg class="deco" viewBox="0 0 400 400" fill="none" aria-hidden="true">
-        <!-- зелёные углы: прямоугольник сверху с вырезанной аркой -->
-        <path d="M0 0H400V196H382V126C382 76 330 46 270 61C230 72 215 56 200 36C185 56 170 72 130 61C70 46 18 76 18 126V196H0Z"
-              fill="#21402F"/>
-        <!-- золотая филигрань по зелёному -->
-        <g stroke="#BC9A55" stroke-width="1" opacity=".5">
-          <path d="M24 24h84M24 24v84M46 24v46M24 46h46M70 24v22M24 70h22M46 92h62M92 46v62"/>
-          <path d="M376 24h-84M376 24v84M354 24v46M376 46h-46M330 24v22M376 70h-22M354 92h-62M308 46v62"/>
-          <circle cx="46" cy="46" r="7"/><circle cx="354" cy="46" r="7"/>
-          <circle cx="92" cy="92" r="5"/><circle cx="308" cy="92" r="5"/>
-        </g>
-        <!-- контур арки золотом -->
-        <path d="M18 196V126C18 76 70 46 130 61C170 72 185 56 200 36C215 56 230 72 270 61C330 46 382 76 382 126V196"
-              stroke="#BC9A55" stroke-width="2.4"/>
+        <defs>
+          <!-- Угловой орнамент рисуем один раз и отражаем -->
+          <g id="orn">
+            <path d="M10 10H162C162 56 134 82 104 100C70 120 44 140 10 156Z" fill="#1E3A2B"/>
+            <g stroke="#B9924E" stroke-width="1.15" opacity=".85" stroke-linecap="round">
+              <path d="M28 26c22 2 40 14 48 32M28 26c2 22 14 40 32 48"/>
+              <path d="M22 52c16 4 28 14 34 28M52 22c4 16 14 28 28 34"/>
+              <path d="M18 84c14-2 26 4 32 16M84 18c-2 14 4 26 16 32"/>
+              <path d="M34 108c10-8 22-10 32-4M108 34c-8 10-10 22-4 32"/>
+              <path d="M20 128c12-6 22-4 30 4M128 20c-6 12-4 22 4 30"/>
+              <path d="M62 66c8-8 20-8 28 0M66 62c-8 8-8 20 0 28"/>
+            </g>
+            <g fill="#B9924E" opacity=".9">
+              <circle cx="28" cy="26" r="2.6"/>
+              <circle cx="60" cy="60" r="3.4"/>
+              <circle cx="22" cy="52" r="1.9"/><circle cx="52" cy="22" r="1.9"/>
+              <circle cx="18" cy="84" r="1.9"/><circle cx="84" cy="18" r="1.9"/>
+              <circle cx="34" cy="108" r="1.7"/><circle cx="108" cy="34" r="1.7"/>
+              <circle cx="20" cy="128" r="1.5"/><circle cx="128" cy="20" r="1.5"/>
+              <circle cx="90" cy="66" r="1.5"/><circle cx="66" cy="90" r="1.5"/>
+            </g>
+            <path d="M162 10C162 56 134 82 104 100C70 120 44 140 10 156"
+                  stroke="#B9924E" stroke-width="2.2" fill="none"/>
+          </g>
+        </defs>
 
-        <!-- силуэт города снизу -->
-        <g fill="#21402F" opacity=".9">
-          <path d="M0 400v-38h10v-22h6v22h10v38z"/>
-          <path d="M30 400v-30c0-14 10-22 22-22s22 8 22 22v30z"/>
-          <path d="M46 352c0-10 6-16 6-16s6 6 6 16z"/>
-          <path d="M82 400v-46h8v-26h5v26h8v46z"/>
-          <path d="M300 400v-46h8v-26h5v26h8v46z"/>
-          <path d="M330 400v-30c0-14 10-22 22-22s22 8 22 22v30z"/>
-          <path d="M346 352c0-10 6-16 6-16s6 6 6 16z"/>
-          <path d="M382 400v-38h10v-22h6v22h10v38z"/>
-          <path d="M110 400v-24c0-20 16-34 36-34s36 14 36 34v24z"/>
-          <path d="M218 400v-24c0-20 16-34 36-34s36 14 36 34v24z"/>
-          <path d="M190 400v-52c0-24 20-40 42-40s42 16 42 40v52z" opacity=".0"/>
-          <rect x="0" y="392" width="400" height="8"/>
+        <!-- силуэт города: светлый песочный, за текстом -->
+        <g fill="#E4D4B0">
+          <path d="M12 376v-48a4 4 0 0 1 8 0v48zM16 322c-6 7-6 16 0 16s6-9 0-16z"/>
+          <path d="M30 376c0-24 10-33 20-39 10 6 20 15 20 39z"/>
+          <path d="M91 376v-70a5 5 0 0 1 10 0v70zM96 292c-7 8-7 18 0 18s7-10 0-18z"/>
+          <path d="M106 376c0-31 13-42 26-50 13 8 26 19 26 50z"/>
+          <path d="M150 376v-18h100v18z"/>
+          <path d="M158 376c0-50 21-67 42-80 21 13 42 30 42 80z"/>
+          <path d="M200 288c-8 9-8 20 0 20s8-11 0-20z"/>
+          <path d="M242 376c0-31 13-42 26-50 13 8 26 19 26 50z"/>
+          <path d="M299 376v-70a5 5 0 0 1 10 0v70zM304 292c-7 8-7 18 0 18s7-10 0-18z"/>
+          <path d="M330 376c0-24 10-33 20-39 10 6 20 15 20 39z"/>
+          <path d="M380 376v-48a4 4 0 0 1 8 0v48zM384 322c-6 7-6 16 0 16s6-9 0-16z"/>
+          <rect x="0" y="374" width="400" height="26"/>
         </g>
+
+        <!-- угловые орнаменты -->
+        <use href="#orn"/>
+        <use href="#orn" transform="translate(400,0) scale(-1,1)"/>
+
+        <!-- тонкая золотая рамка -->
+        <rect x="10" y="10" width="380" height="380" rx="12" stroke="#B9924E" stroke-width="2.2"/>
+        <rect x="16" y="16" width="368" height="368" rx="9" stroke="#B9924E" stroke-width="1" opacity=".55"/>
       </svg>
 
-      <div class="frame"></div>
-
-      <div class="inner">
-
-        <!-- чайник -->
-        <svg class="teapot" viewBox="0 0 100 80" fill="none" aria-hidden="true">
-          <path d="M50 3c-3.6 0-6.5 2.9-6.5 6.5S46.4 16 50 16c1 0 2-.24 2.8-.66a5.2 5.2 0 1 1 0-9.68A6.46 6.46 0 0 0 50 3z" fill="#21402F"/>
-          <path d="M26 40c-9-3-14-10-12-18l5 1.6c-1.2 5.6 2.6 10.4 9.6 12.4z" fill="#21402F"/>
-          <path d="M76 34c11-1.6 12 14 0 17l-1.6-4.6c6-1.4 5.6-8.4-.4-7.8z" fill="#21402F"/>
-          <ellipse cx="50" cy="47" rx="27" ry="21" fill="#21402F"/>
-          <path d="M31 30h38c0-5-8.6-8-19-8s-19 3-19 8z" fill="#21402F"/>
-          <circle cx="50" cy="19" r="3.2" fill="#21402F"/>
-          <g stroke="#BC9A55" stroke-width="1.5" opacity=".85">
-            <path d="M40 44c4-5 16-5 20 0M40 52c4 5 16 5 20 0"/>
-            <circle cx="50" cy="48" r="3"/>
+      <!-- чайник -->
+      <div class="at teapot">
+        <svg viewBox="0 0 100 82" fill="none">
+          <path d="M50 2a7 7 0 0 0 0 14 6.9 6.9 0 0 0 3.1-.72 5.6 5.6 0 1 1 0-12.56A6.9 6.9 0 0 0 50 2z" fill="#1A1A17"/>
+          <circle cx="50" cy="20" r="3.4" fill="#1A1A17"/>
+          <path d="M30 31h40c0-5.4-9-8.6-20-8.6S30 25.6 30 31z" fill="#1A1A17"/>
+          <path d="M25 42c-9.6-3.4-14.6-11-12.4-19.4l5.4 1.8C16.6 30.4 20.6 35.6 28 37.8z" fill="#1A1A17"/>
+          <path d="M76 35c11.6-1.6 12.6 15 0 18.2l-1.8-5c6.4-1.6 6-9-0.4-8.4z" fill="#1A1A17"/>
+          <ellipse cx="50" cy="50" rx="28" ry="22" fill="#1A1A17"/>
+          <g stroke="#B9924E" stroke-width="1.4" opacity=".9">
+            <path d="M38 46c5-6 19-6 24 0M38 56c5 6 19 6 24 0"/>
+            <circle cx="50" cy="51" r="3.4"/>
+            <path d="M31 51h5M64 51h5"/>
           </g>
         </svg>
+      </div>
 
-        <h2 class="title">MADIYAR</h2>
-        <p class="sub"><i></i>чайхана<i></i></p>
+      <h2 class="at title">MADIYAR</h2>
+      <p class="at sub"><i></i><em></em>чайхана<em></em><i></i></p>
 
-        <div class="qr"><img src="../card/qr.svg" alt="QR-код" /></div>
+      <div class="at qr"><img src="../card/qr.svg" alt="QR-код" /></div>
 
-        <div class="call">
-          <svg class="waves" viewBox="0 0 32 22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
-            <path d="M11 7a7 7 0 0 1 0 8"/>
-            <path d="M17 4a12 12 0 0 1 0 14"/>
-            <path d="M23 1a17 17 0 0 1 0 20"/>
-          </svg>
-          <b>Приложите телефон</b>
-          <small>или отсканируйте QR-код</small>
-        </div>
+      <div class="at waves">
+        <svg viewBox="0 0 32 22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+          <path d="M11 7a7 7 0 0 1 0 8"/>
+          <path d="M17 4a12 12 0 0 1 0 14"/>
+          <path d="M23 1a17 17 0 0 1 0 20"/>
+        </svg>
+      </div>
+      <p class="at call">Приложите телефон</p>
+      <p class="at call2">или отсканируйте QR-код</p>
 
-        <p class="thanks">
-          Спасибо,<br />что вы с нами!
-          <svg class="heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M12 20s-7-4.6-7-9.4A4.1 4.1 0 0 1 12 8a4.1 4.1 0 0 1 7 2.6C19 15.4 12 20 12 20Z"/>
-          </svg>
-        </p>
-
+      <p class="at thanks">Спасибо,<br />что вы с нами!</p>
+      <div class="at heart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 20s-7-4.6-7-9.4A4.1 4.1 0 0 1 12 8a4.1 4.1 0 0 1 7 2.6C19 15.4 12 20 12 20Z"/>
+        </svg>
       </div>
 
       <!-- иконки слева -->
@@ -420,7 +416,6 @@
 
 <script>
   (function(){
-    // Вторая копия для печатного листа.
     var stage = document.querySelector('.stage');
     var copy  = stage.firstElementChild.cloneNode(true);
     copy.className = 'plate copy';
