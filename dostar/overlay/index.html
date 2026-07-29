@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Макет с картинкой — Достар</title>
+<meta name="robots" content="noindex" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231E3A2B'/%3E%3C/svg%3E" />
+
+<style>
+  :root{
+    --green:#1E3A2B;
+    --ink:#26302A;
+    --ink-3:#8B968F;
+    --line:#E3E9E4;
+    --side:110mm;
+    /* положение кода на картинке, в процентах стороны */
+    --qx:31.2;
+    --qy:31.3;
+    --qs:39.8;
+    --cover:#FAF6EC;
+  }
+  *,*::before,*::after{ box-sizing:border-box; }
+  body{
+    margin:0;
+    padding:32px 20px 60px;
+    background:#EEF1EE;
+    color:var(--ink);
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height:1.5;
+  }
+  .wrap{ max-width:720px; margin:0 auto; }
+  .wrap > h1{
+    margin:0 0 6px;
+    font-family:Georgia,"Noto Serif","Times New Roman",serif;
+    font-weight:400;
+    font-size:26px;
+  }
+  .lead{ margin:0 0 20px; color:var(--ink-3); font-size:14px; }
+
+  /* ==================== макет ==================== */
+  .plate{
+    position:relative;
+    width:var(--side);
+    height:var(--side);
+    background:#fff;
+    overflow:hidden;
+    box-shadow:0 2px 5px rgba(21,32,27,.16), 0 24px 54px -22px rgba(30,58,43,.5);
+  }
+  .plate .bg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .plate .cover{
+    position:absolute;
+    left:calc(var(--qx) * 1%);
+    top:calc(var(--qy) * 1%);
+    width:calc(var(--qs) * 1%);
+    height:calc(var(--qs) * 1%);
+    background:var(--cover);
+    display:grid;
+    place-items:center;
+    padding:6%;
+  }
+  .plate .cover img{ width:100%; height:100%; display:block; }
+
+  .missing{
+    position:absolute;
+    inset:0;
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:24px;
+    text-align:center;
+    background:#FFF8F3;
+    color:#8A3A1E;
+    font-size:13px;
+  }
+  .missing b{ font-size:15px; }
+  .missing code{
+    font-family:ui-monospace,"Cascadia Mono",Menlo,Consolas,monospace;
+    background:#fff;
+    border:1px solid #F0D8CC;
+    padding:4px 8px;
+    border-radius:6px;
+    font-size:12px;
+    word-break:break-all;
+  }
+  body.nobg .plate .bg,
+  body.nobg .plate .cover{ display:none; }
+  body.nobg .plate .missing{ display:flex; }
+
+  .stage{ display:flex; justify-content:center; padding:20px 0; }
+
+  /* ==================== настройки ==================== */
+  .opts{
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:#fff;
+    padding:16px 18px;
+    margin-bottom:14px;
+  }
+  .opts .row{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+  .opts .row + .row{ margin-top:12px; }
+  .opts .lbl{
+    flex:none;
+    width:104px;
+    font-size:11px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    color:var(--ink-3);
+  }
+  .opts input[type=range]{ flex:1; min-width:180px; accent-color:var(--green); }
+  .opts output{
+    flex:none;
+    width:62px;
+    font-family:ui-monospace,"Cascadia Mono",Menlo,Consolas,monospace;
+    font-size:12.5px;
+    font-variant-numeric:tabular-nums;
+    text-align:right;
+  }
+  .opts button{
+    appearance:none;
+    padding:8px 14px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    background:#fff;
+    color:var(--ink);
+    font:inherit;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .opts button.on{ background:var(--green); border-color:var(--green); color:#fff; }
+
+  body.s90  { --side:90mm;  }
+  body.s110 { --side:110mm; }
+  body.s150 { --side:150mm; }
+
+  .note{
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:#fff;
+    padding:18px 20px;
+    font-size:13.5px;
+  }
+  .note h3{ margin:0 0 8px; font-size:14px; }
+  .note ol,.note ul{ margin:0; padding-left:20px; }
+  .note li + li{ margin-top:6px; }
+  .note code{
+    font-family:ui-monospace,"Cascadia Mono",Menlo,Consolas,monospace;
+    font-size:12px;
+    background:#F1F5F2;
+    padding:1px 5px;
+    border-radius:4px;
+    word-break:break-all;
+  }
+  .print{
+    display:inline-flex;
+    margin-top:18px;
+    padding:12px 20px;
+    border:0;
+    border-radius:12px;
+    background:var(--green);
+    color:#fff;
+    font:inherit;
+    font-size:14.5px;
+    font-weight:600;
+    cursor:pointer;
+  }
+
+  @media print{
+    @page{ size:A4 portrait; margin:9mm; }
+    body{ padding:0; background:#fff; }
+    .wrap > h1, .lead, .note, .opts{ display:none; }
+    .stage{ padding:0; }
+    .plate{ box-shadow:none; break-inside:avoid; }
+  }
+</style>
+</head>
+<body class="s110">
+
+<div class="wrap">
+  <h1>Макет с картинкой</h1>
+  <p class="lead">Твой рисунок как есть, нарисованный код закрыт и заменён рабочим. Ползунками подгони прямоугольник так, чтобы он ровно накрыл старый код.</p>
+
+  <div class="opts">
+    <div class="row">
+      <span class="lbl">Сторона</span>
+      <button type="button" data-side="s90">90 мм</button>
+      <button type="button" data-side="s110">110 мм</button>
+      <button type="button" data-side="s150">150 мм</button>
+    </div>
+    <div class="row">
+      <span class="lbl">Слева</span>
+      <input type="range" id="qx" min="0" max="70" step="0.1" value="31.2" />
+      <output id="ox">31.2%</output>
+    </div>
+    <div class="row">
+      <span class="lbl">Сверху</span>
+      <input type="range" id="qy" min="0" max="70" step="0.1" value="31.3" />
+      <output id="oy">31.3%</output>
+    </div>
+    <div class="row">
+      <span class="lbl">Размер</span>
+      <input type="range" id="qs" min="10" max="60" step="0.1" value="39.8" />
+      <output id="os">39.8%</output>
+    </div>
+    <div class="row">
+      <span class="lbl">Подложка</span>
+      <button type="button" data-cover="#FAF6EC">Кремовая</button>
+      <button type="button" data-cover="#FFFFFF">Белая</button>
+      <button type="button" data-cover="transparent">Без неё</button>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="plate">
+      <img class="bg" id="bg" src="bg.png" alt="" />
+      <div class="cover"><img src="../card/qr.svg" alt="QR-код" /></div>
+      <div class="missing">
+        <b>Картинка не найдена</b>
+        <span>Сохрани свой рисунок рядом с этим файлом под именем</span>
+        <code>bg.png</code>
+        <span>Подойдёт и <code>bg.jpg</code> — страница проверит оба.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <h3>Как пользоваться</h3>
+    <ol>
+      <li>Сохрани рисунок в папку <code>dostar/overlay/</code> под именем <code>bg.png</code></li>
+      <li>Обнови страницу — картинка появится</li>
+      <li>Ползунками наведи прямоугольник ровно на старый код, чтобы его не было видно</li>
+      <li>Печатай. Положение запоминается.</li>
+    </ol>
+    <h3 style="margin-top:14px">Про печать</h3>
+    <ul>
+      <li>Ссылка в коде: <code>https://madiyar77758.github.io/nfc-cards/dostar/</code></li>
+      <li>Бумага от 200 г/м², матовая. Печать → NFC-стикер на изнанку за кодом → в пакет для ламинации → под ламинатор.</li>
+      <li>Метку записать <b>до</b> ламинации.</li>
+    </ul>
+    <button class="print" type="button" onclick="window.print()">Печать</button>
+  </div>
+</div>
+
+<script>
+  (function(){
+    var KEY  = 'overlay-dostar';
+    var root = document.documentElement;
+    var body = document.body;
+    var opts = document.querySelector('.opts');
+
+    var state = { side:'s110', qx:31.2, qy:31.3, qs:39.8, cover:'#FAF6EC' };
+    try {
+      var saved = JSON.parse(localStorage.getItem(KEY) || 'null');
+      if (saved) for (var k in saved) if (k in state) state[k] = saved[k];
+    } catch(e){}
+
+    function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){} }
+
+    function apply(){
+      body.className = state.side + (body.classList.contains('nobg') ? ' nobg' : '');
+      root.style.setProperty('--qx', state.qx);
+      root.style.setProperty('--qy', state.qy);
+      root.style.setProperty('--qs', state.qs);
+      root.style.setProperty('--cover', state.cover);
+
+      document.getElementById('qx').value = state.qx;
+      document.getElementById('qy').value = state.qy;
+      document.getElementById('qs').value = state.qs;
+      document.getElementById('ox').textContent = state.qx + '%';
+      document.getElementById('oy').textContent = state.qy + '%';
+      document.getElementById('os').textContent = state.qs + '%';
+
+      var b = opts.getElementsByTagName('button');
+      for (var i = 0; i < b.length; i++){
+        var s = b[i].getAttribute('data-side');
+        var c = b[i].getAttribute('data-cover');
+        b[i].className = ((s && s === state.side) || (c && c === state.cover)) ? 'on' : '';
+      }
+    }
+
+    ['qx','qy','qs'].forEach(function(id){
+      document.getElementById(id).addEventListener('input', function(){
+        state[id] = parseFloat(this.value);
+        apply(); save();
+      });
+    });
+
+    opts.addEventListener('click', function(e){
+      var t = e.target;
+      while (t && t.tagName !== 'BUTTON' && t !== this) t = t.parentNode;
+      if (!t || t.tagName !== 'BUTTON') return;
+      if (t.getAttribute('data-side'))  state.side  = t.getAttribute('data-side');
+      if (t.getAttribute('data-cover')) state.cover = t.getAttribute('data-cover');
+      apply(); save();
+    });
+
+    // Нет bg.png — пробуем bg.jpg, потом честно говорим, что файла нет.
+    var bg = document.getElementById('bg');
+    var tried = false;
+    bg.addEventListener('error', function(){
+      if (!tried){ tried = true; bg.src = 'bg.jpg'; return; }
+      body.classList.add('nobg');
+    });
+
+    apply();
+  })();
+</script>
+
+</body>
+</html>
