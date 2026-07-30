@@ -5,21 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Табличка — Достар</title>
 <meta name="robots" content="noindex" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230E4735'/%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230F0F10'/%3E%3C/svg%3E" />
 
 <style>
   :root{
-    --paper:#FAF8F3;
-    --pine:#0E4735;
-    --gold:#B8892F;
-    --gold-soft:#DCC79A;
-    --ink:#16211C;
-    --ink-2:#5A6660;
+    --plate:#0F0F10;
+    --plate-2:#17171A;
+    --gold:#C9A227;
+    --gold-hi:#E9D08A;
+    --gold-dim:#8C7024;
+    --white:#F6F3EB;
     --ink-3:#8B968F;
     --line:#E3E9E4;
-    --side:110mm;
+    --w:110mm;                 /* ширина; высота считается по пропорции */
   }
   *,*::before,*::after{ box-sizing:border-box; }
+  [hidden]{ display:none !important; }
   body{
     margin:0;
     padding:32px 20px 60px;
@@ -28,7 +29,7 @@
     font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     line-height:1.5;
   }
-  .wrap{ max-width:700px; margin:0 auto; }
+  .wrap{ max-width:720px; margin:0 auto; }
   .wrap > h1{
     margin:0 0 6px;
     font-family:Georgia,"Noto Serif","Times New Roman",serif;
@@ -38,184 +39,157 @@
   .lead{ margin:0 0 22px; color:var(--ink-3); font-size:14px; }
 
   /* ==================== табличка ====================
-     Всё в потоке: шапка фиксированной высоты, середина тянется,
-     подвал по содержимому. Наложиться блоки не могут в принципе.
-     1em = 1% стороны.                                          */
+     Всё в потоке: шапка, середина, подвал. 1em = 1% ширины. */
   .plate{
-    width:var(--side);
-    height:var(--side);
-    background:var(--paper);
-    border-radius:3.2%;
-    overflow:hidden;
-    box-shadow:0 2px 5px rgba(21,32,27,.14), 0 24px 54px -22px rgba(14,71,53,.45);
-    font-size:calc(var(--side) / 100);
-    display:flex;
-    flex-direction:column;
-  }
-
-  /* --- шапка --- */
-  .head{
     position:relative;
-    flex:0 0 25%;
-    background:var(--pine);
-    color:#fff;
+    width:var(--w);
+    height:calc(var(--w) * 1.295);
+    background:
+      radial-gradient(120% 70% at 50% 0%, #1B1B1F 0%, rgba(27,27,31,0) 60%),
+      var(--plate);
+    border-radius:3%;
     overflow:hidden;
+    font-size:calc(var(--w) / 100);
     display:flex;
     flex-direction:column;
     align-items:center;
-    justify-content:center;
-    gap:2.2em;
+    padding:calc(var(--w) * .072) calc(var(--w) * .06) calc(var(--w) * .062);
+    box-shadow:0 2px 6px rgba(0,0,0,.3), 0 26px 60px -24px rgba(0,0,0,.65);
   }
-  .head .stars{ position:absolute; inset:0; width:100%; height:100%; opacity:.15; }
-  .name{
+
+  /* Все вертикальные отступы — в долях ширины, а не в em:
+     em считается от СОБСТВЕННОГО размера шрифта элемента, и у крупного
+     заголовка отступ раздувается в разы. */
+
+  /* решётка и арка */
+  .arch{
+    position:absolute;
+    left:0; top:0;
+    width:100%;
+    height:calc(var(--w) * .46);
+    pointer-events:none;
+  }
+
+  /* ---------- монограмма ---------- */
+  .mono{
     position:relative;
-    margin:0;
+    flex:none;
+    width:calc(var(--w) * .185);
+    height:calc(var(--w) * .185);
+    display:grid;
+    place-items:center;
+  }
+  .mono svg{ position:absolute; inset:0; width:100%; height:100%; }
+  .mono b{
+    position:relative;
     font-family:Georgia,"Noto Serif","Times New Roman",serif;
     font-weight:400;
-    font-size:9em;
+    font-size:7.6em;
     line-height:1;
-    letter-spacing:.09em;
-    text-indent:.09em;
+    color:var(--white);
+  }
+
+  /* ---------- название ---------- */
+  .name{
+    flex:none;
+    margin:calc(var(--w) * .034) 0 0;
+    font-family:Georgia,"Noto Serif","Times New Roman",serif;
+    font-weight:400;
+    font-size:9.6em;
+    line-height:1;
+    letter-spacing:.1em;
+    text-indent:.1em;
+    color:var(--white);
     white-space:nowrap;
   }
   .kind{
-    position:relative;
-    margin:0;
+    flex:none;
+    margin:calc(var(--w) * .022) 0 0;
     display:flex;
     align-items:center;
-    gap:1.5em;
-    font-size:2.8em;
+    gap:2.2em;
+    font-size:3.1em;
     font-weight:600;
     text-transform:uppercase;
-    letter-spacing:.32em;
-    text-indent:.32em;
-    color:var(--gold-soft);
+    letter-spacing:.42em;
+    text-indent:.42em;
+    color:var(--gold);
     white-space:nowrap;
   }
-  .kind i{ display:block; width:3.4em; height:.09em; background:currentColor; opacity:.8; }
+  .kind i{ display:block; width:4.2em; height:.075em; background:var(--gold); opacity:.85; }
 
-  /* --- середина: три иконки слева, код, три справа --- */
+  /* ---------- середина: иконки | код | иконки ---------- */
+  /* flex:0 0 auto — иначе при нехватке места блок схлопывается в ноль
+     и код с иконками вываливается поверх остального текста. */
   .mid{
-    flex:1 1 auto;
-    min-height:0;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:3.2em;
-    padding:0 5em;
-  }
-  .row{
+    flex:0 0 auto;
     width:100%;
+    margin-top:calc(var(--w) * .042);
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:2em;
+    gap:1.5em;
   }
-
   .col{
     flex:0 0 15em;
     display:flex;
     flex-direction:column;
     align-items:center;
-    gap:2.6em;
+    gap:calc(var(--w) * .044);
+  }
+  .ic{ display:flex; flex-direction:column; align-items:center; gap:calc(var(--w) * .012); }
+  .ic svg{ width:6.6em; height:6.6em; color:var(--gold); }
+  .ic span{
+    font-size:2.35em;
+    font-weight:600;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--white);
+    white-space:nowrap;
   }
 
   .qrbox{
     position:relative;
     flex:none;
-    width:38em;
-    height:38em;
-    padding:2.2em;
-    background:#fff;
-    border:.3em solid var(--gold);
-    border-radius:1.4em;
+    width:42em;
+    height:42em;
+    padding:1.9em;
+    background:var(--white);
+    border-radius:3.4em;
+    box-shadow:0 0 0 .55em var(--gold), 0 0 0 1.5em rgba(201,162,39,.16);
   }
   .qrbox img{ width:100%; height:100%; display:block; }
 
-  /* Значок NFC печаткой на углу рамки: метка лежит ровно за кодом */
-  .nfc{
-    position:absolute;
-    right:-3.2em;
-    top:-3.2em;
-    width:7.2em;
-    height:7.2em;
-    border-radius:50%;
-    background:var(--pine);
-    color:#fff;
-    display:grid;
-    place-items:center;
-    box-shadow:0 0 0 .5em var(--paper);
+  /* ---------- призыв ---------- */
+  .waves{
+    flex:none;
+    width:9.6em;
+    height:6.4em;
+    margin-top:calc(var(--w) * .046);
+    color:var(--gold);
   }
-  .nfc svg{ width:3.8em; height:3.8em; }
-
+  .waves svg{ width:100%; height:100%; display:block; }
   .call{
-    margin:0;
-    text-align:center;
-    font-size:3.3em;
-    font-weight:800;
-    letter-spacing:.12em;
-    text-indent:.12em;
-    line-height:1.15;
-    color:var(--pine);
+    flex:none;
+    margin:calc(var(--w) * .026) 0 0;
+    font-size:3.5em;
+    font-weight:700;
+    letter-spacing:.16em;
+    text-indent:.16em;
+    text-transform:uppercase;
+    color:var(--white);
     white-space:nowrap;
   }
-  .call small{
-    display:block;
-    margin-top:.42em;
-    font-size:.76em;
-    font-weight:400;
-    letter-spacing:0;
-    text-indent:0;
-    color:var(--ink-2);
-  }
-
-  /* --- подвал --- */
-  .foot{
+  .call2{
     flex:none;
-    padding:0 5em 3.4em;
-  }
-  .foot hr{
-    margin:0 0 2.4em;
-    border:0;
-    border-top:.11em solid var(--gold);
-    opacity:.75;
-  }
-
-  .ic{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:1em;
-  }
-  .ic .ring{
-    flex:none;
-    width:7.6em;
-    height:7.6em;
-    border-radius:50%;
-    border:.28em solid var(--gold);
-    display:grid;
-    place-items:center;
-    color:var(--pine);
-  }
-  .ic .ring svg{ width:4.2em; height:4.2em; }
-  .ic .lab{
-    font-size:2.05em;
-    font-weight:700;
-    letter-spacing:.05em;
+    margin:calc(var(--w) * .012) 0 0;
+    font-size:2.7em;
+    font-weight:600;
+    letter-spacing:.14em;
+    text-indent:.14em;
     text-transform:uppercase;
-    color:var(--ink);
+    color:var(--gold);
     white-space:nowrap;
-  }
-  .city{
-    margin:0;
-    text-align:center;
-    font-size:1.9em;
-    font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:.3em;
-    text-indent:.3em;
-    color:var(--ink-3);
   }
 
   /* ==================== настройки ==================== */
@@ -250,11 +224,11 @@
     font-weight:600;
     cursor:pointer;
   }
-  .opts button.on{ background:var(--pine); border-color:var(--pine); color:#fff; }
+  .opts button.on{ background:var(--plate); border-color:var(--plate); color:var(--gold); }
 
-  body.s90  { --side:90mm;  }
-  body.s110 { --side:110mm; }
-  body.s150 { --side:150mm; }
+  body.w100{ --w:100mm; }
+  body.w110{ --w:110mm; }
+  body.w150{ --w:150mm; }
 
   .stage{ display:flex; justify-content:center; padding:22px 0; }
 
@@ -276,14 +250,23 @@
     border-radius:4px;
     word-break:break-all;
   }
+  .warn{
+    margin-top:12px;
+    padding:12px 14px;
+    border-radius:10px;
+    background:#FFF6E8;
+    border:1px solid #F0DDBB;
+    color:#7A5A18;
+    font-size:13px;
+  }
   .print{
     display:inline-flex;
-    margin-top:18px;
+    margin-top:16px;
     padding:12px 20px;
     border:0;
     border-radius:12px;
-    background:var(--pine);
-    color:#fff;
+    background:var(--plate);
+    color:var(--gold);
     font:inherit;
     font-size:14.5px;
     font-weight:600;
@@ -292,8 +275,7 @@
 
   .plate.copy{ display:none; }
   @media print{
-    /* Браузер по умолчанию выбрасывает фоновые заливки при печати:
-       без этого пропадают зелёная шапка и кружок NFC. */
+    /* Без этого браузер выбрасывает все фоновые заливки. */
     *,*::before,*::after{
       -webkit-print-color-adjust:exact;
       print-color-adjust:exact;
@@ -303,118 +285,113 @@
     .wrap > h1, .lead, .note, .opts{ display:none; }
     .stage{ padding:0; display:flex; flex-wrap:wrap; gap:5mm; justify-content:center; align-content:flex-start; }
     .plate{ box-shadow:none; break-inside:avoid; }
-    /* именно flex, а не block: block затирает раскладку таблички */
+    /* именно flex: block затирает раскладку таблички */
     .plate.copy{ display:flex; }
   }
 </style>
 </head>
-<body class="s110">
+<body class="w110">
 
 <div class="wrap">
   <h1>Настольная табличка</h1>
-  <p class="lead">Метка клеится за кодом, поэтому приложить телефон и навести камеру нужно в одну точку. Значок NFC стоит прямо на рамке — мишень одна.</p>
+  <p class="lead">Метка клеится за кодом, поэтому приложить телефон и навести камеру нужно в одну точку.</p>
 
   <div class="opts">
-    <span class="lbl">Сторона</span>
-    <button type="button" data-side="s90">90 мм</button>
-    <button type="button" data-side="s110">110 мм</button>
-    <button type="button" data-side="s150">150 мм</button>
+    <span class="lbl">Ширина</span>
+    <button type="button" data-w="w100">100 мм</button>
+    <button type="button" data-w="w110">110 мм</button>
+    <button type="button" data-w="w150">150 мм</button>
   </div>
 
   <div class="stage">
     <div class="plate">
 
-      <header class="head">
-        <svg class="stars" viewBox="0 0 300 78" fill="none" aria-hidden="true">
-          <defs>
-            <g id="st" stroke="#fff" stroke-width=".7">
-              <rect x="-7.5" y="-7.5" width="15" height="15"/>
-              <rect x="-7.5" y="-7.5" width="15" height="15" transform="rotate(45)"/>
+      <svg class="arch" viewBox="0 0 400 184" preserveAspectRatio="none" fill="none" aria-hidden="true">
+        <defs>
+          <pattern id="girih" width="46" height="46" patternUnits="userSpaceOnUse">
+            <g stroke="#C9A227" stroke-width="1.1" fill="none" opacity=".85">
+              <rect x="8" y="8" width="30" height="30"/>
+              <rect x="8" y="8" width="30" height="30" transform="rotate(45 23 23)"/>
+              <circle cx="23" cy="23" r="4.6"/>
+              <path d="M23 0v8M23 38v8M0 23h8M38 23h8"/>
             </g>
-          </defs>
-          <use href="#st" x="16"  y="8"/><use href="#st" x="48"  y="8"/><use href="#st" x="80"  y="8"/>
-          <use href="#st" x="112" y="8"/><use href="#st" x="144" y="8"/><use href="#st" x="176" y="8"/>
-          <use href="#st" x="208" y="8"/><use href="#st" x="240" y="8"/><use href="#st" x="272" y="8"/>
-          <use href="#st" x="0"   y="39"/><use href="#st" x="32"  y="39"/><use href="#st" x="64"  y="39"/>
-          <use href="#st" x="96"  y="39"/><use href="#st" x="128" y="39"/><use href="#st" x="160" y="39"/>
-          <use href="#st" x="192" y="39"/><use href="#st" x="224" y="39"/><use href="#st" x="256" y="39"/>
-          <use href="#st" x="288" y="39"/>
-          <use href="#st" x="16"  y="70"/><use href="#st" x="48"  y="70"/><use href="#st" x="80"  y="70"/>
-          <use href="#st" x="112" y="70"/><use href="#st" x="144" y="70"/><use href="#st" x="176" y="70"/>
-          <use href="#st" x="208" y="70"/><use href="#st" x="240" y="70"/><use href="#st" x="272" y="70"/>
+          </pattern>
+        </defs>
+
+        <!-- решётка заполняет верхние углы, арка остаётся пустой -->
+        <path d="M0 0H400V153C400 97 342 61 268 48C232 41 214 31 200 13C186 31 168 41 132 48C58 61 0 97 0 153Z"
+              fill="url(#girih)"/>
+        <!-- контур арки -->
+        <path d="M0 153C0 97 58 61 132 48C168 41 186 31 200 13C214 31 232 41 268 48C342 61 400 97 400 153"
+              stroke="#C9A227" stroke-width="2.2" fill="none"/>
+        <path d="M0 161C0 105 60 70 134 56C170 50 187 39 200 22C213 39 230 50 266 56C340 70 400 105 400 161"
+              stroke="#C9A227" stroke-width=".9" opacity=".45" fill="none"/>
+      </svg>
+
+      <!-- монограмма -->
+      <div class="mono">
+        <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <g stroke="#C9A227" stroke-width="2.2">
+            <rect x="22" y="22" width="56" height="56"/>
+            <rect x="22" y="22" width="56" height="56" transform="rotate(45 50 50)"/>
+          </g>
+          <g stroke="#C9A227" stroke-width="1.2" opacity=".6">
+            <rect x="14" y="14" width="72" height="72" transform="rotate(45 50 50)"/>
+          </g>
         </svg>
-        <p class="name">Достар</p>
-        <p class="kind"><i></i>чайхана<i></i></p>
-      </header>
+        <b>Д</b>
+      </div>
+
+      <p class="name">Достар</p>
+      <p class="kind"><i></i>чайхана<i></i></p>
 
       <div class="mid">
-       <div class="row">
 
         <div class="col">
           <span class="ic">
-            <span class="ring">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.6A1.6 1.6 0 0 1 5.6 4H11v16H5.6A1.6 1.6 0 0 1 4 18.4z"/><path d="M20 5.6A1.6 1.6 0 0 0 18.4 4H13v16h5.4a1.6 1.6 0 0 0 1.6-1.6z"/></svg>
-            </span>
-            <span class="lab">Меню</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.6C9.9 4.9 6.7 4.3 3.6 4.7v13.1c3.1-.4 6.3.2 8.4 1.9z"/><path d="M12 6.6c2.1-1.7 5.3-2.3 8.4-1.9v13.1c-3.1-.4-6.3.2-8.4 1.9z"/><path d="M12 6.6v13.1"/></svg>
+            <span>Меню</span>
           </span>
           <span class="ic">
-            <span class="ring">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.7 5.9 6.3.7-4.7 4.3 1.3 6.3L12 17l-5.6 3.2 1.3-6.3L3 9.6l6.3-.7z"/></svg>
-            </span>
-            <span class="lab">Отзывы</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><circle cx="12" cy="12" r="9.2"/><path d="m12 6.6 1.85 3.9 4.15.5-3.1 2.85.86 4.15L12 15.9l-3.76 2.1.86-4.15L6 11l4.15-.5z" fill="currentColor" stroke="none"/></svg>
+            <span>Отзывы</span>
           </span>
           <span class="ic">
-            <span class="ring">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5.3"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1.05" fill="currentColor" stroke="none"/></svg>
-            </span>
-            <span class="lab">Instagram</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="3" y="8.2" width="18" height="4.6" rx="1"/><path d="M4.6 12.8h14.8V20a1 1 0 0 1-1 1H5.6a1 1 0 0 1-1-1z"/><path d="M12 8.2V21"/><path d="M12 8.2S10.6 4 8.4 4a2.1 2.1 0 0 0 0 4.2M12 8.2s1.4-4.2 3.6-4.2a2.1 2.1 0 0 1 0 4.2"/></svg>
+            <span>Акции</span>
           </span>
         </div>
 
         <div class="qrbox">
           <img src="../card/qr.svg" alt="QR-код" />
-          <span class="nfc">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
-              <path d="M7 8.5a7.5 7.5 0 0 1 0 7"/>
-              <path d="M11 6a12 12 0 0 1 0 12"/>
-              <path d="M15 3.5a16.5 16.5 0 0 1 0 17"/>
-            </svg>
-          </span>
         </div>
 
         <div class="col">
           <span class="ic">
-            <span class="ring">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M2.5 8.5a15 15 0 0 1 19 0"/><path d="M5.5 12a11 11 0 0 1 13 0"/><path d="M8.5 15.4a6.5 6.5 0 0 1 7 0"/><circle cx="12" cy="19" r="1.4" fill="currentColor" stroke="none"/></svg>
-            </span>
-            <span class="lab">Wi-Fi</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M2.6 8.6a15 15 0 0 1 18.8 0"/><path d="M5.6 12.1a11 11 0 0 1 12.8 0"/><path d="M8.6 15.5a6.5 6.5 0 0 1 6.8 0"/><circle cx="12" cy="19.1" r="1.35" fill="currentColor" stroke="none"/></svg>
+            <span>Wi-Fi</span>
           </span>
           <span class="ic">
-            <span class="ring">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13.6 3v11.5a3.65 3.65 0 1 1-3.2-3.62"/><path d="M13.6 3.5c.55 2.65 2.25 4.25 4.95 4.45"/></svg>
-            </span>
-            <span class="lab">TikTok</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4.1"/><circle cx="17.3" cy="6.7" r="1.15" fill="currentColor" stroke="none"/></svg>
+            <span>Instagram</span>
           </span>
           <span class="ic">
-            <span class="ring">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="3" y="8" width="18" height="5"/><rect x="4.5" y="13" width="15" height="8"/><path d="M12 8v13"/><path d="M12 8S10.5 4 8.2 4a2.2 2.2 0 0 0 0 4.4M12 8s1.5-4 3.8-4a2.2 2.2 0 0 1 0 4.4"/></svg>
-            </span>
-            <span class="lab">Акции</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13.7 3v11.6a3.7 3.7 0 1 1-3.25-3.67"/><path d="M13.7 3.5c.56 2.7 2.3 4.32 5.05 4.52"/></svg>
+            <span>TikTok</span>
           </span>
         </div>
 
-       </div>
-
-        <p class="call">
-          Приложите телефон
-          <small>или наведите камеру на код</small>
-        </p>
       </div>
 
-      <footer class="foot">
-        <hr />
-        <p class="city">Шымкент</p>
-      </footer>
+      <div class="waves">
+        <svg viewBox="0 0 34 22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true">
+          <path d="M12 7a7 7 0 0 1 0 8"/>
+          <path d="M18.5 4a12 12 0 0 1 0 14"/>
+          <path d="M25 1a17 17 0 0 1 0 20"/>
+        </svg>
+      </div>
+      <p class="call">Наведите телефон</p>
+      <p class="call2">на QR-код или NFC</p>
 
     </div>
   </div>
@@ -423,11 +400,16 @@
     <h3>Про печать</h3>
     <ul>
       <li>Ссылка в коде: <code>https://madiyar77758.github.io/nfc-cards/dostar/</code></li>
-      <li>Бумага от 200 г/м², матовая. Печать → NFC-стикер на изнанку → в пакет для ламинации → под ламинатор.</li>
-      <li><b>Метку клеить строго за кодом</b> — значок NFC на рамке показывает гостю ту же точку.</li>
+      <li>Печать → NFC-стикер на изнанку <b>строго за кодом</b> → в пакет для ламинации → под ламинатор.</li>
       <li>Обрезать, оставив 2–3 мм прозрачного поля от плёнки, углы скруглить дыроколом.</li>
       <li>Записать метку <b>до</b> ламинации: после уже не переделать.</li>
     </ul>
+    <p class="warn">
+      <b>Чёрный фон и струйный принтер — плохая пара.</b> Сплошная заливка на всю страницу
+      ложится полосами, съедает картридж и долго сохнет. Этот макет стоит отдавать
+      в типографию либо печатать на лазерном. Светлый вариант для домашней печати —
+      подставка в папке <code>sign/</code>.
+    </p>
     <button class="print" type="button" onclick="window.print()">Печать — 2 таблички на A4</button>
   </div>
 </div>
@@ -444,15 +426,15 @@
       document.body.className = cls;
       var b = opts.getElementsByTagName('button');
       for (var i = 0; i < b.length; i++){
-        b[i].className = (b[i].getAttribute('data-side') === cls) ? 'on' : '';
+        b[i].className = (b[i].getAttribute('data-w') === cls) ? 'on' : '';
       }
     }
     opts.addEventListener('click', function(e){
       var t = e.target;
       while (t && t.tagName !== 'BUTTON' && t !== this) t = t.parentNode;
-      if (t && t.tagName === 'BUTTON') apply(t.getAttribute('data-side'));
+      if (t && t.tagName === 'BUTTON') apply(t.getAttribute('data-w'));
     });
-    apply('s110');
+    apply('w110');
   })();
 </script>
 
