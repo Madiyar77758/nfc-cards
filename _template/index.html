@@ -45,6 +45,9 @@
   @media (prefers-color-scheme: dark){ :root{ color-scheme: light; } }
 
   *,*::before,*::after{ box-sizing:border-box; }
+  /* Правило браузера для [hidden] слабее авторского display — усиливаем,
+     иначе скрытые строки (Wi-Fi, телефон) всё равно показываются. */
+  [hidden]{ display:none !important; }
   html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
   body{
     margin:0;
