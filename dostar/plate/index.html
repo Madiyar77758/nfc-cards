@@ -43,7 +43,7 @@
   .plate{
     position:relative;
     width:var(--w);
-    height:calc(var(--w) * 1.295);
+    height:var(--w);
     background:
       radial-gradient(120% 70% at 50% 0%, #1B1B1F 0%, rgba(27,27,31,0) 60%),
       var(--plate);
@@ -53,7 +53,7 @@
     display:flex;
     flex-direction:column;
     align-items:center;
-    padding:calc(var(--w) * .072) calc(var(--w) * .06) calc(var(--w) * .062);
+    padding:calc(var(--w) * .055) calc(var(--w) * .05) calc(var(--w) * .05);
     box-shadow:0 2px 6px rgba(0,0,0,.3), 0 26px 60px -24px rgba(0,0,0,.65);
   }
 
@@ -66,7 +66,7 @@
     position:absolute;
     left:0; top:0;
     width:100%;
-    height:calc(var(--w) * .46);
+    height:calc(var(--w) * .34);
     pointer-events:none;
   }
 
@@ -74,8 +74,8 @@
   .mono{
     position:relative;
     flex:none;
-    width:calc(var(--w) * .185);
-    height:calc(var(--w) * .185);
+    width:calc(var(--w) * .13);
+    height:calc(var(--w) * .13);
     display:grid;
     place-items:center;
   }
@@ -84,7 +84,7 @@
     position:relative;
     font-family:Georgia,"Noto Serif","Times New Roman",serif;
     font-weight:400;
-    font-size:7.6em;
+    font-size:5.4em;
     line-height:1;
     color:var(--white);
   }
@@ -92,10 +92,10 @@
   /* ---------- название ---------- */
   .name{
     flex:none;
-    margin:calc(var(--w) * .034) 0 0;
+    margin:calc(var(--w) * .024) 0 0;
     font-family:Georgia,"Noto Serif","Times New Roman",serif;
     font-weight:400;
-    font-size:9.6em;
+    font-size:7.8em;
     line-height:1;
     letter-spacing:.1em;
     text-indent:.1em;
@@ -104,11 +104,11 @@
   }
   .kind{
     flex:none;
-    margin:calc(var(--w) * .022) 0 0;
+    margin:calc(var(--w) * .016) 0 0;
     display:flex;
     align-items:center;
     gap:2.2em;
-    font-size:3.1em;
+    font-size:2.6em;
     font-weight:600;
     text-transform:uppercase;
     letter-spacing:.42em;
@@ -124,7 +124,7 @@
   .mid{
     flex:0 0 auto;
     width:100%;
-    margin-top:calc(var(--w) * .042);
+    margin-top:calc(var(--w) * .030);
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -135,12 +135,12 @@
     display:flex;
     flex-direction:column;
     align-items:center;
-    gap:calc(var(--w) * .044);
+    gap:calc(var(--w) * .027);
   }
-  .ic{ display:flex; flex-direction:column; align-items:center; gap:calc(var(--w) * .012); }
-  .ic svg{ width:6.6em; height:6.6em; color:var(--gold); }
+  .ic{ display:flex; flex-direction:column; align-items:center; gap:calc(var(--w) * .010); }
+  .ic svg{ width:5.6em; height:5.6em; color:var(--gold); }
   .ic span{
-    font-size:2.35em;
+    font-size:2.1em;
     font-weight:600;
     letter-spacing:.1em;
     text-transform:uppercase;
@@ -151,8 +151,8 @@
   .qrbox{
     position:relative;
     flex:none;
-    width:42em;
-    height:42em;
+    width:34em;
+    height:34em;
     padding:1.9em;
     background:var(--white);
     border-radius:3.4em;
@@ -163,16 +163,16 @@
   /* ---------- призыв ---------- */
   .waves{
     flex:none;
-    width:9.6em;
-    height:6.4em;
-    margin-top:calc(var(--w) * .046);
+    width:8em;
+    height:5em;
+    margin-top:calc(var(--w) * .030);
     color:var(--gold);
   }
   .waves svg{ width:100%; height:100%; display:block; }
   .call{
     flex:none;
-    margin:calc(var(--w) * .026) 0 0;
-    font-size:3.5em;
+    margin:calc(var(--w) * .018) 0 0;
+    font-size:2.95em;
     font-weight:700;
     letter-spacing:.16em;
     text-indent:.16em;
@@ -182,8 +182,8 @@
   }
   .call2{
     flex:none;
-    margin:calc(var(--w) * .012) 0 0;
-    font-size:2.7em;
+    margin:calc(var(--w) * .009) 0 0;
+    font-size:2.3em;
     font-weight:600;
     letter-spacing:.14em;
     text-indent:.14em;
@@ -297,7 +297,7 @@
   <p class="lead">Метка клеится за кодом, поэтому приложить телефон и навести камеру нужно в одну точку.</p>
 
   <div class="opts">
-    <span class="lbl">Ширина</span>
+    <span class="lbl">Сторона</span>
     <button type="button" data-w="w100">100 мм</button>
     <button type="button" data-w="w110">110 мм</button>
     <button type="button" data-w="w150">150 мм</button>
@@ -306,7 +306,7 @@
   <div class="stage">
     <div class="plate">
 
-      <svg class="arch" viewBox="0 0 400 184" preserveAspectRatio="none" fill="none" aria-hidden="true">
+      <svg class="arch" viewBox="0 0 400 136" preserveAspectRatio="none" fill="none" aria-hidden="true">
         <defs>
           <pattern id="girih" width="46" height="46" patternUnits="userSpaceOnUse">
             <g stroke="#C9A227" stroke-width="1.1" fill="none" opacity=".85">
@@ -319,13 +319,13 @@
         </defs>
 
         <!-- решётка заполняет верхние углы, арка остаётся пустой -->
-        <path d="M0 0H400V153C400 97 342 61 268 48C232 41 214 31 200 13C186 31 168 41 132 48C58 61 0 97 0 153Z"
+        <path d="M0 0H400V113C400 72 342 45 268 35C232 30 214 23 200 10C186 23 168 30 132 35C58 45 0 72 0 113Z"
               fill="url(#girih)"/>
         <!-- контур арки -->
-        <path d="M0 153C0 97 58 61 132 48C168 41 186 31 200 13C214 31 232 41 268 48C342 61 400 97 400 153"
-              stroke="#C9A227" stroke-width="2.2" fill="none"/>
-        <path d="M0 161C0 105 60 70 134 56C170 50 187 39 200 22C213 39 230 50 266 56C340 70 400 105 400 161"
-              stroke="#C9A227" stroke-width=".9" opacity=".45" fill="none"/>
+        <path d="M0 113C0 72 58 45 132 35C168 30 186 23 200 10C214 23 232 30 268 35C342 45 400 72 400 113"
+              stroke="#C9A227" stroke-width="1.8" fill="none"/>
+        <path d="M0 119C0 78 60 52 134 41C170 37 187 29 200 16C213 29 230 37 266 41C340 52 400 78 400 119"
+              stroke="#C9A227" stroke-width=".8" opacity=".45" fill="none"/>
       </svg>
 
       <!-- монограмма -->
