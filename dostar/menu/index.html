@@ -153,6 +153,82 @@
     to  { opacity:1; transform:none; }
   }
 
+  /* ---------- хиты: лента крупных карточек ---------- */
+  .hits{
+    display:flex;
+    gap:12px;
+    padding:20px var(--pad) 4px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  .hits::-webkit-scrollbar{ display:none; }
+
+  .hit-card{
+    flex:0 0 63%;
+    scroll-snap-align:start;
+    border:1px solid var(--line);
+    border-radius:18px;
+    overflow:hidden;
+    background:var(--paper);
+    text-decoration:none;
+    color:inherit;
+    display:flex;
+    flex-direction:column;
+  }
+  .hit-card .art{
+    position:relative;
+    height:112px;
+    display:grid;
+    place-items:center;
+    background:linear-gradient(160deg,#F2F7F3 0%,#E6F0EA 100%);
+    border-bottom:1px solid var(--line);
+  }
+  .hit-card .art svg{
+    width:88px;
+    height:88px;
+    filter:drop-shadow(0 5px 12px rgba(14,71,53,.2));
+  }
+  .hit-card .art b{
+    position:absolute;
+    top:9px;
+    left:9px;
+    padding:3px 8px;
+    border-radius:999px;
+    background:var(--gold-soft);
+    color:#8A6415;
+    font-size:9px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+  }
+  .hit-card .txt{
+    padding:11px 13px 13px;
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+    flex:1;
+  }
+  .hit-card .nm{ font-size:15px; font-weight:650; letter-spacing:-.01em; }
+  .hit-card .ds{ font-size:11.5px; line-height:1.35; color:var(--ink-3); flex:1; }
+  .hit-card .pr{
+    margin-top:4px;
+    font-size:14.5px;
+    font-weight:700;
+    font-variant-numeric:tabular-nums;
+    color:var(--brand);
+  }
+
+  /* ---------- появление разделов ---------- */
+  html.js section{
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity .5s ease, transform .5s cubic-bezier(.2,.8,.25,1);
+  }
+  html.js section.seen{ opacity:1; transform:none; }
+
   /* ---------- липкие категории ---------- */
   .cats{
     position:sticky;
@@ -280,6 +356,10 @@
     *,*::before,*::after{ animation-duration:.001ms !important; transition-duration:.001ms !important; }
   }
 </style>
+<script>
+  /* Ставим метку до отрисовки: без JS разделы просто видны сразу. */
+  document.documentElement.className += ' js';
+</script>
 </head>
 <body>
 
@@ -415,6 +495,118 @@
     <a href="#napitki" class="i18n"><i lang="ru">Напитки</i><i lang="kk">Сусындар</i><i lang="uz">Ичимликлар</i></a>
     <a href="#deserty" class="i18n"><i lang="ru">Десерты</i><i lang="kk">Тәттілер</i><i lang="uz">Ширинликлар</i></a>
   </nav>
+
+  <div class="hits">
+
+    <a class="hit-card" href="#osnovnye">
+      <span class="art">
+        <b>хит</b>
+        <svg viewBox="0 0 72 72" fill="none" aria-hidden="true">
+          <circle cx="36" cy="36" r="34" fill="#F4F1EA"/>
+          <circle cx="36" cy="36" r="30" fill="none" stroke="#2C6E8F" stroke-width="1.2" opacity=".5"/>
+          <g fill="#EDE2C8" stroke="#DBCCAB" stroke-width=".8">
+            <path d="M13 34l12-7 12 7-12 7z"/>
+            <path d="M34 29l12-7 12 7-12 7z"/>
+            <path d="M22 47l12-7 12 7-12 7z"/>
+          </g>
+          <g fill="#8A5330">
+            <ellipse cx="30" cy="33" rx="7" ry="4.6" transform="rotate(-14 30 33)"/>
+            <ellipse cx="46" cy="42" rx="6" ry="4" transform="rotate(18 46 42)"/>
+          </g>
+          <g fill="none" stroke="#F1E8EE" stroke-width="1.8">
+            <ellipse cx="24" cy="43" rx="5" ry="2.6"/>
+            <ellipse cx="51" cy="31" rx="4.4" ry="2.3"/>
+          </g>
+          <ellipse cx="38" cy="50" rx="3" ry="1.5" fill="#4F8442"/>
+        </svg>
+      </span>
+      <span class="txt">
+        <span class="nm i18n"><i lang="ru">Бешбармак</i><i lang="kk">Бесбармақ</i><i lang="uz">Бешбармоқ</i></span>
+        <span class="ds i18n"><i lang="ru">На двоих. Конина и баранина, домашняя раскатка</i><i lang="kk">Екі адамға. Жылқы және қой еті, үй қамыры</i><i lang="uz">Икки кишига. От ва қўй гўшти, уй хамири</i></span>
+        <span class="pr">4 500 ₸</span>
+      </span>
+    </a>
+
+    <a class="hit-card" href="#osnovnye">
+      <span class="art">
+        <b>хит</b>
+        <svg viewBox="0 0 72 72" fill="none" aria-hidden="true">
+          <circle cx="36" cy="36" r="34" fill="#F4F1EA"/>
+          <circle cx="36" cy="36" r="30" fill="none" stroke="#2C6E8F" stroke-width="1.2" opacity=".5"/>
+          <circle cx="36" cy="36" r="26" fill="#E6D2A6"/>
+          <g fill="#D0873A">
+            <rect x="21" y="23" width="3.4" height="12" rx="1.7" transform="rotate(-26 22.7 29)"/>
+            <rect x="45" y="27" width="3.4" height="12" rx="1.7" transform="rotate(36 46.7 33)"/>
+            <rect x="29" y="45" width="3.4" height="11" rx="1.7" transform="rotate(-64 30.7 50.5)"/>
+            <rect x="38" y="17" width="3.4" height="10" rx="1.7" transform="rotate(14 39.7 22)"/>
+            <rect x="17" y="38" width="3.4" height="11" rx="1.7" transform="rotate(72 18.7 43.5)"/>
+          </g>
+          <g fill="#7E4A2A">
+            <ellipse cx="28" cy="36" rx="6.5" ry="5.4" transform="rotate(-16 28 36)"/>
+            <ellipse cx="45" cy="46" rx="5.6" ry="4.7" transform="rotate(28 45 46)"/>
+          </g>
+          <circle cx="47" cy="24" r="6" fill="#F0E7D4"/>
+          <path d="M47 18.5v11M41.5 24h11" stroke="#D8CAB0" stroke-width="1"/>
+        </svg>
+      </span>
+      <span class="txt">
+        <span class="nm i18n"><i lang="ru">Плов</i><i lang="kk">Палау</i><i lang="uz">Ош</i></span>
+        <span class="ds i18n"><i lang="ru">Рис девзира, баранина, жёлтая морковь, чеснок</i><i lang="kk">Девзира күріші, қой еті, сары сәбіз, сарымсақ</i><i lang="uz">Девзира гуручи, қўй гўшти, сариқ сабзи, саримсоқ</i></span>
+        <span class="pr">1 800 ₸</span>
+      </span>
+    </a>
+
+    <a class="hit-card" href="#chay">
+      <span class="art">
+        <b>хит</b>
+        <svg viewBox="0 0 72 72" fill="none" aria-hidden="true">
+          <circle cx="36" cy="36" r="34" fill="#F4F1EA"/>
+          <circle cx="36" cy="36" r="30" fill="none" stroke="#2C6E8F" stroke-width="1.2" opacity=".5"/>
+          <g fill="#2C6E8F" opacity=".55">
+            <circle cx="62" cy="36" r="1.9"/><circle cx="54.4" cy="54.4" r="1.9"/>
+            <circle cx="36" cy="62" r="1.9"/><circle cx="17.6" cy="54.4" r="1.9"/>
+            <circle cx="10" cy="36" r="1.9"/><circle cx="17.6" cy="17.6" r="1.9"/>
+            <circle cx="36" cy="10" r="1.9"/><circle cx="54.4" cy="17.6" r="1.9"/>
+          </g>
+          <circle cx="36" cy="36" r="22" fill="#D9BC94"/>
+          <ellipse cx="28" cy="28" rx="8" ry="4.2" fill="#EBD6B8" opacity=".7" transform="rotate(-32 28 28)"/>
+        </svg>
+      </span>
+      <span class="txt">
+        <span class="nm i18n"><i lang="ru">Чай с молоком</i><i lang="kk">Сүтті шай</i><i lang="uz">Сутли чой</i></span>
+        <span class="ds i18n"><i lang="ru">Чайник. Крепкая заварка, топлёное молоко, щепотка соли</i><i lang="kk">Шәйнек. Қою шай, қайнатылған сүт, шөкім тұз</i><i lang="uz">Чойнак. Қуюқ чой, қайнатилган сут, бир чимдим туз</i></span>
+        <span class="pr">900 ₸</span>
+      </span>
+    </a>
+
+    <a class="hit-card" href="#vypechka">
+      <span class="art">
+        <b>хит</b>
+        <svg viewBox="0 0 72 72" fill="none" aria-hidden="true">
+          <circle cx="36" cy="36" r="34" fill="#F4F1EA"/>
+          <circle cx="36" cy="36" r="30" fill="none" stroke="#2C6E8F" stroke-width="1.2" opacity=".5"/>
+          <g fill="#D3A159" stroke="#D3A159" stroke-width="4.5" stroke-linejoin="round">
+            <path d="M27 22 36 37 18 37Z"/>
+            <path d="M50 27 57 40 43 40Z"/>
+            <path d="M39 45 47 58 31 58Z"/>
+          </g>
+          <g fill="none" stroke="#B8823C" stroke-width="1.1" opacity=".8">
+            <path d="M27 24v11M50 29v9M39 47v9"/>
+          </g>
+          <g fill="#F3E7CE">
+            <circle cx="24" cy="30" r="1.2"/><circle cx="30" cy="32" r="1.2"/>
+            <circle cx="48" cy="34" r="1.1"/><circle cx="36" cy="52" r="1.2"/>
+          </g>
+        </svg>
+      </span>
+      <span class="txt">
+        <span class="nm i18n"><i lang="ru">Самса</i><i lang="kk">Самса</i><i lang="uz">Сомса</i></span>
+        <span class="ds i18n"><i lang="ru">Из тандыра. Слоёное тесто, баранина с луком</i><i lang="kk">Тандырдан. Қатпарлы қамыр, пиязбен қой еті</i><i lang="uz">Тандирдан. Қатламли хамир, пиёзли қўй гўшти</i></span>
+        <span class="pr">400 ₸</span>
+      </span>
+    </a>
+
+  </div>
 
   <main>
 
@@ -786,6 +978,32 @@
       while (t && t !== box && t.tagName !== 'BUTTON') t = t.parentNode;
       if (t && t.tagName === 'BUTTON') set(t.getAttribute('data-set'), true);
     });
+  })();
+
+  /* ---------- разделы проявляются при подходе ---------- */
+  (function(){
+    var secs = document.querySelectorAll('section');
+    function showAll(){ for (var i = 0; i < secs.length; i++) secs[i].classList.add('seen'); }
+
+    // Нет наблюдателя или человек просил меньше движения — показываем сразу.
+    if (!('IntersectionObserver' in window) ||
+        (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+      showAll();
+      return;
+    }
+
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (!e.isIntersecting) return;
+        e.target.classList.add('seen');
+        io.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.06 });
+
+    for (var i = 0; i < secs.length; i++) io.observe(secs[i]);
+
+    // Страховка: если что-то пошло не так, через две секунды показываем всё.
+    setTimeout(showAll, 2000);
   })();
 
   /* ---------- подсветка раздела при прокрутке ---------- */
