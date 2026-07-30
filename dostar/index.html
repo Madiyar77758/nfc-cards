@@ -4,17 +4,29 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Достар</title>
-<meta name="description" content="Достар — меню, соцсети и адрес." />
+<meta name="description" content="Достар — меню, отзывы, соцсети и Wi-Fi." />
 <meta name="theme-color" content="#0E4735" />
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="ru_KZ" />
 <meta property="og:title" content="Достар" />
-<meta property="og:description" content="Меню, соцсети и адрес — в одном месте." />
+<meta property="og:description" content="Меню, отзывы и соцсети — в одном месте." />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230E4735'/%3E%3C/svg%3E" />
+
+<!--
+  ============================================================
+  ЧТО МЕНЯТЬ ПОД КЛИЕНТА — всё через new-client.ps1:
+    -Name -Subtitle -City -Instagram -TikTok -Gis -Review
+    -Hours "10:00-00:00"   часы работы, из них считается «открыто»
+    -WifiName -WifiPass    строка Wi-Fi; пусто — строки не будет
+    -Phone                 телефон; пусто — строки не будет
+  ============================================================
+-->
 
 <style>
   /* Страница всегда светлая: её открывают в зале при дневном свете. */
-  :root{
+  :root,
+  :root[data-theme="dark"],
+  :root[data-theme="light"]{
     color-scheme: light;
     --bg:#E7EBE7;
     --paper:#FFFFFF;
@@ -22,6 +34,7 @@
     --brand-2:#175C45;
     --brand-tint:#EDF3F0;
     --gold:#B8892F;
+    --gold-soft:#F7EFDD;
     --ink:#15201B;
     --ink-2:#58655E;
     --ink-3:#95A09A;
@@ -29,6 +42,7 @@
     --pad:20px;
     --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
   }
+  @media (prefers-color-scheme: dark){ :root{ color-scheme: light; } }
 
   *,*::before,*::after{ box-sizing:border-box; }
   html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
@@ -44,16 +58,47 @@
   }
   a{ -webkit-touch-callout:none; }
 
-  /* ---------- три языка: показываем один, без JS работает русский ---------- */
+  /* ---------- три языка ---------- */
   .i18n > i{ font-style:normal; display:none; }
   html[data-lang="ru"] .i18n > i[lang="ru"],
   html[data-lang="kk"] .i18n > i[lang="kk"],
   html[data-lang="uz"] .i18n > i[lang="uz"]{ display:inline; }
 
+  .hub{
+    max-width:430px;
+    margin:0 auto;
+    min-height:100vh;
+    min-height:100dvh;
+    display:flex;
+    flex-direction:column;
+    background:var(--paper);
+    overflow:hidden;
+  }
+
+  /* ---------- шапка ---------- */
+  .band{
+    position:relative;
+    padding:calc(46px + env(safe-area-inset-top)) var(--pad) 0;
+    text-align:center;
+    color:#fff;
+    overflow:hidden;
+    background:
+      radial-gradient(125% 100% at 50% -25%, rgba(255,255,255,.15), rgba(255,255,255,0) 62%),
+      var(--brand);
+  }
+  .band::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:var(--grain);
+    opacity:.07;
+    pointer-events:none;
+  }
+
   .lang{
     position:absolute;
     z-index:3;
-    top:calc(14px + env(safe-area-inset-top));
+    top:calc(13px + env(safe-area-inset-top));
     right:var(--pad);
     display:flex;
     gap:2px;
@@ -81,55 +126,27 @@
   .lang button.on{ background:var(--paper); color:var(--brand); }
   .lang button:focus-visible{ outline:2px solid #fff; outline-offset:2px; }
 
-  .hub{
-    max-width:430px;
-    margin:0 auto;
-    min-height:100vh;
-    min-height:100dvh;
-    display:flex;
-    flex-direction:column;
-    background:var(--paper);
-    overflow:hidden;
-  }
-
-  /* ---------- фирменная плашка ---------- */
-  .band{
-    position:relative;
-    padding:calc(48px + env(safe-area-inset-top)) var(--pad) 0;
-    text-align:center;
-    color:#fff;
-    overflow:hidden;
-    background:
-      radial-gradient(125% 100% at 50% -25%, rgba(255,255,255,.15), rgba(255,255,255,0) 62%),
-      var(--brand);
-  }
-  .band::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background-image:var(--grain);
-    opacity:.07;
-    pointer-events:none;
-  }
   .brand{
     position:relative;
     display:flex;
     flex-direction:column;
     align-items:center;
-    gap:16px;
+    gap:14px;
     animation:fade .7s ease .05s both;
   }
+  @keyframes fade{ from{opacity:0} to{opacity:1} }
+
   .mark{
     position:relative;
-    width:70px;
-    height:70px;
+    width:66px;
+    height:66px;
     border-radius:50%;
     display:grid;
     place-items:center;
     background:var(--paper);
     color:var(--brand);
     font-family:Georgia,"Noto Serif","Times New Roman",serif;
-    font-size:25px;
+    font-size:24px;
     letter-spacing:.02em;
   }
   .mark::after{
@@ -148,46 +165,73 @@
     margin:0;
     font-family:Georgia,"Noto Serif","Times New Roman",serif;
     font-weight:400;
-    font-size:clamp(28px,8.2vw,33px);
-    line-height:1.14;
+    font-size:clamp(27px, 8vw, 32px);
+    line-height:1.12;
     letter-spacing:-.012em;
     text-wrap:balance;
   }
-  .rule{ width:26px; height:2px; background:var(--gold); border-radius:2px; }
-  .city{
+  .kind{
     margin:0;
-    font-size:11px;
-    font-weight:600;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:10.5px;
+    font-weight:700;
     text-transform:uppercase;
     letter-spacing:.26em;
-    color:rgba(255,255,255,.72);
+    text-indent:.26em;
+    color:rgba(255,255,255,.66);
   }
+  .kind i{ display:block; width:16px; height:1px; background:var(--gold); opacity:.9; }
 
-  /* Дастархан выглядывает из-за белого листа: нижнюю треть закрывает .sheet */
+  /* плашка «открыто сейчас» — считается на телефоне */
+  .status{
+    display:none;
+    align-items:center;
+    gap:7px;
+    margin-top:2px;
+    padding:6px 13px;
+    border-radius:999px;
+    background:rgba(255,255,255,.13);
+    font-size:12px;
+    font-weight:600;
+    color:#fff;
+  }
+  .status.show{ display:inline-flex; }
+  .status .dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#63C08D;
+    box-shadow:0 0 0 3px rgba(99,192,141,.25);
+  }
+  .status.shut{ color:rgba(255,255,255,.72); }
+  .status.shut .dot{ background:#C9A227; box-shadow:0 0 0 3px rgba(201,162,39,.2); }
+
+  /* дастархан выглядывает из-за листа */
   .dastarkhan{
     position:relative;
     display:block;
     width:calc(100% + var(--pad) * 2);
-    margin:30px calc(var(--pad) * -1) 0;
+    margin:24px calc(var(--pad) * -1) 0;
     animation:fade .9s ease .25s both;
   }
 
-  /* ---------- белый лист поверх плашки ---------- */
+  /* ---------- белый лист ---------- */
   .sheet{
     position:relative;
     z-index:1;
     margin-top:-24px;
-    padding:26px var(--pad) calc(24px + env(safe-area-inset-bottom));
+    padding:24px var(--pad) calc(20px + env(safe-area-inset-bottom));
     background:var(--paper);
     border-radius:26px 26px 0 0;
     flex:1;
     display:flex;
     flex-direction:column;
-    gap:14px;
+    gap:12px;
     animation:lift .6s cubic-bezier(.2,.8,.25,1) .12s both;
   }
-  @keyframes lift{ from{ opacity:0; transform:translateY(16px);} to{ opacity:1; transform:none; } }
-  @keyframes fade{ from{ opacity:0; } to{ opacity:1; } }
+  @keyframes lift{ from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
 
   /* ---------- главная кнопка ---------- */
   .cta{
@@ -208,19 +252,44 @@
   .cta .t{ font-size:18px; font-weight:600; letter-spacing:-.012em; }
   .cta .s{ font-size:13px; color:rgba(255,255,255,.7); }
 
-  /* ---------- список ссылок ---------- */
+  /* ---------- отзыв: отдельной карточкой ---------- */
+  .review{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    min-height:62px;
+    padding:13px 17px;
+    border-radius:16px;
+    border:1px solid #EADFC6;
+    background:linear-gradient(180deg,#FFFDF8 0%,#FDF7EA 100%);
+    color:inherit;
+    text-decoration:none;
+    transition:transform .13s ease;
+    touch-action:manipulation;
+  }
+  .review:active{ transform:scale(.985); }
+  .review .t{ font-size:16.5px; font-weight:650; letter-spacing:-.01em; }
+  .review .s{ font-size:12.5px; color:#8A7444; }
+  .review .ico{ color:var(--gold); }
+
+  /* ---------- списки ---------- */
   .group{ border:1px solid var(--line); border-radius:16px; overflow:hidden; }
   .row{
     display:flex;
     align-items:center;
     gap:14px;
-    min-height:62px;
-    padding:12px 16px;
+    width:100%;
+    min-height:60px;
+    padding:11px 16px;
+    border:0;
     color:inherit;
     text-decoration:none;
+    text-align:left;
+    font:inherit;
     background:var(--paper);
     transition:background .13s ease;
     touch-action:manipulation;
+    cursor:pointer;
   }
   .row + .row{ border-top:1px solid var(--line); }
   .row:active{ background:var(--brand-tint); }
@@ -228,26 +297,39 @@
   .txt{ display:flex; flex-direction:column; gap:1px; min-width:0; }
   .txt .t{ font-size:16px; font-weight:600; letter-spacing:-.008em; }
   .txt .s{ font-size:12.5px; color:var(--ink-3); }
-
   .ico{ flex:none; color:var(--ink-2); }
   .cta .ico{ color:rgba(255,255,255,.9); }
   .chev{ margin-left:auto; flex:none; color:#C6D0CA; }
   .cta .chev{ color:rgba(255,255,255,.55); }
 
-  :where(.cta,.row):focus-visible{ outline:2px solid var(--brand); outline-offset:2px; }
+  /* пароль Wi-Fi моноширинным: цифры и буквы не спутать */
+  .pass{
+    margin-left:auto;
+    flex:none;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-family:ui-monospace,"Cascadia Mono",Menlo,Consolas,monospace;
+    font-size:13.5px;
+    color:var(--brand);
+  }
+  .pass svg{ color:#C6D0CA; }
+
+  :where(a,button):focus-visible{ outline:2px solid var(--brand); outline-offset:2px; }
   @media (hover:hover){
     .row:hover{ background:var(--brand-tint); }
     .cta:hover{ background:var(--brand-2); }
+    .review:hover{ border-color:#DFCFA8; }
   }
 
   /* ---------- подвал ---------- */
   .foot{
     margin-top:auto;
-    padding-top:22px;
+    padding-top:18px;
     display:flex;
     flex-direction:column;
     align-items:center;
-    gap:7px;
+    gap:6px;
     text-align:center;
   }
   .tap{
@@ -261,17 +343,30 @@
     color:var(--ink-3);
   }
 
-  /* ---------- широкий экран ---------- */
+  /* ---------- уведомление ---------- */
+  .toast{
+    position:fixed;
+    left:50%;
+    bottom:calc(26px + env(safe-area-inset-bottom));
+    transform:translate(-50%, 14px);
+    z-index:20;
+    padding:11px 18px;
+    border-radius:12px;
+    background:var(--ink);
+    color:#fff;
+    font-size:13.5px;
+    font-weight:600;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .2s ease, transform .2s ease;
+  }
+  .toast.show{ opacity:1; transform:translate(-50%, 0); }
+
   @media (min-width:520px){
     body{ padding:44px 20px; }
-    .hub{
-      min-height:0;
-      border-radius:26px;
-      box-shadow:0 2px 8px rgba(21,32,27,.05), 0 40px 70px -36px rgba(14,71,53,.4);
-    }
-    .sheet{ padding-bottom:28px; }
+    .hub{ min-height:0; border-radius:26px;
+          box-shadow:0 2px 8px rgba(21,32,27,.05), 0 40px 70px -36px rgba(14,71,53,.4); }
   }
-
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{
       animation-duration:.001ms !important;
@@ -291,11 +386,15 @@
       <button type="button" data-set="kk">ҚАЗ</button>
       <button type="button" data-set="uz">ЎЗ</button>
     </div>
+
     <div class="brand">
       <div class="mark" aria-hidden="true">ЧД</div>
       <h1>Достар</h1>
-      <span class="rule" aria-hidden="true"></span>
-      <p class="city">Шымкент</p>
+      <p class="kind"><i></i>чайхана<i></i></p>
+      <p class="status" id="status" data-hours="10:00-00:00">
+        <span class="dot" aria-hidden="true"></span>
+        <span class="say"></span>
+      </p>
     </div>
 
     <!-- Накрытый стол: лепёшка, пиалы, чайник, плов -->
@@ -308,7 +407,6 @@
         <ellipse cx="376" cy="70" rx="43" ry="41"/>
       </g>
 
-      <!-- тандырная лепёшка -->
       <g>
         <circle cx="58" cy="64" r="38" fill="#D9AC63"/>
         <circle cx="58" cy="64" r="38" fill="none" stroke="#BE8C45" stroke-width="1.3"/>
@@ -325,7 +423,6 @@
         </g>
       </g>
 
-      <!-- пиала -->
       <g>
         <circle cx="140" cy="76" r="22" fill="#F4F1EA"/>
         <circle cx="140" cy="76" r="18" fill="none" stroke="#2C6E8F" stroke-width="1.1" opacity=".5"/>
@@ -333,7 +430,6 @@
         <ellipse cx="134" cy="70" rx="5" ry="2.6" fill="#D6A059" opacity=".55" transform="rotate(-32 134 70)"/>
       </g>
 
-      <!-- чайник -->
       <g>
         <path d="M241 58q15 4 15 11t-15 11z" fill="#F4F1EA"/>
         <path d="M189 53q-15-6-15 4t15 5z" fill="none" stroke="#F4F1EA" stroke-width="6.5" stroke-linecap="round"/>
@@ -349,7 +445,6 @@
         <circle cx="216" cy="64" r="4.2" fill="#2C6E8F" opacity=".45"/>
       </g>
 
-      <!-- пиала -->
       <g>
         <circle cx="292" cy="76" r="22" fill="#F4F1EA"/>
         <circle cx="292" cy="76" r="18" fill="none" stroke="#2C6E8F" stroke-width="1.1" opacity=".5"/>
@@ -357,7 +452,6 @@
         <ellipse cx="286" cy="70" rx="5" ry="2.6" fill="#D6A059" opacity=".55" transform="rotate(-32 286 70)"/>
       </g>
 
-      <!-- плов -->
       <g>
         <circle cx="376" cy="66" r="43" fill="#F4F1EA"/>
         <circle cx="376" cy="66" r="37.5" fill="none" stroke="#2C6E8F" stroke-width="1.3" opacity=".5"/>
@@ -397,8 +491,18 @@
       <svg class="chev" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
     </a>
 
-    <div class="group">
+    <a class="review" href="https://2gis.kz/shymkent/firm/70000001074882983/tab/reviews" target="_blank" rel="noopener">
+      <svg class="ico" width="23" height="23" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="m12 3 2.7 5.9 6.3.7-4.7 4.3 1.3 6.3L12 17l-5.6 3.2 1.3-6.3L3 9.6l6.3-.7z"/>
+      </svg>
+      <span class="txt">
+        <span class="t i18n"><i lang="ru">Оставить отзыв</i><i lang="kk">Пікір қалдыру</i><i lang="uz">Фикр қолдириш</i></span>
+        <span class="s i18n"><i lang="ru">В 2GIS — это очень помогает нам</i><i lang="kk">2GIS-те — бұл бізге көп көмектеседі</i><i lang="uz">2GIS'да — бу бизга жуда ёрдам беради</i></span>
+      </span>
+      <svg class="chev" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+    </a>
 
+    <div class="group">
       <a class="row" href="https://www.instagram.com/madiyars_off" target="_blank" rel="noopener">
         <svg class="ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <rect x="3" y="3" width="18" height="18" rx="5.3"/>
@@ -423,18 +527,39 @@
         </span>
         <svg class="chev" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
       </a>
+    </div>
 
-      <a class="row" href="https://2gis.kz/shymkent/firm/70000001074882983/tab/reviews" target="_blank" rel="noopener">
-        <svg class="ico" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="color:var(--gold)">
-          <path d="m12 3 2.7 5.9 6.3.7-4.7 4.3 1.3 6.3L12 17l-5.6 3.2 1.3-6.3L3 9.6l6.3-.7z"/>
+    <div class="group" id="utility">
+      <button class="row" type="button" id="wifi" data-pass="dostar2026" hidden>
+        <svg class="ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <path d="M2.5 8.5a15 15 0 0 1 19 0"/>
+          <path d="M5.5 12a11 11 0 0 1 13 0"/>
+          <path d="M8.5 15.4a6.5 6.5 0 0 1 7 0"/>
+          <circle cx="12" cy="19" r="1.4" fill="currentColor" stroke="none"/>
         </svg>
         <span class="txt">
-          <span class="t i18n"><i lang="ru">Оставить отзыв</i><i lang="kk">Пікір қалдыру</i><i lang="uz">Фикр қолдириш</i></span>
-          <span class="s i18n"><i lang="ru">В 2GIS — это очень помогает нам</i><i lang="kk">2GIS-те — бұл бізге көп көмектеседі</i><i lang="uz">2GIS'да — бу бизга жуда ёрдам беради</i></span>
+          <span class="t">Wi-Fi</span>
+          <span class="s">Dostar_Guest</span>
+        </span>
+        <span class="pass">
+          dostar2026
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="9" y="9" width="12" height="12" rx="2.4"/>
+            <path d="M15 5.5A2.5 2.5 0 0 0 12.5 3h-7A2.5 2.5 0 0 0 3 5.5v7A2.5 2.5 0 0 0 5.5 15"/>
+          </svg>
+        </span>
+      </button>
+
+      <a class="row" id="phone" href="tel:+77000000000" hidden>
+        <svg class="ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6.2 3h3l1.5 4-2 1.4a11.5 11.5 0 0 0 5.4 5.4L15.6 12l4 1.5v3a1.8 1.8 0 0 1-2 1.8A14.5 14.5 0 0 1 4.4 5a1.8 1.8 0 0 1 1.8-2Z"/>
+        </svg>
+        <span class="txt">
+          <span class="t i18n"><i lang="ru">Позвонить</i><i lang="kk">Қоңырау шалу</i><i lang="uz">Қўнғироқ қилиш</i></span>
+          <span class="s">+7 700 000 00 00</span>
         </span>
         <svg class="chev" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
       </a>
-
     </div>
 
     <footer class="foot">
@@ -452,7 +577,10 @@
 
 </div>
 
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <script>
+  /* ---------- язык ---------- */
   (function(){
     var KEY = 'nfchub-lang';
     var OK  = { ru:1, kk:1, uz:1 };
@@ -470,6 +598,8 @@
         b[i].setAttribute('aria-pressed', on ? 'true' : 'false');
       }
       if (save) { try { localStorage.setItem(KEY, l); } catch(e){} }
+      window.__lang = l;
+      if (window.__paintStatus) window.__paintStatus();
     }
 
     var saved = null;
@@ -485,6 +615,94 @@
       while (t && t !== box && t.tagName !== 'BUTTON') t = t.parentNode;
       if (t && t.tagName === 'BUTTON') set(t.getAttribute('data-set'), true);
     });
+  })();
+
+  /* ---------- открыто сейчас ---------- */
+  (function(){
+    var el = document.getElementById('status');
+    var raw = (el.getAttribute('data-hours') || '').trim();
+    var m = raw.match(/^(\d{1,2}):(\d{2})\s*[-–—]\s*(\d{1,2}):(\d{2})$/);
+    if (!m) return;                                  // часы не заданы — плашки нет
+
+    var openMin  = (+m[1]) * 60 + (+m[2]);
+    var closeMin = (+m[3]) * 60 + (+m[4]);
+
+    var WORD = {
+      ru: { open:'Открыто до ',   shut:'Закрыто · откроем в ' },
+      kk: { open:'Ашық, ',        shut:'Жабық · ашылады ' },
+      uz: { open:'Очиқ, ',        shut:'Ёпиқ · очилади ' }
+    };
+
+    window.__paintStatus = function(){
+      var now = new Date();
+      var cur = now.getHours() * 60 + now.getMinutes();
+      // Закрытие после полуночи: интервал переходит через сутки.
+      var isOpen = (closeMin > openMin)
+        ? (cur >= openMin && cur < closeMin)
+        : (cur >= openMin || cur < closeMin);
+
+      var w = WORD[window.__lang || 'ru'] || WORD.ru;
+      el.classList.toggle('shut', !isOpen);
+      el.classList.add('show');
+      el.querySelector('.say').textContent = isOpen
+        ? w.open + m[3] + ':' + m[4]
+        : w.shut + m[1] + ':' + m[2];
+    };
+
+    window.__paintStatus();
+    setInterval(window.__paintStatus, 60000);
+  })();
+
+  /* ---------- Wi-Fi и телефон ---------- */
+  (function(){
+    var toast = document.getElementById('toast');
+    var timer;
+    function say(text){
+      toast.textContent = text;
+      toast.classList.add('show');
+      clearTimeout(timer);
+      timer = setTimeout(function(){ toast.classList.remove('show'); }, 1900);
+    }
+
+    var wifi = document.getElementById('wifi');
+    var pass = (wifi.getAttribute('data-pass') || '').trim();
+    // Фигурная скобка в начале означает неподставленный шаблон — строку не показываем.
+    if (pass && pass.charAt(0) !== '{') wifi.hidden = false;
+
+    wifi.addEventListener('click', function(){
+      var done = { ru:'Пароль скопирован', kk:'Құпиясөз көшірілді', uz:'Парол кўчирилди' };
+      var fail = { ru:'Не получилось скопировать', kk:'Көшіру мүмкін болмады', uz:'Кўчириб бўлмади' };
+      var L = window.__lang || 'ru';
+
+      function fallback(){
+        // Старые браузеры: прячем поле, выделяем, копируем.
+        var i = document.createElement('input');
+        i.value = pass;
+        i.setAttribute('readonly', '');
+        i.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
+        document.body.appendChild(i);
+        i.select();
+        i.setSelectionRange(0, pass.length);
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch(e){}
+        document.body.removeChild(i);
+        say(ok ? done[L] : fail[L]);
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(pass).then(function(){ say(done[L]); }, fallback);
+      } else {
+        fallback();
+      }
+    });
+
+    var phone = document.getElementById('phone');
+    var num = (phone.getAttribute('href') || '').replace('tel:', '').trim();
+    if (num && num.charAt(0) !== '{') phone.hidden = false;
+
+    // Пустая группа не должна оставлять пустую рамку.
+    var box = document.getElementById('utility');
+    if (wifi.hidden && phone.hidden) box.hidden = true;
   })();
 </script>
 

@@ -25,6 +25,11 @@ param(
     [string]$Review    = '',
     [string]$Subtitle  = 'чайхана',
     [string]$BaseUrl   = 'https://madiyar77758.github.io/nfc-cards',
+    # Часы работы вида "10:00-00:00". Пусто — плашки «открыто» не будет.
+    [string]$Hours     = '',
+    [string]$WifiName  = '',
+    [string]$WifiPass  = '',
+    [string]$Phone     = '',
     [switch]$Force,
     # Только печатные материалы: страницу и меню не трогать.
     # Нужно для своих страниц, написанных вручную.
@@ -90,6 +95,7 @@ if (-not $PrintOnly) {
 
     $map = @{
         '{{NAME}}'          = $Name
+        '{{SUBTITLE}}'      = $Subtitle
         '{{INITIALS}}'      = $Initials
         '{{CITY}}'          = $City
         '{{URL_MENU}}'      = $Menu
@@ -97,6 +103,12 @@ if (-not $PrintOnly) {
         '{{URL_TIKTOK}}'    = $TikTok
         '{{URL_2GIS}}'      = $Gis
         '{{URL_REVIEW}}'    = $(if ([string]::IsNullOrWhiteSpace($Review)) { $Gis } else { $Review })
+        '{{HOURS}}'         = $Hours
+        '{{WIFI_NAME}}'     = $WifiName
+        '{{WIFI_PASS}}'     = $WifiPass
+        '{{PHONE}}'         = $Phone
+        # Для tel: оставляем только плюс и цифры.
+        '{{PHONE_RAW}}'     = ($Phone -replace '[^\d+]', '')
     }
     foreach ($key in $map.Keys) {
         $html = $html.Replace($key, $map[$key])
