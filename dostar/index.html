@@ -242,7 +242,7 @@
     flex:1;
     display:flex;
     flex-direction:column;
-    gap:12px;
+    gap:14px;
     animation:lift .6s cubic-bezier(.2,.8,.25,1) .12s both;
   }
   @keyframes lift{ from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
@@ -255,10 +255,10 @@
     min-height:66px;
     padding:15px 18px;
     border-radius:20px;
-    background:var(--brand);
+    background:linear-gradient(145deg, #109468 0%, var(--brand) 55%, var(--brand-2) 100%);
     color:#fff;
     text-decoration:none;
-    box-shadow:0 1px 2px rgba(14,71,53,.18), 0 12px 26px -14px rgba(14,71,53,.6);
+    box-shadow:0 1px 2px rgba(10,101,71,.22), 0 16px 30px -14px rgba(10,101,71,.75);
     transition:transform .13s ease, background .13s ease;
     touch-action:manipulation;
   }
@@ -274,8 +274,9 @@
     min-height:64px;
     padding:14px 17px;
     border-radius:20px;
-    border:1px solid #EADFC6;
-    background:linear-gradient(180deg,#FFFDF8 0%,#FDF7EA 100%);
+    border:1px solid var(--line);
+    background:var(--paper);
+    box-shadow:0 0 0 1px rgba(199,154,58,.18) inset;
     color:inherit;
     text-decoration:none;
     transition:transform .13s ease;
@@ -283,11 +284,19 @@
   }
   .review:active{ transform:scale(.985); }
   .review .t{ font-size:16.5px; font-weight:650; letter-spacing:-.01em; }
-  .review .s{ font-size:12.5px; color:#8A7444; }
-  .review .ico{ color:var(--gold); }
+  .review .s{ font-size:12.5px; color:var(--ink-3); }
+  
 
   /* ---------- списки ---------- */
-  .group{ border:1px solid var(--line); border-radius:20px; overflow:hidden; background:var(--paper); }
+  .group{
+    border:1px solid var(--line);
+    border-radius:20px;
+    overflow:hidden;
+    background:var(--paper);
+    box-shadow:0 1px 2px rgba(15,23,42,.04);
+  }
+  /* второй список идёт вплотную к первому — они читаются одной стопкой */
+  .group + .group{ margin-top:-4px; }
   .row{
     display:flex;
     align-items:center;
@@ -311,9 +320,24 @@
   .txt{ display:flex; flex-direction:column; gap:1px; min-width:0; }
   .txt .t{ font-size:16px; font-weight:600; letter-spacing:-.008em; }
   .txt .s{ font-size:12.5px; color:var(--ink-3); }
-  .ico{ flex:none; color:var(--ink-2); }
+  /* Плитка под иконкой: тонкий серый контур в списке читается вяло,
+     подложка делает строку весомой и добавляет ритм. */
+  .tile{
+    flex:none;
+    width:42px;
+    height:42px;
+    border-radius:13px;
+    display:grid;
+    place-items:center;
+    background:var(--brand-tint);
+    color:var(--brand);
+  }
+  .review .tile{ background:var(--gold-soft); color:#9A7B22; }
+  .cta .tile{ background:rgba(255,255,255,.17); color:#fff; }
+  .ico{ flex:none; }
+
   .cta .ico{ color:rgba(255,255,255,.9); }
-  .chev{ margin-left:auto; flex:none; color:#C6D0CA; }
+  .chev{ margin-left:auto; flex:none; color:#A9BCB2; }
   .cta .chev{ color:rgba(255,255,255,.55); }
 
   /* пароль Wi-Fi моноширинным: цифры и буквы не спутать */
@@ -493,11 +517,11 @@
   <main class="sheet">
 
     <a class="cta" href="menu/">
-      <svg class="ico" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <span class="tile" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M4 5.6A1.6 1.6 0 0 1 5.6 4H11v16H5.6A1.6 1.6 0 0 1 4 18.4z"/>
         <path d="M20 5.6A1.6 1.6 0 0 0 18.4 4H13v16h5.4a1.6 1.6 0 0 0 1.6-1.6z"/>
         <path d="M6.8 8.4h2M6.8 11.4h2M15.2 8.4h2M15.2 11.4h2"/>
-      </svg>
+      </svg></span>
       <span class="txt">
         <span class="t i18n"><i lang="ru">Меню</i><i lang="kk">Мәзір</i><i lang="uz">Меню</i></span>
         <span class="s i18n"><i lang="ru">Каталог блюд и цены</i><i lang="kk">Тағамдар мен бағалар</i><i lang="uz">Таомлар ва нархлар</i></span>
@@ -506,9 +530,9 @@
     </a>
 
     <a class="review" href="https://2gis.kz/shymkent/firm/70000001074882983/tab/reviews" target="_blank" rel="noopener">
-      <svg class="ico" width="23" height="23" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <span class="tile" aria-hidden="true"><svg width="23" height="23" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
         <path d="m12 3 2.7 5.9 6.3.7-4.7 4.3 1.3 6.3L12 17l-5.6 3.2 1.3-6.3L3 9.6l6.3-.7z"/>
-      </svg>
+      </svg></span>
       <span class="txt">
         <span class="t i18n"><i lang="ru">Оставить отзыв</i><i lang="kk">Пікір қалдыру</i><i lang="uz">Фикр қолдириш</i></span>
         <span class="s i18n"><i lang="ru">В 2GIS — это очень помогает нам</i><i lang="kk">2GIS-те — бұл бізге көп көмектеседі</i><i lang="uz">2GIS'да — бу бизга жуда ёрдам беради</i></span>
@@ -518,11 +542,11 @@
 
     <div class="group">
       <a class="row" href="https://www.instagram.com/madiyars_off" target="_blank" rel="noopener">
-        <svg class="ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <span class="tile" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <rect x="3" y="3" width="18" height="18" rx="5.3"/>
           <circle cx="12" cy="12" r="4"/>
           <circle cx="17.3" cy="6.7" r="1.05" fill="currentColor" stroke="none"/>
-        </svg>
+        </svg></span>
         <span class="txt">
           <span class="t">Instagram</span>
           <span class="s i18n"><i lang="ru">Фото и новинки</i><i lang="kk">Фото және жаңалықтар</i><i lang="uz">Фото ва янгиликлар</i></span>
@@ -531,10 +555,10 @@
       </a>
 
       <a class="row" href="https://www.tiktok.com/@ieltsnova7" target="_blank" rel="noopener">
-        <svg class="ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <span class="tile" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M13.6 3v11.5a3.65 3.65 0 1 1-3.2-3.62"/>
           <path d="M13.6 3.5c.55 2.65 2.25 4.25 4.95 4.45"/>
-        </svg>
+        </svg></span>
         <span class="txt">
           <span class="t">TikTok</span>
           <span class="s i18n"><i lang="ru">Видео из заведения</i><i lang="kk">Мекеменің видеосы</i><i lang="uz">Масканинг видеолари</i></span>
@@ -545,12 +569,12 @@
 
     <div class="group" id="utility">
       <button class="row" type="button" id="wifi" data-pass="dostar2026" hidden>
-        <svg class="ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+        <span class="tile" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
           <path d="M2.5 8.5a15 15 0 0 1 19 0"/>
           <path d="M5.5 12a11 11 0 0 1 13 0"/>
           <path d="M8.5 15.4a6.5 6.5 0 0 1 7 0"/>
           <circle cx="12" cy="19" r="1.4" fill="currentColor" stroke="none"/>
-        </svg>
+        </svg></span>
         <span class="txt">
           <span class="t">Wi-Fi</span>
           <span class="s">Dostar_Guest</span>
@@ -565,9 +589,9 @@
       </button>
 
       <a class="row" id="phone" href="tel:" hidden>
-        <svg class="ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <span class="tile" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M6.2 3h3l1.5 4-2 1.4a11.5 11.5 0 0 0 5.4 5.4L15.6 12l4 1.5v3a1.8 1.8 0 0 1-2 1.8A14.5 14.5 0 0 1 4.4 5a1.8 1.8 0 0 1 1.8-2Z"/>
-        </svg>
+        </svg></span>
         <span class="txt">
           <span class="t i18n"><i lang="ru">Позвонить</i><i lang="kk">Қоңырау шалу</i><i lang="uz">Қўнғироқ қилиш</i></span>
           <span class="s"></span>
