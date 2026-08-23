@@ -5,34 +5,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Меню — Достар</title>
 <meta name="description" content="Меню Достар: блюда и цены." />
-<meta name="theme-color" content="#0E4735" />
+<meta name="theme-color" content="#14161A" />
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="ru_KZ" />
 <meta property="og:title" content="Меню — Достар" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230E4735'/%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2314161A'/%3E%3C/svg%3E" />
 
-<!-- Playfair Display SC и Manrope — обе с кириллицей (Karla её не имеет).
-     display=swap: текст виден сразу системным шрифтом, потом подменяется. -->
+<!-- Manrope: один гротеск на всю страницу, кириллица есть.
+     display=swap: текст виден сразу, потом подменяется. -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display+SC:wght@400;700&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" />
 
 <style>
   :root{
     color-scheme: light;
-    --serif:"Playfair Display SC", Georgia, "Noto Serif", "Times New Roman", serif;
+    --serif:"Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     --sans:"Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    --bg:#E7EBE7;
+    --bg:#FFF7ED;
     --paper:#FFFFFF;
-    --brand:#0E4735;
-    --brand-2:#175C45;
-    --brand-tint:#EDF3F0;
-    --gold:#B8892F;
-    --gold-soft:#F7EFDD;
-    --ink:#15201B;
-    --ink-2:#58655E;
-    --ink-3:#95A09A;
-    --line:#E8EDE9;
+    --band:#14161A;
+    --band-2:#1E2126;
+    --brand:#EA580C;
+    --brand-2:#C2410C;
+    --brand-tint:#FFF1E6;
+    --gold:#F59E0B;
+    --gold-soft:#FEF3C7;
+    --ink:#0F172A;
+    --ink-2:#475569;
+    --ink-3:#94A3B8;
+    --line:#F2E8DF;
     --pad:20px;
     --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
   }
@@ -75,8 +77,8 @@
     padding:calc(16px + env(safe-area-inset-top)) var(--pad) 26px;
     color:#fff;
     background:
-      radial-gradient(120% 90% at 50% -30%, rgba(255,255,255,.14), rgba(255,255,255,0) 60%),
-      var(--brand);
+      radial-gradient(120% 90% at 50% -25%, rgba(234,88,12,.22), rgba(234,88,12,0) 60%),
+      var(--band);
     overflow:hidden;
   }
   .band::after{
@@ -139,11 +141,11 @@
   .titles{ position:relative; z-index:2; margin-top:14px; }
   .titles h1{
     margin:0;
-    font-family:var(--serif);
-    font-weight:400;
-    font-size:38px;
-    letter-spacing:.02em;
-    line-height:1.02;
+    font-family:var(--sans);
+    font-weight:800;
+    font-size:34px;
+    letter-spacing:-.03em;
+    line-height:1.05;
   }
   .titles p{
     margin:9px 0 0;
@@ -193,7 +195,7 @@
     transition:background .15s ease, color .15s ease, border-color .15s ease;
     touch-action:manipulation;
   }
-  .cats a.on{ background:var(--brand); border-color:var(--brand); color:#fff; }
+  .cats a.on{ background:var(--ink); border-color:var(--ink); color:#fff; }
 
   /* ---------- разделы ---------- */
   main{ flex:1; padding:0 var(--pad); }
@@ -205,11 +207,11 @@
   .medal{ flex:none; width:42px; height:42px; }
   .sec-head h2{
     margin:0;
-    font-family:var(--serif);
-    font-weight:400;
-    font-size:26px;
-    letter-spacing:.015em;
-    line-height:1.1;
+    font-family:var(--sans);
+    font-weight:800;
+    font-size:24px;
+    letter-spacing:-.028em;
+    line-height:1.12;
   }
   .sec-head .hint{ margin:2px 0 0; font-size:12px; color:var(--ink-3); }
 
@@ -221,7 +223,7 @@
     position:relative;
     display:flex;
     flex-direction:column;
-    border-radius:18px;
+    border-radius:22px;
     overflow:hidden;
     background:var(--paper);
     box-shadow:0 1px 2px rgba(21,32,27,.05), 0 10px 24px -14px rgba(14,71,53,.35);
@@ -285,14 +287,6 @@
     letter-spacing:-.008em;
   }
   .dots{ display:none; }
-  .price{
-    flex:none;
-    font-size:15px;
-    font-weight:600;
-    font-variant-numeric:tabular-nums;
-    color:var(--ink);
-    white-space:nowrap;
-  }
   .desc{ margin:4px 0 0; font-size:12.5px; line-height:1.45; color:var(--ink-3); max-width:30em; }
 
   /* Хит — золотая плашка на углу картинки */

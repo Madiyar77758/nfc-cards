@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Достар</title>
 <meta name="description" content="Достар — меню, отзывы, соцсети и Wi-Fi." />
-<meta name="theme-color" content="#0E4735" />
+<meta name="theme-color" content="#14161A" />
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="ru_KZ" />
 <meta property="og:title" content="Достар" />
 <meta property="og:description" content="Меню, отзывы и соцсети — в одном месте." />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230E4735'/%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2314161A'/%3E%3C/svg%3E" />
 
 <!--
   ============================================================
@@ -24,7 +24,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display+SC:wght@400;700&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" />
 
 <style>
   /* Страница всегда светлая: её открывают в зале при дневном свете. */
@@ -32,19 +32,21 @@
   :root[data-theme="dark"],
   :root[data-theme="light"]{
     color-scheme: light;
-    --serif:"Playfair Display SC", Georgia, "Noto Serif", "Times New Roman", serif;
+    --serif:"Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     --sans:"Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    --bg:#E7EBE7;
+    --bg:#FFF7ED;
     --paper:#FFFFFF;
-    --brand:#0E4735;
-    --brand-2:#175C45;
-    --brand-tint:#EDF3F0;
-    --gold:#B8892F;
-    --gold-soft:#F7EFDD;
-    --ink:#15201B;
-    --ink-2:#58655E;
-    --ink-3:#95A09A;
-    --line:#E8EDE9;
+    --band:#14161A;
+    --band-2:#1E2126;
+    --brand:#EA580C;
+    --brand-2:#C2410C;
+    --brand-tint:#FFF1E6;
+    --gold:#F59E0B;
+    --gold-soft:#FEF3C7;
+    --ink:#0F172A;
+    --ink-2:#475569;
+    --ink-3:#94A3B8;
+    --line:#F2E8DF;
     --pad:20px;
     --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
   }
@@ -92,8 +94,8 @@
     color:#fff;
     overflow:hidden;
     background:
-      radial-gradient(125% 100% at 50% -25%, rgba(255,255,255,.15), rgba(255,255,255,0) 62%),
-      var(--brand);
+      radial-gradient(120% 100% at 50% -20%, rgba(234,88,12,.22), rgba(234,88,12,0) 62%),
+      var(--band);
   }
   .band::after{
     content:"";
@@ -154,9 +156,10 @@
     place-items:center;
     background:var(--paper);
     color:var(--brand);
-    font-family:var(--serif);
+    font-family:var(--sans);
+    font-weight:800;
     font-size:24px;
-    letter-spacing:.02em;
+    letter-spacing:-.02em;
   }
   .mark::after{
     content:"";
@@ -172,11 +175,11 @@
   }
   .band h1{
     margin:0;
-    font-family:var(--serif);
-    font-weight:400;
+    font-family:var(--sans);
+    font-weight:800;
     font-size:clamp(30px, 9vw, 38px);
-    line-height:1.06;
-    letter-spacing:.02em;
+    line-height:1.04;
+    letter-spacing:-.032em;
     text-wrap:balance;
   }
   .kind{
@@ -233,7 +236,7 @@
     margin-top:-24px;
     padding:24px var(--pad) calc(20px + env(safe-area-inset-bottom));
     background:var(--paper);
-    border-radius:26px 26px 0 0;
+    border-radius:28px 28px 0 0;
     flex:1;
     display:flex;
     flex-direction:column;
@@ -247,9 +250,9 @@
     display:flex;
     align-items:center;
     gap:14px;
-    min-height:64px;
-    padding:14px 18px;
-    border-radius:16px;
+    min-height:66px;
+    padding:15px 18px;
+    border-radius:20px;
     background:var(--brand);
     color:#fff;
     text-decoration:none;
@@ -266,9 +269,9 @@
     display:flex;
     align-items:center;
     gap:14px;
-    min-height:62px;
-    padding:13px 17px;
-    border-radius:16px;
+    min-height:64px;
+    padding:14px 17px;
+    border-radius:20px;
     border:1px solid #EADFC6;
     background:linear-gradient(180deg,#FFFDF8 0%,#FDF7EA 100%);
     color:inherit;
@@ -282,7 +285,7 @@
   .review .ico{ color:var(--gold); }
 
   /* ---------- списки ---------- */
-  .group{ border:1px solid var(--line); border-radius:16px; overflow:hidden; }
+  .group{ border:1px solid var(--line); border-radius:20px; overflow:hidden; background:var(--paper); }
   .row{
     display:flex;
     align-items:center;
