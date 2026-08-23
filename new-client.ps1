@@ -132,7 +132,24 @@ if ($ownMenu) {
     if (-not (Test-Path $menuDir)) {
         New-Item -ItemType Directory -Path $menuDir | Out-Null
     }
+    # Где лежит настоящее фото — карточка берёт его вместо рисунка.
+    $photoDir = Join-Path $menuDir 'photo'
+    $swapped = 0
+    if (Test-Path $photoDir) {
+        foreach ($jpg in (Get-ChildItem $photoDir -Filter *.jpg -ErrorAction SilentlyContinue)) {
+            $from = 'photo/' + $jpg.BaseName + '.svg'
+            $to   = 'photo/' + $jpg.Name
+            if ($menuHtml.Contains($from)) {
+                $menuHtml = $menuHtml.Replace($from, $to)
+                $swapped++
+            }
+        }
+    }
+
     [System.IO.File]::WriteAllText($menuFile, $menuHtml, $utf8NoBom)
+    if ($swapped) {
+        Write-Host "  Фото:      $swapped блюд с настоящими снимками" -ForegroundColor Green
+    }
 }
 
 # Печатный макет карты плюс QR с той же ссылкой, что и в метке:
