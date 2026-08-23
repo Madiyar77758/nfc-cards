@@ -22,12 +22,18 @@
   ============================================================
 -->
 
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display+SC:wght@400;700&display=swap" />
+
 <style>
   /* Страница всегда светлая: её открывают в зале при дневном свете. */
   :root,
   :root[data-theme="dark"],
   :root[data-theme="light"]{
     color-scheme: light;
+    --serif:"Playfair Display SC", Georgia, "Noto Serif", "Times New Roman", serif;
+    --sans:"Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     --bg:#E7EBE7;
     --paper:#FFFFFF;
     --brand:#0E4735;
@@ -53,7 +59,7 @@
     margin:0;
     background:var(--bg);
     color:var(--ink);
-    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family:var(--sans);
     line-height:1.45;
     -webkit-font-smoothing:antialiased;
     -webkit-tap-highlight-color:transparent;
@@ -148,7 +154,7 @@
     place-items:center;
     background:var(--paper);
     color:var(--brand);
-    font-family:Georgia,"Noto Serif","Times New Roman",serif;
+    font-family:var(--serif);
     font-size:24px;
     letter-spacing:.02em;
   }
@@ -166,11 +172,11 @@
   }
   .band h1{
     margin:0;
-    font-family:Georgia,"Noto Serif","Times New Roman",serif;
+    font-family:var(--serif);
     font-weight:400;
-    font-size:clamp(27px, 8vw, 32px);
-    line-height:1.12;
-    letter-spacing:-.012em;
+    font-size:clamp(30px, 9vw, 38px);
+    line-height:1.06;
+    letter-spacing:.02em;
     text-wrap:balance;
   }
   .kind{
