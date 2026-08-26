@@ -80,7 +80,7 @@ a { color: inherit; -webkit-touch-callout: none; }
 .i18n > i { font-style: normal; display: none; }
 html[data-lang="ru"] .i18n > i[lang="ru"],
 html[data-lang="kk"] .i18n > i[lang="kk"],
-html[data-lang="uz"] .i18n > i[lang="uz"] { display: inline; }
+html[data-lang="en"] .i18n > i[lang="en"] { display: inline; }
 
 /* ---------- лист ---------- */
 .hub {

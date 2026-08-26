@@ -553,20 +553,20 @@
 
   function editSection(si) {
     var isNew = si === null;
-    var sec = isNew ? { id: uid('s'), title: { ru: '', kk: '', uz: '' }, hint: '', items: [] } : model.sections[si];
-    var t = typeof sec.title === 'string' ? { ru: sec.title, kk: '', uz: '' } : (sec.title || {});
+    var sec = isNew ? { id: uid('s'), title: { ru: '', kk: '', en: '' }, hint: '', items: [] } : model.sections[si];
+    var t = typeof sec.title === 'string' ? { ru: sec.title, kk: '', en: '' } : (sec.title || {});
 
     sheet(isNew ? 'Новый раздел' : 'Раздел',
       fld('Название (рус)', 's-ru', t.ru, 'Салаты') +
       fld('Қазақша', 's-kk', t.kk, 'Салаттар') +
-      fld('Ўзбекча', 's-uz', t.uz, 'Салатлар') +
+      fld('English', 's-en', t.en, 'Salads') +
       fld('Подпись под названием', 's-hint', sec.hint, 'Готовим на живом огне, в казане и тандыре') +
       '<p class="hint">Пустой перевод заменяется русским названием. Подпись — одна строка ' +
       'про раздел, она заметно оживляет меню; пустую не показываем.</p>',
       function (bg) {
         var ru = bg.querySelector('#s-ru').value.trim();
         if (!ru) { XD.toast('Впишите название', true); return false; }
-        sec.title = { ru: ru, kk: bg.querySelector('#s-kk').value.trim(), uz: bg.querySelector('#s-uz').value.trim() };
+        sec.title = { ru: ru, kk: bg.querySelector('#s-kk').value.trim(), en: bg.querySelector('#s-en').value.trim() };
         sec.hint = bg.querySelector('#s-hint').value.trim();
         if (isNew) model.sections.push(sec);
         renderMenu();

@@ -10,7 +10,7 @@
   var CFG = global.XD_CONFIG || { API_BASE: '', SLUG: 'xamidoo' };
   var LANG_KEY = 'xd-lang';
   var TOKEN_KEY = 'xd-token';
-  var OK_LANG = { ru: 1, kk: 1, uz: 1 };
+  var OK_LANG = { ru: 1, kk: 1, en: 1 };
 
   /* ---------- язык ---------- */
 
@@ -20,7 +20,7 @@
     if (saved && OK_LANG[saved]) return saved;
     var n = (navigator.language || 'ru').toLowerCase();
     if (n.indexOf('kk') === 0) return 'kk';
-    if (n.indexOf('uz') === 0) return 'uz';
+    if (n.indexOf('en') === 0) return 'en';
     return 'ru';
   }
 

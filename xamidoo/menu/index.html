@@ -363,19 +363,19 @@
     <div class="topbar">
       <a class="back" href="../">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
-        <span class="i18n"><i lang="ru">Назад</i><i lang="kk">Артқа</i><i lang="uz">Орқага</i></span>
+        <span class="i18n"><i lang="ru">Назад</i><i lang="kk">Артқа</i><i lang="en">Back</i></span>
       </a>
-      <div class="lang" id="lang" role="group" aria-label="Тіл / Til / Язык">
+      <div class="lang" id="lang" role="group" aria-label="Тіл / Language / Язык">
         <button type="button" data-set="ru">RU</button>
         <button type="button" data-set="kk">ҚАЗ</button>
-        <button type="button" data-set="uz">ЎЗ</button>
+        <button type="button" data-set="en">EN</button>
       </div>
     </div>
 
     <div class="titles">
       <img src="../img/logo.webp" width="54" height="54" alt="" />
       <div>
-        <h1 class="i18n"><i lang="ru">Меню</i><i lang="kk">Мәзір</i><i lang="uz">Меню</i></h1>
+        <h1 class="i18n"><i lang="ru">Меню</i><i lang="kk">Мәзір</i><i lang="en">Menu</i></h1>
         <p id="who">Xami_Doo</p>
       </div>
     </div>
@@ -389,23 +389,23 @@
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
         <path d="M4 6h16M4 12h16M4 18h16"/>
       </svg>
-      <span class="i18n"><i lang="ru">Все</i><i lang="kk">Барлығы</i><i lang="uz">Барчаси</i></span>
+      <span class="i18n"><i lang="ru">Все</i><i lang="kk">Барлығы</i><i lang="en">All</i></span>
     </button>
   </div>
 
   <main id="list">
-    <p class="note i18n"><i lang="ru">Загружаем меню…</i><i lang="kk">Мәзір жүктелуде…</i><i lang="uz">Меню юкланмоқда…</i></p>
+    <p class="note i18n"><i lang="ru">Загружаем меню…</i><i lang="kk">Мәзір жүктелуде…</i><i lang="en">Loading the menu…</i></p>
   </main>
 
   <footer class="foot">
     <a class="home" href="../">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
-      <span class="i18n"><i lang="ru">На главную</i><i lang="kk">Басты бетке</i><i lang="uz">Бош саҳифага</i></span>
+      <span class="i18n"><i lang="ru">На главную</i><i lang="kk">Басты бетке</i><i lang="en">Home</i></span>
     </a>
     <small class="i18n">
       <i lang="ru">Цены указаны в тенге. Подача блюда может немного отличаться от фотографии.</i>
       <i lang="kk">Бағалар теңгемен. Тағамның берілуі суреттен сәл өзгеше болуы мүмкін.</i>
-      <i lang="uz">Нархлар теңгеда. Таомнинг тақдим этилиши суратдан бироз фарқ қилиши мумкин.</i>
+      <i lang="en">Prices are in tenge. The dish may be served slightly differently from the photo.</i>
     </small>
   </footer>
 
@@ -428,7 +428,7 @@
   var WORD = {
     ru: { empty: 'Меню пока пустое', fail: 'Не получилось загрузить меню' },
     kk: { empty: 'Мәзір әзірге бос',  fail: 'Мәзірді жүктеу мүмкін болмады' },
-    uz: { empty: 'Меню ҳозирча бўш',  fail: 'Менюни юклаб бўлмади' }
+    en: { empty: 'The menu is empty',  fail: 'Could not load the menu' }
   };
   function w() { return WORD[window.XD_LANG || 'ru'] || WORD.ru; }
 
@@ -552,7 +552,7 @@
   function openIdx() {
     if (!index.length) return;
     closeIdx();
-    var TITLE = { ru: 'Разделы меню', kk: 'Мәзір бөлімдері', uz: 'Меню бўлимлари' };
+    var TITLE = { ru: 'Разделы меню', kk: 'Мәзір бөлімдері', en: 'Menu sections' };
     idx = document.createElement('div');
     idx.className = 'idx-bg';
     idx.innerHTML = '<div class="idx" role="dialog" aria-modal="true"><h3>' +
