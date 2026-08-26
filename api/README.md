@@ -13,6 +13,39 @@
 - аккаунт Cloudflare (бесплатный, регистрация по почте)
 - Node.js на компьютере — он уже стоит
 
+## Проверить у себя, без аккаунта
+
+Всё то же самое поднимается на своём компьютере — аккаунт Cloudflare не нужен.
+Так проверяли эту сборку целиком, прежде чем что-то развёртывать.
+
+```bash
+cd api
+
+# секреты для локального запуска (файл уже в .gitignore)
+#   TOKEN_SECRET=local-test-secret
+#   ADMIN_KEY=local-admin-key
+# лежат в api/.dev.vars
+
+npx wrangler d1 execute xd-menu --local --file=./schema.sql
+npx wrangler dev --port 8787 --local
+```
+
+В соседнем окне завести заведение и убедиться, что живо:
+
+```bash
+curl "http://127.0.0.1:8787/v1/health"
+curl -X POST "http://127.0.0.1:8787/v1/client" \
+  -H "content-type: application/json" -H "x-admin-key: local-admin-key" \
+  -d "{\"slug\":\"xamidoo\",\"pass\":\"test1234\",\"data\":$(cat ../xamidoo/data/menu.json)}"
+```
+
+Дальше временно поставить `API_BASE: 'http://127.0.0.1:8787'` в
+`xamidoo/app/config.js`, открыть `/admin/` с паролем `test1234` и поменять цену.
+**Не забыть вернуть `API_BASE` обратно перед коммитом.**
+
+Локальная база лежит в `api/.wrangler/` и в репозиторий не попадает.
+Очистить её: `npx wrangler d1 execute xd-menu --local --command "DELETE FROM clients"`.
+
 ## Развёртывание, один раз
 
 Все команды — из папки `api/`.
@@ -36,6 +69,8 @@ npx wrangler d1 execute xd-menu --remote --file=./schema.sql
 
 # 4. два секрета: подпись токенов и ваш ключ владельца.
 #    Придумайте длинные случайные строки и сохраните их у себя.
+#    ADMIN_KEY едет в HTTP-заголовке — только латиница, цифры и дефис,
+#    кириллица в заголовок не пролезает.
 npx wrangler secret put TOKEN_SECRET
 npx wrangler secret put ADMIN_KEY
 

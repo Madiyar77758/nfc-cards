@@ -1,2 +1,6 @@
 node_modules/
 package-lock.json
+
+# локальные секреты и состояние wrangler — в репозиторий не попадают
+.dev.vars
+.wrangler/
