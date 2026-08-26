@@ -63,22 +63,90 @@
   .promo .ps { font-size: 12px; color: rgba(255, 255, 255, .72); }
 
   /* ---------- липкие категории ---------- */
-  .cats {
+  .cats-wrap {
     position: sticky;
     top: 0;
     z-index: 5;
     display: flex;
-    gap: 8px;
+    align-items: center;
     padding: 10px var(--pad);
+    gap: 8px;
     background: rgba(255, 255, 255, .94);
     -webkit-backdrop-filter: saturate(180%) blur(12px);
     backdrop-filter: saturate(180%) blur(12px);
     border-bottom: 1px solid var(--line);
+  }
+  .cats {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    gap: 8px;
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    /* полоса уезжает за край — подсказываем это затуханием справа */
+    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 26px), transparent);
+            mask-image: linear-gradient(90deg, #000 calc(100% - 26px), transparent);
   }
   .cats::-webkit-scrollbar { display: none; }
+
+  /* кнопка со списком всех разделов: с десятью категориями пролистывать
+     полосу вслепую неудобно, а так весь состав меню виден разом */
+  .cats-all {
+    flex: none;
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 36px;
+    padding: 7px 13px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--paper);
+    color: var(--ink);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: -10px 0 14px rgba(255, 255, 255, .95);
+  }
+  .cats-all:active { background: var(--brand-tint); }
+
+  /* ---------- список всех разделов ---------- */
+  .idx-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: rgba(43, 19, 16, .5);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .idx {
+    width: 100%;
+    max-width: var(--wrap);
+    max-height: 82dvh;
+    overflow-y: auto;
+    padding: 18px var(--pad) calc(18px + env(safe-area-inset-bottom));
+    border-radius: 24px 24px 0 0;
+    background: var(--paper);
+    animation: up .22s cubic-bezier(.2, .8, .25, 1) both;
+  }
+  @keyframes up { from { transform: translateY(16px); opacity: 0; } to { transform: none; opacity: 1; } }
+  .idx h3 { margin: 0 0 14px; font-family: var(--display); font-size: 21px; font-weight: 800; letter-spacing: -.02em; }
+  .idx a {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 11px 4px;
+    border-bottom: 1px solid var(--line);
+    text-decoration: none;
+    color: inherit;
+  }
+  .idx a:last-of-type { border-bottom: 0; }
+  .idx a .medal { width: 38px; height: 38px; }
+  .idx a b { flex: 1; font-size: 16px; font-weight: 600; }
+  .idx a i { font-style: normal; font-size: 13px; font-weight: 600; color: var(--ink-3); }
   .cats a {
     flex: none;
     padding: 7px 14px;
@@ -193,20 +261,47 @@
   .hit { left: 10px; background: rgba(255, 255, 255, .95); color: #8A6415; }
   .off { right: 10px; background: var(--brand); color: #fff; }
 
-  /* ---------- блюда без фотографии ----------
-     В печатном меню они и идут простым списком, поэтому здесь
-     занимают всю ширину строкой, а не пустой карточкой. */
+  /* ---------- раздел списком ----------
+     Когда фотографий меньше, чем у половины блюд, сетка из двух карточек
+     с висящим снизу списком читается как поломка. Такой раздел целиком
+     показываем списком — так он и свёрстан в печатном меню. Появятся
+     снимки — раздел сам вернётся в сетку. */
+  section.list { display: block; }
+  section.list .sec-head { margin-bottom: 10px; }
+
   .plain {
     grid-column: 1 / -1;
     display: flex;
-    align-items: baseline;
-    gap: 10px;
-    padding: 11px 2px;
+    align-items: center;
+    gap: 11px;
+    padding: 10px 2px;
     border-bottom: 1px solid var(--line);
   }
+  .plain:last-child { border-bottom: 0; }
+  .plain .thumb {
+    flex: none;
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #F6EEEB;
+    cursor: zoom-in;
+  }
   .plain .name { flex: none; }
-  .plain .dots { flex: 1; border-bottom: 1.5px dotted #E3CDC8; transform: translateY(-4px); }
+  .plain .dots { flex: 1; border-bottom: 1.5px dotted #E3CDC8; transform: translateY(-3px); }
   .plain .price { margin: 0; font-size: 15.5px; }
+  .plain .tag {
+    margin-left: 6px;
+    padding: 2px 7px;
+    border-radius: 6px;
+    background: var(--gold-soft);
+    color: #8A6415;
+    font-size: 9.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    vertical-align: 2px;
+  }
+  .plain .tag.off { background: var(--brand); color: #fff; }
 
   /* ---------- просмотр фото ---------- */
   .lb {
@@ -288,7 +383,15 @@
     <div class="promos" id="promos"></div>
   </header>
 
-  <nav class="cats" id="cats" aria-label="Разделы меню"></nav>
+  <div class="cats-wrap">
+    <nav class="cats" id="cats" aria-label="Разделы меню"></nav>
+    <button class="cats-all" type="button" id="cats-all" aria-haspopup="dialog">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <path d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+      <span class="i18n"><i lang="ru">Все</i><i lang="kk">Барлығы</i><i lang="uz">Барчаси</i></span>
+    </button>
+  </div>
 
   <main id="list">
     <p class="note i18n"><i lang="ru">Загружаем меню…</i><i lang="kk">Мәзір жүктелуде…</i><i lang="uz">Меню юкланмоқда…</i></p>
@@ -364,6 +467,14 @@
       var items = (sec.items || []).filter(function (it) { return !it.off; });
       if (!items.length) return null;
 
+      // В данных лежит либо имя файла из menu/photo/, либо полный адрес.
+      function srcOf(photo) { return /^https?:/.test(photo) ? photo : 'photo/' + photo; }
+
+      // Раздел, где фото меньше чем у половины блюд, показываем списком:
+      // две карточки и висящий под ними перечень читаются как поломка.
+      var withPhoto = items.filter(function (it) { return !!it.photo; }).length;
+      var asList = withPhoto * 2 < items.length;
+
       var cards = items.map(function (it) {
         var promo = XD.promoFor(live, it.id, sec.id);
         var pr = XD.priceOf(it, promo);
@@ -371,18 +482,22 @@
           (pr.was ? '<span class="was">' + XD.money(pr.was) + '</span>' : '') +
           XD.money(pr.now) + '</span>';
 
-        // без фотографии — строкой во всю ширину, как в печатном меню
-        if (!it.photo) {
-          return '<div class="plain"><span class="name">' + XD.esc(it.name) + '</span>' +
-            '<span class="dots"></span>' + price + '</div>';
+        if (asList || !it.photo) {
+          return '<div class="plain">' +
+            (it.photo
+              ? '<img class="thumb" src="' + XD.esc(srcOf(it.photo)) + '" alt="" loading="lazy" ' +
+                'decoding="async" width="52" height="52" data-name="' + XD.esc(it.name) + '" />'
+              : '') +
+            '<span class="name">' + XD.esc(it.name) +
+            (it.hit ? '<b class="tag">хит</b>' : '') +
+            (pr.was ? '<b class="tag off">−' + pr.percent + '%</b>' : '') +
+            '</span><span class="dots"></span>' + price + '</div>';
         }
 
-        // в данных лежит либо имя файла из menu/photo/, либо полный адрес
-        var src = /^https?:/.test(it.photo) ? it.photo : 'photo/' + it.photo;
         return '<article class="item">' +
           (it.hit ? '<b class="flag hit">хит</b>' : '') +
           (pr.was ? '<b class="flag off">−' + pr.percent + '%</b>' : '') +
-          '<img class="ph" src="' + XD.esc(src) + '" alt="" loading="lazy" decoding="async" ' +
+          '<img class="ph" src="' + XD.esc(srcOf(it.photo)) + '" alt="" loading="lazy" decoding="async" ' +
           'width="520" height="520" data-name="' + XD.esc(it.name) + '" />' +
           // цена сразу под названием: её ищут глазами первой, описание — потом
           '<div class="body"><span class="name">' + XD.esc(it.name) + '</span>' +
@@ -395,7 +510,9 @@
       return {
         id: sec.id,
         title: XD.t(sec.title),
-        html: '<section id="s-' + XD.esc(sec.id) + '">' +
+        count: items.length,
+        medal: medal,
+        html: '<section id="s-' + XD.esc(sec.id) + '"' + (asList ? ' class="list"' : '') + '>' +
           '<div class="sec-head"><span class="medal">' + medal + '</span>' +
           '<div><h2>' + XD.esc(XD.t(sec.title)) + '</h2>' +
           // подпись пишет заведение в админке; выдумывать за него, как они
@@ -415,10 +532,59 @@
     catsEl.innerHTML = secs.map(function (s) {
       return '<a href="#s-' + XD.esc(s.id) + '">' + XD.esc(s.title) + '</a>';
     }).join('');
+    index = secs;
 
     spy();
     jumpToHash();
   }
+
+  /* ---------- список всех разделов ---------- */
+  var index = [];
+  var idx = null;
+
+  function closeIdx() {
+    if (!idx) return;
+    idx.remove();
+    idx = null;
+    document.body.style.overflow = '';
+  }
+
+  function openIdx() {
+    if (!index.length) return;
+    closeIdx();
+    var TITLE = { ru: 'Разделы меню', kk: 'Мәзір бөлімдері', uz: 'Меню бўлимлари' };
+    idx = document.createElement('div');
+    idx.className = 'idx-bg';
+    idx.innerHTML = '<div class="idx" role="dialog" aria-modal="true"><h3>' +
+      XD.esc(TITLE[window.XD_LANG || 'ru'] || TITLE.ru) + '</h3>' +
+      index.map(function (s) {
+        return '<a href="#s-' + XD.esc(s.id) + '"><span class="medal">' + s.medal + '</span>' +
+          '<b>' + XD.esc(s.title) + '</b><i>' + s.count + '</i></a>';
+      }).join('') + '</div>';
+    document.body.appendChild(idx);
+    document.body.style.overflow = 'hidden';
+
+    idx.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href^="#s-"]');
+      if (a) {
+        // закрываем до прыжка: иначе прокрутка уходит внутрь шторки
+        var href = a.getAttribute('href');
+        e.preventDefault();
+        closeIdx();
+        var el = document.querySelector(href);
+        if (el) {
+          var doc = document.documentElement;
+          var y = el.getBoundingClientRect().top + (window.pageYOffset || doc.scrollTop) - 56;
+          window.scrollTo(0, Math.max(0, y));
+          history.replaceState(null, '', href);
+        }
+        return;
+      }
+      if (e.target === idx) closeIdx();
+    });
+  }
+
+  document.getElementById('cats-all').addEventListener('click', openIdx);
 
   /* Разделы появляются только после загрузки данных, поэтому браузер
      не успевает отработать якорь из адреса. Доводим сами и один раз —
@@ -504,7 +670,8 @@
   }
   document.addEventListener('click', function (e) {
     var t = e.target;
-    if (t && t.classList && t.classList.contains('ph')) {
+    // крупно открываются и карточки, и миниатюры в разделах-списках
+    if (t && t.classList && (t.classList.contains('ph') || t.classList.contains('thumb'))) {
       closeLb();
       lb = document.createElement('figure');
       lb.className = 'lb';
@@ -517,7 +684,11 @@
     }
     if (lb) closeLb();
   });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLb(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    closeLb();
+    closeIdx();
+  });
 
   window.onLangChange = render;
 
