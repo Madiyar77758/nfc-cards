@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Меню — Xami_Doo</title>
+<meta name="description" content="Меню Xami_Doo: лағман, цомян, сяй, пицца, суши, завтраки. Цены в тенге." />
+<meta name="theme-color" content="#1B100C" />
+<link rel="icon" href="../img/logo-192.png" />
+<link rel="apple-touch-icon" href="../img/logo-192.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap" />
+<link rel="stylesheet" href="../app/brand.css" />
+
+<style>
+  body { padding-bottom: env(safe-area-inset-bottom); }
+
+  /* На карточке пламя — украшение, а здесь оно стоит за длинным списком
+     цен. Приглушаем до фактуры, иначе строки внизу читаются хуже. */
+  .flame { opacity: .16; }
+
+  /* ---------- шапка ---------- */
+  .bar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: #1B100CF2;
+    backdrop-filter: saturate(150%) blur(14px);
+    -webkit-backdrop-filter: saturate(150%) blur(14px);
+    border-bottom: 1px solid var(--line-2);
+  }
+  .bar-in {
+    max-width: var(--wrap);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: calc(9px + env(safe-area-inset-top)) var(--pad) 9px;
+  }
+  .back {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 38px; height: 38px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink-2);
+    text-decoration: none;
+  }
+  .bar .who { display: flex; align-items: center; gap: 9px; min-width: 0; }
+  .bar .who img { width: 32px; height: 32px; border-radius: 50%; flex: none; }
+  .bar .who b {
+    font-size: 15px; font-weight: 800; letter-spacing: -.01em;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .bar .lang { margin-left: auto; flex: none; }
+
+  /* ---------- полоса разделов ---------- */
+  .cats {
+    display: flex;
+    gap: 7px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 0 var(--pad) 9px;
+    max-width: var(--wrap);
+    margin: 0 auto;
+  }
+  .cats::-webkit-scrollbar { display: none; }
+  .cats a {
+    flex: none;
+    padding: 7px 13px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink-2);
+    font-size: 12.5px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background .13s ease, color .13s ease, border-color .13s ease;
+  }
+  .cats a.on { background: var(--gold); border-color: transparent; color: var(--on-gold); }
+
+  main { max-width: var(--wrap); margin: 0 auto; padding: 4px var(--pad) 30px; }
+
+  /* ---------- акция ---------- */
+  .promos { display: flex; flex-direction: column; gap: 8px; margin: 12px 0 4px; }
+  .promo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 15px;
+    border-radius: 16px;
+    border: 1px solid #FF4A1547;
+    background: linear-gradient(135deg, #FF4A1524, #D9AE2B12);
+  }
+  .promo .pc {
+    flex: none;
+    display: grid;
+    place-items: center;
+    min-width: 50px;
+    padding: 7px 9px;
+    border-radius: 12px;
+    background: var(--flame);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 900;
+    letter-spacing: -.02em;
+  }
+  .promo .pt { font-size: 14.5px; font-weight: 800; letter-spacing: -.01em; }
+  .promo .ps { font-size: 12px; font-weight: 600; color: var(--ink-2); }
+
+  /* ---------- раздел ---------- */
+  section { margin-top: 30px; scroll-margin-top: 108px; }
+  .sec-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px; }
+  .sec-head .rule { flex: 1; height: 2px; background: linear-gradient(90deg, var(--gold), transparent); }
+  .sec-count { font-size: 11px; font-weight: 800; color: var(--ink-3); }
+
+  /* ---------- блюдо ---------- */
+  .item {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--line-2);
+  }
+  .item:last-child { border-bottom: 0; }
+
+  .ph {
+    position: relative;
+    flex: none;
+    width: 74px; height: 74px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--card);
+    box-shadow: 0 0 0 2px #D9AE2B3D, 0 6px 16px -8px #000;
+    cursor: zoom-in;
+  }
+  /* у части блюд фото нет (они шли в PDF простым списком) —
+     вместо пустого круга ставим тонкую метку, строка остаётся ровной */
+  .nophoto {
+    flex: none;
+    width: 74px; height: 74px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    border: 1px dashed #D9AE2B33;
+    color: #D9AE2B4D;
+  }
+
+  .body { flex: 1; min-width: 0; }
+  .nm {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex-wrap: wrap;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -.012em;
+  }
+  .ds { margin: 2px 0 0; font-size: 12.5px; font-weight: 500; color: var(--ink-3); }
+
+  .hit {
+    padding: 2px 7px;
+    border-radius: 6px;
+    background: var(--flame);
+    color: #fff;
+    font-size: 9.5px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+  .off {
+    padding: 2px 7px;
+    border-radius: 6px;
+    background: var(--gold-dim);
+    color: var(--gold-2);
+    font-size: 9.5px;
+    font-weight: 900;
+  }
+
+  .price-col { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+  .price-col .price { font-size: 13.5px; padding: 6px 12px; }
+  .cut { background: var(--flame); color: #fff; }
+  .cut .was { color: #fff; }
+
+  /* ---------- пусто / загрузка ---------- */
+  .note {
+    margin: 40px 0;
+    text-align: center;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink-3);
+  }
+
+  /* ---------- фото крупно ---------- */
+  .lb {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: grid;
+    place-items: center;
+    padding: 22px;
+    background: #0C0705F2;
+    cursor: zoom-out;
+  }
+  .lb img {
+    max-width: 100%;
+    max-height: 82vh;
+    border-radius: 20px;
+    box-shadow: 0 30px 70px -20px #000;
+  }
+  .lb figcaption {
+    margin-top: 14px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 800;
+  }
+  .lb .lbp { margin-top: 8px; display: flex; justify-content: center; }
+
+  /* ---------- подвал ---------- */
+  .foot {
+    margin-top: 34px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line-2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+  }
+  .foot small { font-size: 11.5px; font-weight: 500; color: var(--ink-3); max-width: 30ch; }
+
+  @media (min-width: 520px) {
+    body { background: #140B08; }
+    .bar { background: #1B100CF7; }
+  }
+</style>
+</head>
+<body>
+
+<img class="flame" src="../img/flame.webp" alt="" aria-hidden="true" />
+
+<div class="bar">
+  <div class="bar-in">
+    <a class="back" href="../" aria-label="Назад">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+    </a>
+    <span class="who">
+      <img src="../img/logo.webp" width="32" height="32" alt="" />
+      <b id="who">Xami_Doo</b>
+    </span>
+    <div class="lang" id="lang" role="group" aria-label="Тіл / Til / Язык">
+      <button type="button" data-set="ru">RU</button>
+      <button type="button" data-set="kk">ҚАЗ</button>
+      <button type="button" data-set="uz">ЎЗ</button>
+    </div>
+  </div>
+  <nav class="cats" id="cats" aria-label="Разделы меню"></nav>
+</div>
+
+<main class="wrap" style="min-height:0">
+  <div class="promos" id="promos"></div>
+  <div id="list"><p class="note i18n"><i lang="ru">Загружаем меню…</i><i lang="kk">Мәзір жүктелуде…</i><i lang="uz">Меню юкланмоқда…</i></p></div>
+
+  <footer class="foot">
+    <small class="i18n">
+      <i lang="ru">Цены указаны в тенге. Фото блюд из зала — подача может немного отличаться.</i>
+      <i lang="kk">Бағалар теңгемен. Тағам суреттері залдан — беру түрі сәл өзгеше болуы мүмкін.</i>
+      <i lang="uz">Нархлар теңгеда. Таом суратлари залдан — тақдим этилиши бироз фарқ қилиши мумкин.</i>
+    </small>
+    <a class="btn btn-sm btn-ghost" href="../">
+      <span class="i18n"><i lang="ru">На главную</i><i lang="kk">Басты бетке</i><i lang="uz">Бош саҳифага</i></span>
+    </a>
+  </footer>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="../app/config.js"></script>
+<script src="../app/data.js"></script>
+<script>
+(function () {
+  'use strict';
+  XD.initLang();
+
+  var data = null;
+  var listEl = document.getElementById('list');
+  var catsEl = document.getElementById('cats');
+  var promoEl = document.getElementById('promos');
+
+  var WORD = {
+    ru: { empty: 'Меню пока пустое', fail: 'Не получилось загрузить меню', dish: 'блюд' },
+    kk: { empty: 'Мәзір әзірге бос',  fail: 'Мәзірді жүктеу мүмкін болмады', dish: 'тағам' },
+    uz: { empty: 'Меню ҳозирча бўш',  fail: 'Менюни юклаб бўлмади',          dish: 'таом' }
+  };
+  function w() { return WORD[window.XD_LANG || 'ru'] || WORD.ru; }
+
+  function render() {
+    if (!data) return;
+    var live = XD.livePromos(data);
+
+    document.getElementById('who').textContent = (data.place && data.place.name) || 'Xami_Doo';
+
+    /* акции сверху */
+    promoEl.innerHTML = live.map(function (p) {
+      return '<div class="promo">' +
+        '<span class="pc">−' + XD.esc(p.percent) + '%</span>' +
+        '<span><span class="pt">' + XD.esc(p.title || 'Акция') + '</span>' +
+        (p.note ? '<br><span class="ps">' + XD.esc(p.note) + '</span>' : '') +
+        '</span></div>';
+    }).join('');
+
+    /* разделы и блюда */
+    var secs = (data.sections || []).map(function (sec) {
+      var items = (sec.items || []).filter(function (it) { return !it.off; });
+      if (!items.length) return null;
+
+      var rows = items.map(function (it) {
+        var promo = XD.promoFor(live, it.id, sec.id);
+        var pr = XD.priceOf(it, promo);
+
+        // в данных лежит либо имя файла из menu/photo/, либо полный адрес картинки
+        var src = /^https?:/.test(it.photo) ? it.photo : 'photo/' + it.photo;
+        var photo = it.photo
+          ? '<img class="ph" src="' + XD.esc(src) + '" alt="" loading="lazy" decoding="async" ' +
+            'width="74" height="74" data-name="' + XD.esc(it.name) + '" />'
+          : '<span class="nophoto" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" ' +
+            'stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M5 12h14M12 5v14"/></svg></span>';
+
+        var price = pr.was
+          ? '<span class="price cut"><span class="was">' + XD.money(pr.was) + '</span>' + XD.money(pr.now) + '</span>'
+          : '<span class="price">' + XD.money(pr.now) + '</span>';
+
+        return '<div class="item">' + photo +
+          '<div class="body"><div class="nm">' + XD.esc(it.name) +
+          (it.hit ? '<b class="hit">хит</b>' : '') +
+          (pr.was ? '<b class="off">−' + pr.percent + '%</b>' : '') +
+          '</div>' +
+          (it.desc ? '<p class="ds">' + XD.esc(it.desc) + '</p>' : '') +
+          '</div><div class="price-col">' + price + '</div></div>';
+      }).join('');
+
+      return {
+        id: sec.id,
+        title: XD.t(sec.title),
+        html: '<section id="s-' + XD.esc(sec.id) + '">' +
+          '<div class="sec-head"><h2 class="h-sec">' + XD.esc(XD.t(sec.title)) + '</h2>' +
+          '<span class="rule"></span><span class="sec-count">' + items.length + '</span></div>' +
+          rows + '</section>'
+      };
+    }).filter(Boolean);
+
+    if (!secs.length) {
+      listEl.innerHTML = '<p class="note">' + w().empty + '</p>';
+      catsEl.innerHTML = '';
+      return;
+    }
+
+    listEl.innerHTML = secs.map(function (s) { return s.html; }).join('');
+    catsEl.innerHTML = secs.map(function (s) {
+      return '<a href="#s-' + XD.esc(s.id) + '">' + XD.esc(s.title) + '</a>';
+    }).join('');
+    spy();
+  }
+
+  /* ---------- подсветка раздела при прокрутке ---------- */
+  var current = -1;
+  function spy() {
+    var links = Array.prototype.slice.call(catsEl.querySelectorAll('a'));
+    if (!links.length) return;
+    var secs = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+
+    function activate(i) {
+      links.forEach(function (a, j) { a.classList.toggle('on', i === j); });
+      var chip = links[i];
+      if (!chip) return;
+      var left = chip.offsetLeft - 16;
+      var right = left + chip.offsetWidth + 32;
+      if (left < catsEl.scrollLeft) catsEl.scrollTo({ left: left, behavior: 'smooth' });
+      else if (right > catsEl.scrollLeft + catsEl.clientWidth) {
+        catsEl.scrollTo({ left: right - catsEl.clientWidth, behavior: 'smooth' });
+      }
+    }
+
+    function pick() {
+      var y = (window.pageYOffset || document.documentElement.scrollTop) + 120;
+      var i = 0;
+      for (var k = 0; k < secs.length; k++) {
+        var s = secs[k];
+        if (!s) continue;
+        var top = s.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop);
+        if (top <= y) i = k;
+      }
+      // у самого низа всегда горит последний раздел: он короткий и до полосы не доезжает
+      var doc = document.documentElement;
+      if (window.innerHeight + (window.pageYOffset || doc.scrollTop) >= doc.scrollHeight - 8) i = secs.length - 1;
+      if (i !== current) { current = i; activate(i); }
+    }
+
+    current = -1;
+    pick();
+    if (!spy.bound) {
+      var ticking = false;
+      window.addEventListener('scroll', function () {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () { pick(); ticking = false; });
+      }, { passive: true });
+      window.addEventListener('resize', pick);
+      spy.bound = true;
+      spy.pick = pick;
+    } else {
+      spy.pick = pick;
+    }
+  }
+
+  /* ---------- фото крупно ---------- */
+  var lb = null;
+  function closeLb() {
+    if (!lb) return;
+    lb.remove();
+    lb = null;
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target;
+    if (t && t.classList && t.classList.contains('ph')) {
+      closeLb();
+      lb = document.createElement('figure');
+      lb.className = 'lb';
+      lb.innerHTML = '<div><img src="' + t.getAttribute('src') + '" alt="" />' +
+        '<figcaption>' + XD.esc(t.getAttribute('data-name') || '') + '</figcaption></div>';
+      document.body.appendChild(lb);
+      document.body.style.overflow = 'hidden';
+      return;
+    }
+    if (lb) closeLb();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLb(); });
+
+  window.onLangChange = render;
+
+  XD.load('../').then(function (d) {
+    data = d;
+    render();
+    // акции с расписанием могут включиться прямо во время просмотра
+    setInterval(render, 60000);
+  }).catch(function () {
+    listEl.innerHTML = '<p class="note">' + w().fail + '</p>';
+  });
+})();
+</script>
+
+</body>
+</html>

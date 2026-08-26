@@ -1,0 +1,903 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Админка — Xami_Doo</title>
+<meta name="robots" content="noindex, nofollow" />
+<meta name="theme-color" content="#1B100C" />
+<link rel="icon" href="../img/logo-192.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap" />
+<link rel="stylesheet" href="../app/brand.css" />
+
+<style>
+  .wrap { padding-bottom: 96px; }
+
+  /* ---------- вход ---------- */
+  .gate {
+    max-width: 340px;
+    margin: 0 auto;
+    padding: 12vh var(--pad) 40px;
+    text-align: center;
+  }
+  .gate img { width: 92px; height: 92px; border-radius: 50%; }
+  .gate h1 { margin: 18px 0 4px; font-size: 22px; font-weight: 900; letter-spacing: -.02em; }
+  .gate p { margin: 0 0 22px; font-size: 13px; color: var(--ink-3); }
+  .gate form { display: flex; flex-direction: column; gap: 10px; }
+
+  /* ---------- поля ---------- */
+  .fld { display: flex; flex-direction: column; gap: 6px; }
+  .fld > span { font-size: 11.5px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
+  input, select, textarea {
+    width: 100%;
+    min-height: 46px;
+    padding: 11px 13px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #FFFFFF0A;
+    color: var(--ink);
+    font: inherit;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  textarea { min-height: 74px; resize: vertical; line-height: 1.4; }
+  input::placeholder, textarea::placeholder { color: var(--ink-3); font-weight: 500; }
+  input[type="checkbox"] { width: auto; min-height: 0; }
+  select { appearance: none; background-image: none; }
+
+  .check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 46px;
+    padding: 0 13px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    font-size: 14.5px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .check input { accent-color: var(--gold); width: 19px; height: 19px; }
+
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  /* ---------- шапка ---------- */
+  .head {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: #1B100CF2;
+    backdrop-filter: saturate(150%) blur(14px);
+    -webkit-backdrop-filter: saturate(150%) blur(14px);
+    border-bottom: 1px solid var(--line-2);
+  }
+  .head-in {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: calc(10px + env(safe-area-inset-top)) var(--pad) 10px;
+  }
+  .head img { width: 32px; height: 32px; border-radius: 50%; }
+  .head b { font-size: 15px; font-weight: 900; letter-spacing: -.01em; }
+  .head .sp { margin-left: auto; }
+
+  .tabs { display: flex; gap: 7px; padding: 0 var(--pad) 10px; }
+  .tabs button {
+    flex: 1;
+    appearance: none;
+    min-height: 38px;
+    border: 1px solid var(--line);
+    border-radius: 11px;
+    background: var(--card);
+    color: var(--ink-2);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .tabs button.on { background: var(--gold); border-color: transparent; color: var(--on-gold); }
+
+  .pane { padding: 16px var(--pad) 0; display: none; flex-direction: column; gap: 12px; }
+  .pane.on { display: flex; }
+
+  /* ---------- баннер режима ---------- */
+  .mode {
+    display: flex;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 13px;
+    border: 1px solid #D9AE2B3D;
+    background: #D9AE2B14;
+    font-size: 12.5px;
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--ink-2);
+  }
+  .mode b { color: var(--gold-2); }
+
+  /* ---------- раздел ---------- */
+  .sec {
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--card);
+    overflow: hidden;
+  }
+  .sec-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 13px;
+    background: #FFFFFF08;
+  }
+  .sec-top .nm { flex: 1; min-width: 0; font-size: 15px; font-weight: 800; letter-spacing: -.01em; }
+  .sec-top .n { font-size: 11px; font-weight: 800; color: var(--ink-3); }
+
+  .ico-btn {
+    appearance: none;
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 34px; height: 34px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--ink-2);
+    cursor: pointer;
+    transition: background .12s ease, color .12s ease, border-color .12s ease;
+  }
+  .ico-btn:active { background: #FFFFFF12; }
+  .ico-btn.warn { color: #FF8A80; border-color: #E42C2C3D; }
+  .ico-btn:disabled { opacity: .3; cursor: default; }
+
+  .rows { display: flex; flex-direction: column; }
+  /* Строка целиком открывает редактор: на телефоне это надёжнее,
+     чем целиться в мелкую кнопку. Стрелки — единственное исключение. */
+  .r {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 13px;
+    border-top: 1px solid var(--line-2);
+    cursor: pointer;
+  }
+  .r:active { background: #FFFFFF0D; }
+  @media (hover: hover) { .r:hover { background: #FFFFFF08; } }
+  .r .t { flex: 1; min-width: 0; }
+  .r .t b {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -.01em;
+    overflow-wrap: anywhere;
+  }
+  .r .t small { font-size: 11.5px; font-weight: 600; color: var(--ink-3); }
+  .r.hidden .t b { color: var(--ink-3); text-decoration: line-through; }
+  .tag {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 1px 6px;
+    border-radius: 5px;
+    background: var(--gold-dim);
+    color: var(--gold-2);
+    font-size: 9.5px;
+    font-weight: 900;
+    vertical-align: 1px;
+  }
+  .r .p {
+    flex: none;
+    font-size: 13.5px;
+    font-weight: 800;
+    color: var(--gold-2);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .r .thumb { flex: none; width: 34px; height: 34px; border-radius: 50%; object-fit: cover; background: #FFFFFF0F; }
+  .add { margin: 0; border-top: 1px solid var(--line-2); border-radius: 0; justify-content: flex-start; }
+
+  /* ---------- акция ---------- */
+  .pr {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 13px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--card);
+  }
+  .pr.dead { opacity: .5; }
+  .pr .pc {
+    flex: none;
+    display: grid;
+    place-items: center;
+    min-width: 48px;
+    padding: 7px;
+    border-radius: 11px;
+    background: var(--flame);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 900;
+  }
+  .pr .t { flex: 1; min-width: 0; }
+  .pr .t b { display: block; font-size: 14.5px; font-weight: 800; }
+  .pr .t small { font-size: 11.5px; font-weight: 600; color: var(--ink-3); }
+  .live { display: inline-block; margin-left: 6px; padding: 1px 6px; border-radius: 5px;
+          background: #29A85529; color: #6FE39B; font-size: 9.5px; font-weight: 900; }
+
+  /* ---------- шторка редактора ---------- */
+  .sheet-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: #0C0705D9;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .sheet {
+    width: 100%;
+    max-width: var(--wrap);
+    max-height: 92dvh;
+    overflow-y: auto;
+    padding: 18px var(--pad) calc(20px + env(safe-area-inset-bottom));
+    border-radius: 22px 22px 0 0;
+    background: var(--bg-2);
+    border-top: 1px solid var(--line);
+    animation: up .22s cubic-bezier(.2,.8,.25,1) both;
+  }
+  @keyframes up { from { transform: translateY(16px); opacity: 0; } to { transform: none; opacity: 1; } }
+  .sheet h3 { margin: 0 0 14px; font-size: 18px; font-weight: 900; letter-spacing: -.02em; }
+  .sheet .grid { display: flex; flex-direction: column; gap: 12px; }
+  .sheet .acts { display: flex; gap: 9px; margin-top: 18px; }
+  .sheet .acts .btn { flex: 1; }
+
+  .picks { display: flex; flex-wrap: wrap; gap: 7px; }
+  .picks label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 11px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .picks label.on { border-color: transparent; background: var(--gold); color: var(--on-gold); }
+  .picks input { display: none; }
+
+  /* ---------- полоса сохранения ---------- */
+  .bar {
+    position: fixed;
+    left: 0; right: 0;
+    bottom: 0;
+    z-index: 30;
+    padding: 10px var(--pad) calc(10px + env(safe-area-inset-bottom));
+    background: #1B100CF7;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid var(--line);
+  }
+  .bar-in {
+    max-width: var(--wrap);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .bar .st { flex: 1; font-size: 12.5px; font-weight: 700; color: var(--ink-3); }
+  .bar .st.dirty { color: var(--gold-2); }
+</style>
+</head>
+<body>
+
+<!-- ---------- вход ---------- -->
+<div class="gate" id="gate">
+  <img src="../img/logo.webp" width="92" height="92" alt="" />
+  <h1>Админка</h1>
+  <p id="gate-sub">Введите пароль администратора</p>
+  <form id="gate-form">
+    <input type="password" id="pass" placeholder="Пароль" autocomplete="current-password" />
+    <button class="btn btn-gold" type="submit" id="gate-go">Войти</button>
+  </form>
+</div>
+
+<!-- ---------- приложение ---------- -->
+<div class="wrap" id="app" hidden>
+
+  <div class="head">
+    <div class="head-in">
+      <img src="../img/logo.webp" width="32" height="32" alt="" />
+      <b id="app-name">Xami_Doo</b>
+      <a class="btn btn-sm btn-ghost sp" href="../menu/" target="_blank" rel="noopener">Меню ↗</a>
+      <button class="ico-btn" type="button" id="logout" title="Выйти" aria-label="Выйти">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 17l-5-5 5-5"/><path d="M5 12h11"/>
+        </svg>
+      </button>
+    </div>
+    <div class="tabs">
+      <button type="button" data-tab="menu" class="on">Меню</button>
+      <button type="button" data-tab="promo">Акции</button>
+      <button type="button" data-tab="place">Заведение</button>
+    </div>
+  </div>
+
+  <div class="mode" id="mode" hidden></div>
+
+  <div class="pane on" id="pane-menu">
+    <div id="secs"></div>
+    <button class="btn btn-ghost" type="button" id="add-sec">+ Добавить раздел</button>
+  </div>
+
+  <div class="pane" id="pane-promo">
+    <div id="promos"></div>
+    <button class="btn btn-ghost" type="button" id="add-promo">+ Добавить акцию</button>
+  </div>
+
+  <div class="pane" id="pane-place">
+    <label class="fld"><span>Название</span><input id="f-name" placeholder="Xami_Doo" /></label>
+    <label class="fld"><span>Подпись под названием</span><input id="f-tagline" placeholder="Шашлык · Halal · 24/7" /></label>
+    <label class="fld"><span>Адрес</span><input id="f-address" placeholder="Шымкент, ул. ..." /></label>
+    <label class="check"><input type="checkbox" id="f-always" /> Работаем круглосуточно</label>
+    <label class="fld" id="w-hours"><span>Часы работы</span><input id="f-hours" placeholder="10:00-23:00" /></label>
+    <div class="two">
+      <label class="fld"><span>Телефон</span><input id="f-phone" placeholder="+7 700 000 00 00" /></label>
+      <label class="fld"><span>WhatsApp</span><input id="f-whatsapp" placeholder="77000000000" /></label>
+    </div>
+    <label class="fld"><span>Ссылка на 2ГИС (вкладка отзывов)</span><input id="f-gis" placeholder="https://2gis.kz/shymkent/firm/.../tab/reviews" /></label>
+    <label class="fld"><span>Instagram</span><input id="f-instagram" placeholder="https://instagram.com/..." /></label>
+    <label class="fld"><span>TikTok</span><input id="f-tiktok" placeholder="https://tiktok.com/@..." /></label>
+    <div class="two">
+      <label class="fld"><span>Имя Wi-Fi</span><input id="f-wifiName" placeholder="XamiDoo_Guest" /></label>
+      <label class="fld"><span>Пароль Wi-Fi</span><input id="f-wifiPass" placeholder="" /></label>
+    </div>
+    <p style="font-size:12px;color:var(--ink-3);margin:0 0 8px">
+      Пустое поле = строки не будет на карточке. Ссылку 2ГИС берите с вкладки «Отзывы» — гость сразу попадёт куда нужно.
+    </p>
+  </div>
+
+  <div class="bar">
+    <div class="bar-in">
+      <span class="st" id="st">Изменений нет</span>
+      <button class="btn btn-sm btn-ghost" type="button" id="download" title="Скачать menu.json">Файл</button>
+      <button class="btn btn-sm btn-gold" type="button" id="save" disabled>Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="../app/config.js"></script>
+<script src="../app/data.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var model = null;
+  var dirty = false;
+  var localMode = !XD.hasApi();
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  function uid(p) { return (p || 'x') + Math.random().toString(36).slice(2, 8); }
+  function num(v) { var n = parseInt(String(v).replace(/[^\d]/g, ''), 10); return isNaN(n) ? 0 : n; }
+
+  function markDirty() {
+    dirty = true;
+    $('st').textContent = 'Есть несохранённые изменения';
+    $('st').className = 'st dirty';
+    $('save').disabled = false;
+  }
+  function markClean(text) {
+    dirty = false;
+    $('st').textContent = text || 'Изменений нет';
+    $('st').className = 'st';
+    $('save').disabled = true;
+  }
+
+  window.addEventListener('beforeunload', function (e) {
+    if (!dirty) return;
+    e.preventDefault();
+    e.returnValue = '';
+  });
+
+  /* ============================================================
+     Шторка редактора
+     ============================================================ */
+  function sheet(title, bodyHtml, onSave, onDelete) {
+    var bg = document.createElement('div');
+    bg.className = 'sheet-bg';
+    bg.innerHTML = '<div class="sheet"><h3>' + XD.esc(title) + '</h3>' +
+      '<div class="grid">' + bodyHtml + '</div>' +
+      '<div class="acts">' +
+      (onDelete ? '<button class="btn btn-danger" type="button" data-act="del">Удалить</button>' : '') +
+      '<button class="btn btn-ghost" type="button" data-act="cancel">Отмена</button>' +
+      '<button class="btn btn-gold" type="button" data-act="ok">Готово</button>' +
+      '</div></div>';
+    document.body.appendChild(bg);
+    document.body.style.overflow = 'hidden';
+
+    function close() {
+      bg.remove();
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', onKey);
+    }
+    function onKey(e) { if (e.key === 'Escape') close(); }
+    document.addEventListener('keydown', onKey);
+
+    bg.addEventListener('click', function (e) {
+      if (e.target === bg) return close();
+      var act = e.target.closest && e.target.closest('[data-act]');
+      if (!act) return;
+      var a = act.getAttribute('data-act');
+      if (a === 'cancel') return close();
+      if (a === 'del') {
+        if (!confirm('Удалить без возврата?')) return;
+        onDelete();
+        close();
+        markDirty();
+        return;
+      }
+      if (a === 'ok') {
+        if (onSave(bg) === false) return;   // форма сама решила, что рано закрывать
+        close();
+        markDirty();
+      }
+    });
+
+    // переключение «на что действует акция» показывает нужный список
+    bg.addEventListener('change', function (e) {
+      if (e.target.id === 'p-scope') scopeView(bg, e.target.value);
+      var lab = e.target.closest && e.target.closest('.picks label');
+      if (lab) lab.classList.toggle('on', e.target.checked);
+    });
+
+    var first = bg.querySelector('input, textarea, select');
+    if (first) setTimeout(function () { first.focus(); }, 60);
+    return bg;
+  }
+
+  function fld(label, id, value, ph, type) {
+    return '<label class="fld"><span>' + XD.esc(label) + '</span>' +
+      '<input id="' + id + '" type="' + (type || 'text') + '" value="' + XD.esc(value == null ? '' : value) +
+      '" placeholder="' + XD.esc(ph || '') + '" /></label>';
+  }
+  function area(label, id, value, ph) {
+    return '<label class="fld"><span>' + XD.esc(label) + '</span>' +
+      '<textarea id="' + id + '" placeholder="' + XD.esc(ph || '') + '">' + XD.esc(value || '') + '</textarea></label>';
+  }
+  function chk(label, id, on) {
+    return '<label class="check"><input type="checkbox" id="' + id + '"' + (on ? ' checked' : '') + ' /> ' +
+      XD.esc(label) + '</label>';
+  }
+
+  /* ============================================================
+     Меню
+     ============================================================ */
+  var ICON = {
+    up:   '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"/></svg>',
+    down: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>',
+    edit: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
+    eye:  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>',
+    eyeOff: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"/><path d="M10.6 6.2A9.9 9.9 0 0 1 12 6c6.4 0 10 7 10 7a17 17 0 0 1-3.3 4.1M6.3 7.4A17 17 0 0 0 2 13s3.6 7 10 7a9.7 9.7 0 0 0 4.2-.9"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>'
+  };
+
+  function move(arr, i, d) {
+    var j = i + d;
+    if (j < 0 || j >= arr.length) return;
+    var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    markDirty();
+  }
+
+  function renderMenu() {
+    var host = $('secs');
+    var secs = model.sections || (model.sections = []);
+    host.innerHTML = secs.map(function (sec, si) {
+      var items = sec.items || [];
+      var rows = items.map(function (it, ii) {
+        var thumb = it.photo
+          ? '<img class="thumb" src="' + (/^https?:/.test(it.photo) ? XD.esc(it.photo) : '../menu/photo/' + XD.esc(it.photo)) + '" alt="" loading="lazy" />'
+          : '<span class="thumb"></span>';
+        return '<div class="r' + (it.off ? ' hidden' : '') + '" data-i="' + si + ',' + ii + ',edit" ' +
+          'role="button" tabindex="0">' + thumb +
+          '<span class="t"><b>' + XD.esc(it.name) +
+          (it.hit ? '<span class="tag">хит</span>' : '') +
+          (it.off ? '<span class="tag">скрыто</span>' : '') + '</b>' +
+          (it.desc ? '<small>' + XD.esc(it.desc) + '</small>' : '') + '</span>' +
+          '<span class="p">' + XD.money(it.price) + '</span>' +
+          '<button class="ico-btn" type="button" data-i="' + si + ',' + ii + ',up"' + (ii === 0 ? ' disabled' : '') + ' aria-label="Выше">' + ICON.up + '</button>' +
+          '<button class="ico-btn" type="button" data-i="' + si + ',' + ii + ',down"' + (ii === items.length - 1 ? ' disabled' : '') + ' aria-label="Ниже">' + ICON.down + '</button>' +
+          '</div>';
+      }).join('');
+
+      return '<div class="sec">' +
+        '<div class="sec-top">' +
+        '<span class="nm">' + XD.esc(XD.t(sec.title)) + '</span>' +
+        '<span class="n">' + items.length + '</span>' +
+        '<button class="ico-btn" type="button" data-s="' + si + ',up"' + (si === 0 ? ' disabled' : '') + ' aria-label="Выше">' + ICON.up + '</button>' +
+        '<button class="ico-btn" type="button" data-s="' + si + ',down"' + (si === secs.length - 1 ? ' disabled' : '') + ' aria-label="Ниже">' + ICON.down + '</button>' +
+        '<button class="ico-btn" type="button" data-s="' + si + ',edit" aria-label="Изменить раздел">' + ICON.edit + '</button>' +
+        '</div>' +
+        '<div class="rows">' + rows + '</div>' +
+        '<button class="btn btn-ghost add" type="button" data-s="' + si + ',add">+ Блюдо</button>' +
+        '</div>';
+    }).join('');
+  }
+
+  function onSecsClick(e) {
+    // Кнопка внутри строки перебивает саму строку: иначе стрелка «выше»
+    // тут же открывала бы редактор.
+    var src = e.target.closest('button') || e.target.closest('.r[data-i]');
+    if (!src) return;
+
+    var s = src.getAttribute('data-s');
+    if (s) {
+      var ps = s.split(',');
+      var si = +ps[0], act = ps[1];
+      if (act === 'up' || act === 'down') { move(model.sections, si, act === 'up' ? -1 : 1); renderMenu(); }
+      else if (act === 'edit') editSection(si);
+      else if (act === 'add') editItem(si, null);
+      return;
+    }
+
+    var i = src.getAttribute('data-i');
+    if (!i) return;
+    var pi = i.split(',');
+    var sI = +pi[0], iI = +pi[1], a = pi[2];
+    var items = model.sections[sI].items;
+    if (a === 'up' || a === 'down') { move(items, iI, a === 'up' ? -1 : 1); renderMenu(); }
+    else if (a === 'edit') editItem(sI, iI);
+  }
+
+  $('secs').addEventListener('click', onSecsClick);
+  $('secs').addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    var row = e.target.closest('.r[data-i]');
+    if (!row) return;
+    e.preventDefault();
+    onSecsClick(e);
+  });
+
+  function editSection(si) {
+    var isNew = si === null;
+    var sec = isNew ? { id: uid('s'), title: { ru: '', kk: '', uz: '' }, items: [] } : model.sections[si];
+    var t = typeof sec.title === 'string' ? { ru: sec.title, kk: '', uz: '' } : (sec.title || {});
+
+    sheet(isNew ? 'Новый раздел' : 'Раздел',
+      fld('Название (рус)', 's-ru', t.ru, 'Салаты') +
+      fld('Қазақша', 's-kk', t.kk, 'Салаттар') +
+      fld('Ўзбекча', 's-uz', t.uz, 'Салатлар') +
+      '<p style="font-size:12px;color:var(--ink-3);margin:0">Пустой перевод заменяется русским названием.</p>',
+      function (bg) {
+        var ru = bg.querySelector('#s-ru').value.trim();
+        if (!ru) { XD.toast('Впишите название', true); return false; }
+        sec.title = { ru: ru, kk: bg.querySelector('#s-kk').value.trim(), uz: bg.querySelector('#s-uz').value.trim() };
+        if (isNew) model.sections.push(sec);
+        renderMenu();
+      },
+      isNew ? null : function () {
+        model.sections.splice(si, 1);
+        renderMenu();
+      });
+  }
+
+  function editItem(si, ii) {
+    var isNew = ii === null;
+    var sec = model.sections[si];
+    var it = isNew
+      ? { id: uid('i'), name: '', price: 0, photo: '', desc: '', hit: false, off: false }
+      : sec.items[ii];
+
+    sheet(isNew ? 'Новое блюдо' : 'Блюдо',
+      fld('Название', 'i-name', it.name, 'Лағман') +
+      fld('Цена, ₸', 'i-price', it.price || '', '1750', 'tel') +
+      area('Описание (необязательно)', 'i-desc', it.desc, 'Тянутая лапша, говядина, редька') +
+      fld('Фото', 'i-photo', it.photo, 'guyru.webp или https://…') +
+      '<p style="font-size:12px;color:var(--ink-3);margin:0">Имя файла из папки <b>menu/photo/</b> либо полный адрес картинки. Пусто — блюдо покажется строкой без фото.</p>' +
+      chk('Отметить как «хит»', 'i-hit', it.hit) +
+      chk('Временно скрыть из меню', 'i-off', it.off),
+      function (bg) {
+        var name = bg.querySelector('#i-name').value.trim();
+        if (!name) { XD.toast('Впишите название', true); return false; }
+        it.name = name;
+        it.price = num(bg.querySelector('#i-price').value);
+        it.desc = bg.querySelector('#i-desc').value.trim();
+        it.photo = bg.querySelector('#i-photo').value.trim();
+        it.hit = bg.querySelector('#i-hit').checked;
+        it.off = bg.querySelector('#i-off').checked;
+        if (isNew) sec.items.push(it);
+        renderMenu();
+      },
+      isNew ? null : function () {
+        sec.items.splice(ii, 1);
+        renderMenu();
+      });
+  }
+
+  $('add-sec').addEventListener('click', function () { editSection(null); });
+
+  /* ============================================================
+     Акции
+     ============================================================ */
+  var DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+
+  function scopeView(bg, scope) {
+    bg.querySelector('#w-secs').hidden = scope !== 'section';
+    bg.querySelector('#w-items').hidden = scope !== 'items';
+  }
+
+  function scopeWord(p) {
+    if (p.scope === 'section') {
+      var names = (p.sections || []).map(function (id) {
+        var s = (model.sections || []).filter(function (x) { return x.id === id; })[0];
+        return s ? XD.t(s.title) : id;
+      });
+      return names.length ? 'Разделы: ' + names.join(', ') : 'Разделы не выбраны';
+    }
+    if (p.scope === 'items') return 'Блюд выбрано: ' + ((p.items || []).length);
+    return 'Всё меню';
+  }
+
+  function whenWord(p) {
+    var bits = [];
+    if (p.from || p.to) bits.push((p.from || '…') + ' → ' + (p.to || '…'));
+    if (p.days && p.days.length && p.days.length < 7) {
+      bits.push(p.days.slice().sort().map(function (d) { return DAYS[d - 1]; }).join(' '));
+    }
+    if (p.hours) bits.push(p.hours);
+    return bits.join(' · ');
+  }
+
+  function renderPromos() {
+    var host = $('promos');
+    var list = model.promos || (model.promos = []);
+    if (!list.length) {
+      host.innerHTML = '<p style="font-size:13px;color:var(--ink-3);text-align:center;padding:22px 0">' +
+        'Акций нет. Например: «Бизнес-ланч −20% с 12:00 до 16:00 по будням».</p>';
+      return;
+    }
+    host.innerHTML = list.map(function (p, i) {
+      var live = XD.isLive(p);
+      return '<div class="pr' + (p.on === false ? ' dead' : '') + '" style="margin-bottom:9px">' +
+        '<span class="pc">−' + XD.esc(p.percent) + '%</span>' +
+        '<span class="t"><b>' + XD.esc(p.title || 'Акция') +
+        (live ? '<span class="live">идёт</span>' : '') + '</b>' +
+        '<small>' + XD.esc(scopeWord(p)) + (whenWord(p) ? ' · ' + XD.esc(whenWord(p)) : '') + '</small></span>' +
+        '<button class="ico-btn" type="button" data-p="' + i + ',toggle" aria-label="Включить/выключить">' +
+        (p.on === false ? ICON.eyeOff : ICON.eye) + '</button>' +
+        '<button class="ico-btn" type="button" data-p="' + i + ',edit" aria-label="Изменить">' + ICON.edit + '</button>' +
+        '</div>';
+    }).join('');
+  }
+
+  $('promos').addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (!b) return;
+    var p = (b.getAttribute('data-p') || '').split(',');
+    if (p.length !== 2) return;
+    var i = +p[0];
+    if (p[1] === 'toggle') { model.promos[i].on = model.promos[i].on === false; markDirty(); renderPromos(); }
+    else editPromo(i);
+  });
+
+  function editPromo(pi) {
+    var isNew = pi === null;
+    var p = isNew
+      ? { id: uid('p'), title: '', note: '', percent: 10, scope: 'all', sections: [], items: [], from: '', to: '', days: [], hours: '', on: true }
+      : model.promos[pi];
+
+    var secPicks = (model.sections || []).map(function (s) {
+      var on = (p.sections || []).indexOf(s.id) !== -1;
+      return '<label class="' + (on ? 'on' : '') + '"><input type="checkbox" data-sec="' + XD.esc(s.id) + '"' +
+        (on ? ' checked' : '') + ' />' + XD.esc(XD.t(s.title)) + '</label>';
+    }).join('');
+
+    var itemPicks = (model.sections || []).map(function (s) {
+      return '<div style="margin-bottom:9px"><div style="font-size:11px;font-weight:800;color:var(--ink-3);margin-bottom:5px">' +
+        XD.esc(XD.t(s.title)) + '</div><div class="picks">' +
+        (s.items || []).map(function (it) {
+          var on = (p.items || []).indexOf(it.id) !== -1;
+          return '<label class="' + (on ? 'on' : '') + '"><input type="checkbox" data-item="' + XD.esc(it.id) + '"' +
+            (on ? ' checked' : '') + ' />' + XD.esc(it.name) + '</label>';
+        }).join('') + '</div></div>';
+    }).join('');
+
+    var dayPicks = DAYS.map(function (d, k) {
+      var on = (p.days || []).indexOf(k + 1) !== -1;
+      return '<label class="' + (on ? 'on' : '') + '"><input type="checkbox" data-day="' + (k + 1) + '"' +
+        (on ? ' checked' : '') + ' />' + d + '</label>';
+    }).join('');
+
+    sheet(isNew ? 'Новая акция' : 'Акция',
+      fld('Название', 'p-title', p.title, 'Бизнес-ланч') +
+      fld('Скидка, %', 'p-percent', p.percent, '20', 'tel') +
+      fld('Пояснение под названием (необязательно)', 'p-note', p.note, 'Кроме сетов и напитков') +
+      '<label class="fld"><span>На что действует</span><select id="p-scope">' +
+      '<option value="all"' + (p.scope === 'all' ? ' selected' : '') + '>Всё меню</option>' +
+      '<option value="section"' + (p.scope === 'section' ? ' selected' : '') + '>Выбранные разделы</option>' +
+      '<option value="items"' + (p.scope === 'items' ? ' selected' : '') + '>Выбранные блюда</option>' +
+      '</select></label>' +
+      '<div class="fld" id="w-secs"' + (p.scope === 'section' ? '' : ' hidden') + '><span>Разделы</span><div class="picks">' + secPicks + '</div></div>' +
+      '<div class="fld" id="w-items"' + (p.scope === 'items' ? '' : ' hidden') + '><span>Блюда</span><div>' + itemPicks + '</div></div>' +
+      '<div class="two">' + fld('Действует с', 'p-from', p.from, '', 'date') + fld('по', 'p-to', p.to, '', 'date') + '</div>' +
+      '<div class="fld"><span>Дни недели (пусто — все дни)</span><div class="picks">' + dayPicks + '</div></div>' +
+      fld('Часы (пусто — весь день)', 'p-hours', p.hours, '12:00-16:00') +
+      chk('Акция включена', 'p-on', p.on !== false),
+      function (bg) {
+        var title = bg.querySelector('#p-title').value.trim();
+        if (!title) { XD.toast('Впишите название', true); return false; }
+        var pc = num(bg.querySelector('#p-percent').value);
+        if (pc < 1 || pc > 95) { XD.toast('Скидка — от 1 до 95%', true); return false; }
+
+        p.title = title;
+        p.percent = pc;
+        p.note = bg.querySelector('#p-note').value.trim();
+        p.scope = bg.querySelector('#p-scope').value;
+        p.from = bg.querySelector('#p-from').value;
+        p.to = bg.querySelector('#p-to').value;
+        p.hours = bg.querySelector('#p-hours').value.trim();
+        p.on = bg.querySelector('#p-on').checked;
+
+        p.sections = [].slice.call(bg.querySelectorAll('[data-sec]:checked')).map(function (x) { return x.getAttribute('data-sec'); });
+        p.items = [].slice.call(bg.querySelectorAll('[data-item]:checked')).map(function (x) { return x.getAttribute('data-item'); });
+        p.days = [].slice.call(bg.querySelectorAll('[data-day]:checked')).map(function (x) { return +x.getAttribute('data-day'); });
+
+        if (p.scope === 'section' && !p.sections.length) { XD.toast('Выберите хотя бы один раздел', true); return false; }
+        if (p.scope === 'items' && !p.items.length) { XD.toast('Выберите хотя бы одно блюдо', true); return false; }
+
+        if (isNew) model.promos.push(p);
+        renderPromos();
+      },
+      isNew ? null : function () {
+        model.promos.splice(pi, 1);
+        renderPromos();
+      });
+  }
+
+  $('add-promo').addEventListener('click', function () { editPromo(null); });
+
+  /* ============================================================
+     Заведение
+     ============================================================ */
+  var PLACE_FIELDS = ['name', 'tagline', 'address', 'hours', 'phone', 'whatsapp',
+                      'gis', 'instagram', 'tiktok', 'wifiName', 'wifiPass'];
+
+  function renderPlace() {
+    var p = model.place || (model.place = {});
+    PLACE_FIELDS.forEach(function (k) { $('f-' + k).value = p[k] || ''; });
+    $('f-always').checked = !!p.always;
+    $('w-hours').hidden = !!p.always;
+    $('app-name').textContent = p.name || 'Xami_Doo';
+  }
+
+  PLACE_FIELDS.forEach(function (k) {
+    $('f-' + k).addEventListener('input', function () {
+      model.place[k] = this.value;
+      if (k === 'name') $('app-name').textContent = this.value || 'Xami_Doo';
+      markDirty();
+    });
+  });
+  $('f-always').addEventListener('change', function () {
+    model.place.always = this.checked;
+    $('w-hours').hidden = this.checked;
+    markDirty();
+  });
+
+  /* ============================================================
+     Вкладки, сохранение, вход
+     ============================================================ */
+  document.querySelector('.tabs').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-tab]');
+    if (!b) return;
+    var tab = b.getAttribute('data-tab');
+    [].forEach.call(document.querySelectorAll('.tabs button'), function (x) {
+      x.classList.toggle('on', x === b);
+    });
+    ['menu', 'promo', 'place'].forEach(function (t) {
+      $('pane-' + t).classList.toggle('on', t === tab);
+    });
+    if (tab === 'promo') renderPromos();
+    window.scrollTo(0, 0);
+  });
+
+  $('download').addEventListener('click', function () {
+    model.updated = new Date().toISOString().slice(0, 10);
+    var blob = new Blob([JSON.stringify(model, null, 2)], { type: 'application/json' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'menu.json';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    XD.toast('Файл menu.json скачан');
+  });
+
+  $('save').addEventListener('click', function () {
+    if (localMode) {
+      XD.toast('Воркер не подключён — сохраните файлом', true);
+      return;
+    }
+    var btn = this;
+    btn.disabled = true;
+    model.updated = new Date().toISOString().slice(0, 10);
+    XD.save(model).then(function () {
+      markClean('Сохранено · ' + new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }));
+      XD.toast('Сохранено — меню обновилось');
+    }).catch(function (err) {
+      btn.disabled = false;
+      if (err.status === 401) {
+        XD.setToken('');
+        XD.toast('Сессия истекла, войдите заново', true);
+        setTimeout(function () { location.reload(); }, 1200);
+      } else {
+        XD.toast('Не сохранилось: ' + err.message, true);
+      }
+    });
+  });
+
+  $('logout').addEventListener('click', function () {
+    if (dirty && !confirm('Есть несохранённые изменения. Всё равно выйти?')) return;
+    XD.setToken('');
+    location.reload();
+  });
+
+  function start() {
+    $('gate').hidden = true;
+    $('app').hidden = false;
+
+    if (localMode) {
+      $('mode').hidden = false;
+      $('mode').innerHTML = '<span>⚠️</span><span><b>Локальный режим.</b> Воркер ещё не подключён: правки живут только в этом окне. ' +
+        'Жмите «Файл», чтобы скачать <b>menu.json</b>, и положите его в <b>xamidoo/data/</b> репозитория. ' +
+        'Как включить настоящее сохранение — в <b>api/README.md</b>.</span>';
+    }
+
+    XD.load('../').then(function (d) {
+      model = d;
+      delete model.__source;
+      delete model.__why;
+      if (!model.place) model.place = {};
+      if (!model.promos) model.promos = [];
+      if (!model.sections) model.sections = [];
+      renderMenu();
+      renderPromos();
+      renderPlace();
+      markClean();
+    }).catch(function (e) {
+      XD.toast('Меню не загрузилось: ' + e.message, true);
+    });
+  }
+
+  // Уже входили с этого телефона — токен лежит рядом, пароль не спрашиваем.
+  if (localMode) {
+    $('gate-sub').textContent = 'Воркер не подключён — открываем в локальном режиме';
+    $('pass').hidden = true;
+    $('gate-go').textContent = 'Открыть админку';
+  } else if (XD.getToken()) {
+    start();
+  }
+
+  $('gate-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (localMode) return start();
+
+    var btn = $('gate-go');
+    var pass = $('pass').value;
+    if (!pass) { XD.toast('Введите пароль', true); return; }
+    btn.disabled = true;
+    btn.textContent = 'Проверяем…';
+    XD.login(pass).then(start).catch(function (err) {
+      btn.disabled = false;
+      btn.textContent = 'Войти';
+      $('pass').value = '';
+      XD.toast(err.status === 401 ? 'Неверный пароль' : ('Ошибка: ' + err.message), true);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Макет карты — Xami_Doo</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" href="../img/logo-192.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap" />
+
+<style>
+  :root {
+    --bg:    #1B100C;
+    --card:  #24150F;
+    --gold:  #D9AE2B;
+    --gold2: #F0CB4C;
+    --flame: #FF4A15;
+    --ink:   #F7F0E6;
+    --ink-2: #C9B5A4;
+    --ink-3: #8E7767;
+  }
+  * , *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 30px 20px 60px;
+    background: #EFEAE4;
+    color: #22160F;
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.5;
+  }
+  .page { max-width: 660px; margin: 0 auto; }
+  h1 { margin: 0 0 4px; font-size: 24px; font-weight: 900; letter-spacing: -.02em; }
+  .lead { margin: 0 0 24px; font-size: 14px; color: #6B5A4C; }
+
+  .stage { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; padding: 8px 0 24px; }
+
+  /* ---------- карта 85,6 × 54 мм, как банковская ---------- */
+  .card {
+    width: 85.6mm;
+    height: 54mm;
+    border-radius: 3.2mm;
+    overflow: hidden;
+    position: relative;
+    background: var(--card);
+    color: var(--ink);
+    box-shadow: 0 2px 4px #22160F26, 0 16px 34px -14px #22160F80;
+  }
+  /* тёплый отсвет из-за логотипа — тот же приём, что на сайте */
+  .card::before {
+    content: "";
+    position: absolute;
+    left: -8mm; bottom: -14mm;
+    width: 46mm; height: 46mm;
+    border-radius: 50%;
+    background: radial-gradient(circle, #FF6A1E4D 0%, #FF6A1E00 70%);
+  }
+
+  .face { position: relative; height: 100%; display: flex; align-items: stretch; }
+
+  .left {
+    flex: 1;
+    min-width: 0;
+    padding: 4.4mm 3mm 4.4mm 5mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .left img.logo { width: 13mm; height: 13mm; border-radius: 50%; display: block; }
+  .left h2 { margin: 2.2mm 0 0; font-size: 5.6mm; font-weight: 900; letter-spacing: -.03em; line-height: 1; }
+  .left .kind {
+    margin: 1.4mm 0 0;
+    font-size: 1.9mm;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .2em;
+    color: var(--gold2);
+  }
+  .left .hint {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 1.5mm;
+    font-size: 2.4mm;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--ink-2);
+  }
+  .left .hint svg { flex: none; color: var(--gold2); }
+
+  .right {
+    flex: none;
+    width: 33mm;
+    padding: 4.4mm 5mm 4.4mm 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.4mm;
+  }
+  /* QR печатаем на белом: на тёмном коде камера ловит его заметно хуже */
+  .qr {
+    width: 27mm;
+    height: 27mm;
+    padding: 1.6mm;
+    border-radius: 2mm;
+    background: #fff;
+  }
+  .qr img { width: 100%; height: 100%; display: block; }
+  .right span {
+    font-size: 1.8mm;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    color: var(--ink-3);
+    text-align: center;
+  }
+
+  /* ---------- оборот ---------- */
+  .back .face { flex-direction: column; align-items: center; justify-content: center; gap: 2mm; padding: 5mm; }
+  .back img.logo { width: 22mm; height: 22mm; border-radius: 50%; }
+  .back .marks { display: flex; gap: 2mm; }
+  .back .chip {
+    padding: 1mm 2.6mm;
+    border-radius: 99mm;
+    background: #FFFFFF14;
+    font-size: 2mm;
+    font-weight: 800;
+    letter-spacing: .1em;
+    color: var(--ink-2);
+  }
+  .back .chip.on { background: #29A85530; color: #6FE39B; }
+  .back .url { margin: 0; font-size: 2.2mm; font-weight: 700; color: var(--ink-3); }
+
+  /* ---------- пояснения ---------- */
+  .note {
+    border: 1px solid #DAD1C7;
+    border-radius: 14px;
+    background: #fff;
+    padding: 18px 20px;
+    font-size: 13.5px;
+  }
+  .note + .note { margin-top: 14px; }
+  .note h3 { margin: 0 0 9px; font-size: 14px; font-weight: 800; }
+  .note ul { margin: 0; padding-left: 18px; }
+  .note li + li { margin-top: 6px; }
+  .note code {
+    font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+    font-size: 12px;
+    background: #F2EEE9;
+    padding: 1px 5px;
+    border-radius: 4px;
+    word-break: break-all;
+  }
+  .print {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 18px 0 0;
+    padding: 12px 22px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--flame);
+    color: #fff;
+    font: inherit;
+    font-size: 14.5px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  /* ---------- лист для печати ---------- */
+  .sheet { display: none; }
+
+  @media print {
+    @page { size: A4 portrait; margin: 8mm; }
+    body { padding: 0; background: #fff; }
+    .page { display: none; }
+    .sheet {
+      display: grid;
+      grid-template-columns: repeat(2, 85.6mm);
+      gap: 4mm;
+      justify-content: center;
+    }
+    .sheet .card {
+      box-shadow: none;
+      /* тонкая рамка — линия реза для типографии */
+      outline: .2mm dashed #B9AFA4;
+      outline-offset: 0;
+      break-inside: avoid;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <h1>Карта для стола — Xami_Doo</h1>
+  <p class="lead">Лицо и оборот в размере банковской карты, 85,6 × 54 мм. Кнопка внизу
+    печатает лист А4 с десятью картами и линиями реза.</p>
+
+  <div class="stage">
+    <!-- лицо -->
+    <div class="card">
+      <div class="face">
+        <div class="left">
+          <div>
+            <img class="logo" src="../img/logo.webp" alt="" />
+            <h2>Xami_Doo</h2>
+            <p class="kind">Шашлык · Halal</p>
+          </div>
+          <p class="hint">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+              <path d="M6 8.5a7.5 7.5 0 0 1 0 7"/><path d="M10 6a12 12 0 0 1 0 12"/>
+              <path d="M14 3.5a16.5 16.5 0 0 1 0 17"/>
+            </svg>
+            Меню, отзыв<br />и Wi-Fi
+          </p>
+        </div>
+        <div class="right">
+          <span class="qr"><img src="qr.svg" alt="QR-код меню" /></span>
+          <span>наведите камеру</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- оборот -->
+    <div class="card back">
+      <div class="face">
+        <img class="logo" src="../img/logo.webp" alt="" />
+        <div class="marks">
+          <span class="chip on">24 / 7</span>
+          <span class="chip">HALAL</span>
+        </div>
+        <p class="url">приложите телефон к карте</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <h3>Что записать в NFC-метку</h3>
+    <ul>
+      <li>Тип записи — <b>URL</b>, адрес:
+        <code>https://madiyar77758.github.io/nfc-cards/xamidoo/</code></li>
+      <li>Метку <b>не блокировать</b> (read-only): пока адрес прямой, а не свой домен
+        с редиректом, её ещё предстоит перезаписать один раз.</li>
+      <li>Проверить на настоящем столе заведения: сквозь металл NFC не читается.</li>
+      <li>iPhone старше XS требует «Сканер NFC» из пункта управления — поэтому
+        на карте есть и QR.</li>
+    </ul>
+  </div>
+
+  <div class="note">
+    <h3>Печать</h3>
+    <ul>
+      <li>Пластик 0,76 мм, полноцветная печать с двух сторон, скругление 3,2 мм.</li>
+      <li>Если печатаете на наклейке поверх готовой NFC-карты — берите на 1 мм меньше
+        по каждой стороне, иначе края задираются.</li>
+      <li>QR собран с уровнем коррекции H: читается, даже если четверть кода
+        закрыта бликом или царапиной.</li>
+    </ul>
+  </div>
+
+  <button class="print" type="button" onclick="window.print()">
+    Печать листа А4 — 10 карт
+  </button>
+</div>
+
+<!-- лист размножается скриптом, чтобы не держать в разметке десять копий -->
+<div class="sheet" id="sheet"></div>
+
+<script>
+  (function () {
+    var one = document.querySelector('.stage .card').outerHTML;
+    var sheet = document.getElementById('sheet');
+    var html = '';
+    for (var i = 0; i < 10; i++) html += one;
+    sheet.innerHTML = html;
+  })();
+</script>
+
+</body>
+</html>

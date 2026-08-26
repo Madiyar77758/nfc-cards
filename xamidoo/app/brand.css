@@ -1,0 +1,209 @@
+/* ============================================================
+   Xami_Doo — общий стиль хаба, меню и админки.
+   Палитра снята с печатного меню: копчёно-коричневый фон,
+   оранжевое пламя в заголовках, горчичные плашки под цены.
+   Страницы всегда тёмные: это фирменный цвет, а не тема системы.
+   ============================================================ */
+
+:root,
+:root[data-theme="dark"],
+:root[data-theme="light"] {
+  color-scheme: dark;
+
+  --bg:        #1B100C;
+  --bg-2:      #24150F;
+  --card:      #2B1A13;
+  --card-2:    #35211896;
+  --line:      #FFFFFF1A;
+  --line-2:    #FFFFFF0D;
+
+  --gold:      #D9AE2B;
+  --gold-2:    #F0CB4C;
+  --gold-dim:  #D9AE2B26;
+  --on-gold:   #24150F;
+
+  --flame:     #FF4A15;
+  --flame-2:   #FF8A1F;
+  --red:       #E42C2C;
+  --green:     #29A855;
+
+  --ink:       #F7F0E6;
+  --ink-2:     #CBB6A3;
+  --ink-3:     #94796A;
+
+  --pad:       18px;
+  --wrap:      460px;
+  --font:      "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+/* правило браузера для [hidden] слабее авторского display — усиливаем */
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+a { color: inherit; -webkit-touch-callout: none; }
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid var(--gold-2);
+  outline-offset: 2px;
+}
+
+/* ---------- три языка ----------
+   Видимой остаётся только та вставка <i>, чей lang совпадает с корнем. */
+.i18n > i { font-style: normal; display: none; }
+html[data-lang="ru"] .i18n > i[lang="ru"],
+html[data-lang="kk"] .i18n > i[lang="kk"],
+html[data-lang="uz"] .i18n > i[lang="uz"] { display: inline; }
+
+.lang {
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 999px;
+  background: #FFFFFF14;
+}
+.lang button {
+  appearance: none;
+  border: 0;
+  margin: 0;
+  padding: 5px 10px;
+  min-height: 30px;
+  border-radius: 999px;
+  background: transparent;
+  color: #FFFFFFB3;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+  touch-action: manipulation;
+}
+.lang button.on { background: var(--gold); color: var(--on-gold); }
+
+/* ---------- пламя ----------
+   Та же картинка, что стоит фоном в печатном меню. Тянется по низу
+   экрана и не мешает тексту: живёт в отдельном слое под контентом. */
+.flame {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  z-index: 0;
+  width: min(100%, 720px);
+  transform: translateX(-50%);
+  pointer-events: none;
+  opacity: .42;
+  -webkit-mask-image: linear-gradient(to top, #000 35%, transparent 100%);
+          mask-image: linear-gradient(to top, #000 35%, transparent 100%);
+}
+
+.wrap {
+  position: relative;
+  z-index: 1;
+  max-width: var(--wrap);
+  margin: 0 auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* ---------- заголовок раздела ---------- */
+.h-sec {
+  margin: 0;
+  font-size: clamp(26px, 8vw, 34px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -.01em;
+  text-transform: uppercase;
+  color: var(--flame);
+  text-shadow: 0 0 26px #FF4A1533;
+}
+
+/* ---------- горчичная плашка с ценой ---------- */
+.price {
+  flex: none;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--on-gold);
+  font-size: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.price .was {
+  font-size: 11.5px;
+  font-weight: 700;
+  opacity: .55;
+  text-decoration: line-through;
+}
+
+/* ---------- кнопки ---------- */
+.btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 11px 18px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
+  color: var(--ink);
+  font: inherit;
+  font-size: 14.5px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .12s ease, background .12s ease, border-color .12s ease;
+  touch-action: manipulation;
+}
+.btn:active { transform: scale(.985); }
+.btn-gold { border-color: transparent; background: var(--gold); color: var(--on-gold); }
+.btn-flame { border-color: transparent; background: var(--flame); color: #fff; }
+.btn-ghost { background: transparent; }
+.btn-danger { border-color: #E42C2C55; background: transparent; color: #FF8A80; }
+.btn:disabled { opacity: .45; cursor: default; }
+.btn-sm { min-height: 36px; padding: 7px 12px; font-size: 13px; border-radius: 11px; }
+
+/* ---------- уведомление ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(24px + env(safe-area-inset-bottom));
+  z-index: 60;
+  transform: translate(-50%, 14px);
+  padding: 11px 18px;
+  border-radius: 12px;
+  background: var(--gold);
+  color: var(--on-gold);
+  font-size: 13.5px;
+  font-weight: 800;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.toast.bad { background: var(--red); color: #fff; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: .001ms !important;
+  }
+}

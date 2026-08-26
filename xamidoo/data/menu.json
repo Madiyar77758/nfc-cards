@@ -1,0 +1,165 @@
+{
+  "v": 1,
+  "updated": "2026-08-26",
+  "place": {
+    "name": "Xami_Doo",
+    "tagline": "Шашлык · Halal · 24/7",
+    "always": true,
+    "hours": "",
+    "address": "",
+    "phone": "",
+    "whatsapp": "",
+    "gis": "",
+    "instagram": "https://www.instagram.com/xami_doo_cafe",
+    "tiktok": "https://www.tiktok.com/@xami_doo_cafe",
+    "wifiName": "",
+    "wifiPass": ""
+  },
+  "promos": [],
+  "sections": [
+    {
+      "id": "salaty",
+      "title": { "ru": "Салаты", "kk": "Салаттар", "uz": "Салатлар" },
+      "items": [
+        { "id": "cezar", "name": "Цезарь", "price": 2000, "photo": "cezar.webp", "desc": "", "hit": false, "off": false },
+        { "id": "svezhie", "name": "Свежие салаты", "price": 900, "photo": "svezhie.webp", "desc": "", "hit": false, "off": false },
+        { "id": "grecheskiy", "name": "Греческий", "price": 1500, "photo": "grecheskiy.webp", "desc": "", "hit": false, "off": false },
+        { "id": "olivie", "name": "Оливье", "price": 1200, "photo": "olivie.webp", "desc": "", "hit": false, "off": false },
+        { "id": "achuchuk", "name": "Ачучук", "price": 800, "photo": "achuchuk.webp", "desc": "", "hit": false, "off": false },
+        { "id": "fruktovyy", "name": "Фруктовый", "price": 2300, "photo": "fruktovyy.webp", "desc": "", "hit": false, "off": false },
+        { "id": "tayskiy", "name": "Тайский", "price": 1750, "photo": "tayskiy.webp", "desc": "", "hit": false, "off": false },
+        { "id": "baklazhan", "name": "Хрустящий баклажан", "price": 1900, "photo": "baklazhan.webp", "desc": "", "hit": false, "off": false }
+      ]
+    },
+    {
+      "id": "lagman",
+      "title": { "ru": "Лағмандар", "kk": "Лағмандар", "uz": "Лағмонлар" },
+      "items": [
+        { "id": "guyru", "name": "Гуйру лағман", "price": 1750, "photo": "guyru.webp", "desc": "", "hit": false, "off": false },
+        { "id": "hoho", "name": "Хо хо лағман", "price": 1900, "photo": "hoho.webp", "desc": "", "hit": false, "off": false },
+        { "id": "suyru", "name": "Суйру лағман", "price": 1750, "photo": "suyru.webp", "desc": "", "hit": false, "off": false },
+        { "id": "atush", "name": "Атуш лағман", "price": 1900, "photo": "atush.webp", "desc": "", "hit": false, "off": false },
+        { "id": "moguru", "name": "Могуру лағман", "price": 1800, "photo": "moguru.webp", "desc": "", "hit": false, "off": false },
+        { "id": "degyandyak", "name": "Дегяндяк лағман", "price": 1900, "photo": "degyandyak.webp", "desc": "", "hit": false, "off": false },
+        { "id": "domashniy", "name": "Домашний лағман", "price": 1750, "photo": "domashniy.webp", "desc": "", "hit": false, "off": false },
+        { "id": "zhusay", "name": "Жусай лағман", "price": 1750, "photo": "zhusay.webp", "desc": "", "hit": false, "off": false }
+      ]
+    },
+    {
+      "id": "comyan",
+      "title": { "ru": "Цомян", "kk": "Цомян", "uz": "Цомян" },
+      "items": [
+        { "id": "comyan-guyru", "name": "Цомян гуйру", "price": 1800, "photo": "comyan-guyru.webp", "desc": "", "hit": false, "off": false },
+        { "id": "moguru-comyan", "name": "Могуру цомян", "price": 1800, "photo": "moguru-comyan.webp", "desc": "", "hit": false, "off": false },
+        { "id": "gabyan-comyan", "name": "Габян цомян", "price": 1800, "photo": "gabyan-comyan.webp", "desc": "", "hit": false, "off": false },
+        { "id": "suyru-comyan", "name": "Суйру цомян", "price": 1800, "photo": "suyru-comyan.webp", "desc": "", "hit": false, "off": false },
+        { "id": "mampar-comyan", "name": "Мампар цомян", "price": 1800, "photo": "mampar-comyan.webp", "desc": "", "hit": false, "off": false },
+        { "id": "dindin-comyan", "name": "Дин дин цомян", "price": 1800, "photo": "dindin-comyan.webp", "desc": "", "hit": false, "off": false },
+        { "id": "lapsha-yaico", "name": "Лагманная лапша с яйцом", "price": 1500, "photo": "lapsha-yaico.webp", "desc": "", "hit": false, "off": false }
+      ]
+    },
+    {
+      "id": "syay",
+      "title": { "ru": "Сяй", "kk": "Сяй", "uz": "Сяй" },
+      "items": [
+        { "id": "mua-ru", "name": "Муа ру", "price": 2900, "photo": "mua-ru.webp", "desc": "", "hit": false, "off": false },
+        { "id": "chezyru", "name": "Чезыру", "price": 2500, "photo": "chezyru.webp", "desc": "", "hit": false, "off": false },
+        { "id": "funchoza", "name": "Фунчоза жареная", "price": 2500, "photo": "funchoza.webp", "desc": "", "hit": false, "off": false },
+        { "id": "moshu-ru", "name": "Мошу ру", "price": 2500, "photo": "moshu-ru.webp", "desc": "", "hit": false, "off": false },
+        { "id": "chin-syay-ru", "name": "Чин сяй ру", "price": 2500, "photo": "chin-syay-ru.webp", "desc": "", "hit": false, "off": false },
+        { "id": "lazru", "name": "Лазру", "price": 2500, "photo": "lazru.webp", "desc": "", "hit": false, "off": false },
+        { "id": "lazdzhi", "name": "Лазджи", "price": 2500, "photo": "lazdzhi.webp", "desc": "", "hit": false, "off": false },
+        { "id": "tuhum-syay", "name": "Тухум-сяй", "price": 1800, "photo": "tuhum-syay.webp", "desc": "", "hit": false, "off": false },
+        { "id": "shou-shu-ryan", "name": "Шоу-шу-рян", "price": 2500, "photo": "shou-shu-ryan.webp", "desc": "", "hit": false, "off": false },
+        { "id": "mogu-ru", "name": "Могу ру", "price": 2500, "photo": "mogu-ru.webp", "desc": "", "hit": false, "off": false }
+      ]
+    },
+    {
+      "id": "goryachee",
+      "title": { "ru": "Горячие блюда", "kk": "Ыстық тағамдар", "uz": "Иссиқ таомлар" },
+      "items": [
+        { "id": "hanskiy-plov", "name": "Ханский плов", "price": 9000, "photo": "hanskiy-plov.webp", "desc": "", "hit": false, "off": false },
+        { "id": "sazan", "name": "Сазан", "price": 4500, "photo": "sazan.webp", "desc": "", "hit": false, "off": false },
+        { "id": "plov", "name": "Плов", "price": 1500, "photo": "", "desc": "", "hit": false, "off": false },
+        { "id": "pelmen", "name": "Пельмень", "price": 1500, "photo": "", "desc": "", "hit": false, "off": false },
+        { "id": "manty", "name": "Манты", "price": 1500, "photo": "", "desc": "", "hit": false, "off": false },
+        { "id": "ramen", "name": "Рамен", "price": 1700, "photo": "", "desc": "", "hit": false, "off": false },
+        { "id": "ramen-slivki", "name": "Рамен в сливочном соусе", "price": 1900, "photo": "", "desc": "", "hit": false, "off": false },
+        { "id": "shorpa", "name": "Шорпа", "price": 1800, "photo": "", "desc": "", "hit": false, "off": false },
+        { "id": "kuyrdak-siyr", "name": "Қуырдақ сиыр", "price": 3500, "photo": "", "desc": "", "hit": false, "off": false },
+        { "id": "kuyrdak-koy", "name": "Қуырдақ қой", "price": 3500, "photo": "", "desc": "", "hit": false, "off": false },
+        { "id": "iskander", "name": "Искандер", "price": 3000, "photo": "", "desc": "", "hit": false, "off": false }
+      ]
+    },
+    {
+      "id": "pizza",
+      "title": { "ru": "Пицца", "kk": "Пицца", "uz": "Пицца" },
+      "items": [
+        { "id": "pizza-assorti", "name": "Ассорти", "price": 2900, "photo": "pizza-assorti.webp", "desc": "", "hit": false, "off": false },
+        { "id": "pizza-ostryy", "name": "Острая", "price": 2500, "photo": "pizza-ostryy.webp", "desc": "", "hit": false, "off": false },
+        { "id": "pizza-kuritsa-griby", "name": "Курица с грибами", "price": 2800, "photo": "pizza-kuritsa-griby.webp", "desc": "", "hit": false, "off": false },
+        { "id": "pizza-bolonez", "name": "Болоньезе", "price": 2600, "photo": "pizza-bolonez.webp", "desc": "", "hit": false, "off": false },
+        { "id": "pizza-margarita", "name": "Маргарита", "price": 2100, "photo": "pizza-margarita.webp", "desc": "", "hit": false, "off": false },
+        { "id": "pizza-syrnaya", "name": "Сырная", "price": 2000, "photo": "pizza-syrnaya.webp", "desc": "", "hit": false, "off": false },
+        { "id": "pizza-pepperoni", "name": "Пепперони", "price": 2300, "photo": "pizza-pepperoni.webp", "desc": "", "hit": false, "off": false },
+        { "id": "pizza-losos", "name": "С лососем", "price": 3200, "photo": "pizza-losos.webp", "desc": "", "hit": false, "off": false },
+        { "id": "pizza-kurinyy", "name": "Куриная", "price": 2300, "photo": "pizza-kurinyy.webp", "desc": "", "hit": false, "off": false },
+        { "id": "pizza-4-sezona", "name": "4 сезона", "price": 2800, "photo": "pizza-4-sezona.webp", "desc": "", "hit": false, "off": false }
+      ]
+    },
+    {
+      "id": "sushi",
+      "title": { "ru": "Суши-роллы", "kk": "Суши-роллдар", "uz": "Суши-ролллар" },
+      "items": [
+        { "id": "geysha", "name": "Поцелуй гейши", "price": 3200, "photo": "geysha.webp", "desc": "", "hit": false, "off": false },
+        { "id": "filadelfiya", "name": "Филадельфия", "price": 2800, "photo": "filadelfiya.webp", "desc": "", "hit": false, "off": false },
+        { "id": "amerika", "name": "Америка", "price": 2600, "photo": "amerika.webp", "desc": "", "hit": false, "off": false },
+        { "id": "syake-tempura", "name": "Сяке темпура", "price": 2400, "photo": "syake-tempura.webp", "desc": "", "hit": false, "off": false },
+        { "id": "chiz-krab", "name": "Чиз краб", "price": 1800, "photo": "chiz-krab.webp", "desc": "", "hit": false, "off": false },
+        { "id": "ponchik", "name": "Пончик", "price": 2300, "photo": "ponchik.webp", "desc": "", "hit": false, "off": false },
+        { "id": "kappa-maki", "name": "Каппа маки", "price": 1500, "photo": "kappa-maki.webp", "desc": "", "hit": false, "off": false },
+        { "id": "roll-cezar", "name": "Цезарь", "price": 2600, "photo": "roll-cezar.webp", "desc": "", "hit": false, "off": false },
+        { "id": "cezar-zapechennyy", "name": "Цезарь запечённый", "price": 2800, "photo": "cezar-zapechennyy.webp", "desc": "", "hit": false, "off": false },
+        { "id": "kaliforniya-zapechennaya", "name": "Калифорния запечённая", "price": 2600, "photo": "kaliforniya-zapechennaya.webp", "desc": "", "hit": false, "off": false }
+      ]
+    },
+    {
+      "id": "sety",
+      "title": { "ru": "Сеты", "kk": "Сеттер", "uz": "Сетлар" },
+      "items": [
+        { "id": "set-1", "name": "Сет 1", "price": 6500, "photo": "set-1.webp", "desc": "", "hit": false, "off": false },
+        { "id": "set-2", "name": "Сет 2", "price": 6500, "photo": "set-2.webp", "desc": "", "hit": false, "off": false },
+        { "id": "set-3", "name": "Сет 3", "price": 6500, "photo": "set-3.webp", "desc": "", "hit": false, "off": false },
+        { "id": "set-4", "name": "Сет 4", "price": 5000, "photo": "set-4.webp", "desc": "", "hit": false, "off": false }
+      ]
+    },
+    {
+      "id": "zavtrak",
+      "title": { "ru": "Завтрак", "kk": "Таңғы ас", "uz": "Нонушта" },
+      "items": [
+        { "id": "shakshuka", "name": "Шакшука", "price": 1600, "photo": "shakshuka.webp", "desc": "", "hit": false, "off": false },
+        { "id": "zavtrak-1", "name": "Завтрак 1", "price": 1000, "photo": "zavtrak-1.webp", "desc": "", "hit": false, "off": false },
+        { "id": "zavtrak-2", "name": "Завтрак 2", "price": 1200, "photo": "zavtrak-2.webp", "desc": "", "hit": false, "off": false },
+        { "id": "kasha-risovaya", "name": "Рисовая каша", "price": 990, "photo": "kasha-risovaya.webp", "desc": "", "hit": false, "off": false },
+        { "id": "kasha-mannaya", "name": "Манная каша", "price": 990, "photo": "kasha-mannaya.webp", "desc": "", "hit": false, "off": false },
+        { "id": "kasha-ovsyanaya", "name": "Овсяная каша", "price": 990, "photo": "kasha-ovsyanaya.webp", "desc": "", "hit": false, "off": false }
+      ]
+    },
+    {
+      "id": "napitki",
+      "title": { "ru": "Напитки", "kk": "Сусындар", "uz": "Ичимликлар" },
+      "items": [
+        { "id": "chay-moloko", "name": "Чай с молоком", "price": 800, "photo": "chay-moloko.webp", "desc": "", "hit": false, "off": false },
+        { "id": "chay-chernyy", "name": "Чёрный чай", "price": 600, "photo": "chay-chernyy.webp", "desc": "", "hit": false, "off": false },
+        { "id": "chay-tureckiy", "name": "Турецкий чай", "price": 700, "photo": "chay-tureckiy.webp", "desc": "", "hit": false, "off": false },
+        { "id": "chay-tashkentskiy", "name": "Ташкентский чай", "price": 900, "photo": "chay-tashkentskiy.webp", "desc": "", "hit": false, "off": false },
+        { "id": "kofe-3v1", "name": "Кофе 3 в 1", "price": 400, "photo": "kofe-3v1.webp", "desc": "", "hit": false, "off": false },
+        { "id": "mohito", "name": "Мохито", "price": 1500, "photo": "mohito.webp", "desc": "", "hit": false, "off": false },
+        { "id": "mango-marakuyya", "name": "Манго-маракуйя", "price": 1500, "photo": "mango-marakuyya.webp", "desc": "", "hit": false, "off": false },
+        { "id": "yagody", "name": "Ягоды", "price": 1500, "photo": "yagody.webp", "desc": "", "hit": false, "off": false },
+        { "id": "kivi-laym", "name": "Киви-лайм", "price": 1500, "photo": "kivi-laym.webp", "desc": "", "hit": false, "off": false },
+        { "id": "klubnichnyy", "name": "Клубничный", "price": 1500, "photo": "klubnichnyy.webp", "desc": "", "hit": false, "off": false }
+      ]
+    }
+  ]
+}

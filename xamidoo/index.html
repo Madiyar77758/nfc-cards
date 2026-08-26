@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Xami_Doo</title>
+<meta name="description" content="Xami_Doo — шашлык, лағман, пицца и суши. Меню, отзывы, соцсети и Wi-Fi." />
+<meta name="theme-color" content="#1B100C" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="ru_KZ" />
+<meta property="og:title" content="Xami_Doo" />
+<meta property="og:description" content="Меню, отзывы и соцсети — в одном месте." />
+<meta property="og:image" content="img/logo-192.png" />
+<link rel="icon" href="img/logo-192.png" />
+<link rel="apple-touch-icon" href="img/logo-192.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap" />
+<link rel="stylesheet" href="app/brand.css" />
+
+<style>
+  .hub {
+    /* Пламя лежит внутри .wrap, поэтому содержимое поднимаем над ним слоем:
+       позиционированная картинка иначе рисуется поверх обычных блоков. */
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: calc(14px + env(safe-area-inset-top)) var(--pad)
+             calc(22px + env(safe-area-inset-bottom));
+  }
+
+  .top { display: flex; justify-content: flex-end; }
+
+  /* ---------- шапка ---------- */
+  .brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 0 22px;
+    text-align: center;
+  }
+
+  .mark {
+    position: relative;
+    width: 148px;
+    height: 148px;
+    animation: pop .55s cubic-bezier(.2,.8,.25,1) both;
+  }
+  .mark img { width: 100%; height: 100%; display: block; border-radius: 50%; }
+  /* тёплое свечение позади печати — она белая и иначе висит в пустоте */
+  .mark::before {
+    content: "";
+    position: absolute;
+    inset: -18px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #FF6A1E44 0%, #FF6A1E00 68%);
+    z-index: -1;
+  }
+  /* волна, как от приложенной карты */
+  .mark::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    border: 2px solid #F0CB4CB3;
+    animation: tap 2.1s cubic-bezier(.2,.7,.3,1) .45s 1 both;
+  }
+  @keyframes pop { from { opacity: 0; transform: scale(.9); } to { opacity: 1; transform: none; } }
+  @keyframes tap { from { transform: scale(1); opacity: .75; } to { transform: scale(1.65); opacity: 0; } }
+
+  .brand h1 {
+    margin: 0;
+    font-size: clamp(34px, 11vw, 44px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -.03em;
+  }
+  .kind {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    font-size: 10.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .24em;
+    text-indent: .24em;
+    color: var(--ink-2);
+  }
+  .kind i { display: block; width: 20px; height: 2px; background: var(--gold); }
+
+  .marks { display: flex; gap: 8px; }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: .02em;
+  }
+  .chip-open { background: #29A85526; color: #6FE39B; }
+  .chip-open .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #6FE39B; box-shadow: 0 0 0 3px #29A85533;
+  }
+  .chip-halal { background: #FFFFFF12; color: var(--ink-2); }
+
+  /* ---------- главная кнопка ---------- */
+  .cta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 72px;
+    padding: 14px 18px;
+    border-radius: 20px;
+    background: linear-gradient(150deg, var(--gold-2) 0%, var(--gold) 60%, #C0951E 100%);
+    color: var(--on-gold);
+    text-decoration: none;
+    box-shadow: 0 18px 34px -16px #D9AE2BAA;
+    transition: transform .12s ease;
+    touch-action: manipulation;
+  }
+  .cta:active { transform: scale(.985); }
+  .cta .t { font-size: 19px; font-weight: 900; letter-spacing: -.015em; }
+  .cta .s { font-size: 12.5px; font-weight: 600; opacity: .68; }
+  .cta .tile { background: #24150F1F; color: var(--on-gold); }
+  .cta .chev { color: #24150F80; }
+
+  /* ---------- списки ---------- */
+  .group {
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--card);
+  }
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    width: 100%;
+    min-height: 62px;
+    padding: 11px 15px;
+    border: 0;
+    color: inherit;
+    text-align: left;
+    text-decoration: none;
+    font: inherit;
+    background: transparent;
+    cursor: pointer;
+    transition: background .12s ease;
+    touch-action: manipulation;
+  }
+  .row + .row { border-top: 1px solid var(--line-2); }
+  .row:active { background: #FFFFFF0F; }
+  @media (hover: hover) { .row:hover { background: #FFFFFF0A; } }
+
+  .tile {
+    flex: none;
+    width: 42px; height: 42px;
+    border-radius: 13px;
+    display: grid;
+    place-items: center;
+    background: var(--gold-dim);
+    color: var(--gold-2);
+  }
+  .txt { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+  .txt .t { font-size: 15.5px; font-weight: 700; letter-spacing: -.008em; }
+  .txt .s { font-size: 12.5px; font-weight: 500; color: var(--ink-3); }
+  .chev { margin-left: auto; flex: none; color: var(--ink-3); }
+
+  /* отзыв просим отдельной карточкой — это главная цель карты */
+  .review { border-color: #D9AE2B4D; background: linear-gradient(180deg, #D9AE2B14, transparent); }
+  .review .tile { background: #FF4A1524; color: var(--flame-2); }
+
+  .pass {
+    margin-left: auto;
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--gold-2);
+  }
+  .pass svg { color: var(--ink-3); }
+
+  /* ---------- подвал ---------- */
+  .foot {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+  }
+  .tap {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .2em;
+    color: var(--ink-3);
+  }
+  .addr { font-size: 12.5px; font-weight: 500; color: var(--ink-3); }
+
+  @media (min-width: 520px) {
+    body { padding: 40px 20px; }
+    .wrap { min-height: 0; border-radius: 26px; background: var(--bg-2); overflow: hidden;
+            box-shadow: 0 40px 70px -34px #000000B3; }
+    /* Карточка на широком экране короче окна телефона, и пламя во весь рост
+       лезет под логотип. Оставляем от него только языки понизу. */
+    .flame {
+      position: absolute;
+      opacity: .34;
+      -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 52%);
+              mask-image: linear-gradient(to top, #000 0%, transparent 52%);
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <!-- на широком экране .wrap становится карточкой со скруглением и
+       обрезает пламя по себе; на телефоне оно остаётся прижатым к низу окна -->
+  <img class="flame" src="img/flame.webp" alt="" aria-hidden="true" />
+
+  <div class="hub">
+
+    <div class="top">
+      <div class="lang" id="lang" role="group" aria-label="Тіл / Til / Язык">
+        <button type="button" data-set="ru">RU</button>
+        <button type="button" data-set="kk">ҚАЗ</button>
+        <button type="button" data-set="uz">ЎЗ</button>
+      </div>
+    </div>
+
+    <header class="brand">
+      <div class="mark">
+        <img src="img/logo.webp" width="148" height="148" alt="Xami_Doo" />
+      </div>
+      <h1 id="name">Xami_Doo</h1>
+      <p class="kind"><i></i><span id="kind">Шашлык</span><i></i></p>
+      <div class="marks">
+        <span class="chip chip-open" id="open">
+          <span class="dot" aria-hidden="true"></span>
+          <span class="say i18n"><i lang="ru">Круглосуточно</i><i lang="kk">Тәулік бойы</i><i lang="uz">Кеча-кундуз</i></span>
+        </span>
+        <span class="chip chip-halal">HALAL</span>
+      </div>
+    </header>
+
+    <a class="cta" href="menu/">
+      <span class="tile" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 5.6A1.6 1.6 0 0 1 5.6 4H11v16H5.6A1.6 1.6 0 0 1 4 18.4z"/>
+        <path d="M20 5.6A1.6 1.6 0 0 0 18.4 4H13v16h5.4a1.6 1.6 0 0 0 1.6-1.6z"/>
+        <path d="M6.8 8.4h2M6.8 11.4h2M15.2 8.4h2M15.2 11.4h2"/>
+      </svg></span>
+      <span class="txt">
+        <span class="t i18n"><i lang="ru">Меню</i><i lang="kk">Мәзір</i><i lang="uz">Меню</i></span>
+        <span class="s i18n"><i lang="ru">Все блюда и цены с фото</i><i lang="kk">Барлық тағам мен баға, фотосымен</i><i lang="uz">Барча таом ва нархлар, фото билан</i></span>
+      </span>
+      <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+    </a>
+
+    <div class="group review" id="g-review" hidden>
+      <a class="row" id="gis" href="#" target="_blank" rel="noopener">
+        <span class="tile" aria-hidden="true"><svg width="23" height="23" viewBox="0 0 24 24" fill="currentColor">
+          <path d="m12 3 2.7 5.9 6.3.7-4.7 4.3 1.3 6.3L12 17l-5.6 3.2 1.3-6.3L3 9.6l6.3-.7z"/>
+        </svg></span>
+        <span class="txt">
+          <span class="t i18n"><i lang="ru">Оставить отзыв</i><i lang="kk">Пікір қалдыру</i><i lang="uz">Фикр қолдириш</i></span>
+          <span class="s i18n"><i lang="ru">В 2ГИС — это очень помогает нам</i><i lang="kk">2ГИС-те — бұл бізге көп көмектеседі</i><i lang="uz">2ГИС’да — бу бизга жуда ёрдам беради</i></span>
+        </span>
+        <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <div class="group" id="g-social" hidden>
+      <a class="row" id="instagram" href="#" target="_blank" rel="noopener" hidden>
+        <span class="tile" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="5.3"/><circle cx="12" cy="12" r="4"/>
+          <circle cx="17.3" cy="6.7" r="1.05" fill="currentColor" stroke="none"/>
+        </svg></span>
+        <span class="txt">
+          <span class="t">Instagram</span>
+          <span class="s i18n"><i lang="ru">Фото и новинки</i><i lang="kk">Фото және жаңалықтар</i><i lang="uz">Фото ва янгиликлар</i></span>
+        </span>
+        <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+      </a>
+
+      <a class="row" id="tiktok" href="#" target="_blank" rel="noopener" hidden>
+        <span class="tile" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13.6 3v11.5a3.65 3.65 0 1 1-3.2-3.62"/>
+          <path d="M13.6 3.5c.55 2.65 2.25 4.25 4.95 4.45"/>
+        </svg></span>
+        <span class="txt">
+          <span class="t">TikTok</span>
+          <span class="s i18n"><i lang="ru">Видео из заведения</i><i lang="kk">Мекеменің видеосы</i><i lang="uz">Масканинг видеолари</i></span>
+        </span>
+        <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <div class="group" id="g-util" hidden>
+      <a class="row" id="whatsapp" href="#" target="_blank" rel="noopener" hidden>
+        <span class="tile" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.5 11.7a8.4 8.4 0 0 1-12.3 7.5L3.5 20.5l1.4-4.6A8.4 8.4 0 1 1 20.5 11.7Z"/>
+          <path d="M8.9 8.2c.3-.1.7 0 .9.4l.7 1.3c.1.3.1.6-.1.8l-.5.6a5.6 5.6 0 0 0 2.9 2.9l.6-.5c.2-.2.5-.3.8-.1l1.3.7c.4.2.5.6.4.9-.3.8-1.2 1.3-2 1.2-2.9-.4-5.6-3.1-6-6-.1-.9.3-1.8 1-2.2Z"/>
+        </svg></span>
+        <span class="txt">
+          <span class="t">WhatsApp</span>
+          <span class="s i18n"><i lang="ru">Заказ и бронь стола</i><i lang="kk">Тапсырыс және үстел броны</i><i lang="uz">Буюртма ва стол банди</i></span>
+        </span>
+        <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+      </a>
+
+      <a class="row" id="phone" href="#" hidden>
+        <span class="tile" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6.2 3h3l1.5 4-2 1.4a11.5 11.5 0 0 0 5.4 5.4L15.6 12l4 1.5v3a1.8 1.8 0 0 1-2 1.8A14.5 14.5 0 0 1 4.4 5a1.8 1.8 0 0 1 1.8-2Z"/>
+        </svg></span>
+        <span class="txt">
+          <span class="t i18n"><i lang="ru">Позвонить</i><i lang="kk">Қоңырау шалу</i><i lang="uz">Қўнғироқ қилиш</i></span>
+          <span class="s" id="phone-num"></span>
+        </span>
+        <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+      </a>
+
+      <button class="row" type="button" id="wifi" hidden>
+        <span class="tile" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <path d="M2.5 8.5a15 15 0 0 1 19 0"/><path d="M5.5 12a11 11 0 0 1 13 0"/>
+          <path d="M8.5 15.4a6.5 6.5 0 0 1 7 0"/>
+          <circle cx="12" cy="19" r="1.4" fill="currentColor" stroke="none"/>
+        </svg></span>
+        <span class="txt">
+          <span class="t">Wi-Fi</span>
+          <span class="s" id="wifi-name"></span>
+        </span>
+        <span class="pass">
+          <span id="wifi-pass"></span>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="12" height="12" rx="2.4"/>
+            <path d="M15 5.5A2.5 2.5 0 0 0 12.5 3h-7A2.5 2.5 0 0 0 3 5.5v7A2.5 2.5 0 0 0 5.5 15"/>
+          </svg>
+        </span>
+      </button>
+    </div>
+
+    <footer class="foot">
+      <span class="addr" id="addr" hidden></span>
+      <span class="tap">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round">
+          <path d="M6 8.5a7.5 7.5 0 0 1 0 7"/><path d="M10 6a12 12 0 0 1 0 12"/>
+          <path d="M14 3.5a16.5 16.5 0 0 1 0 17"/>
+        </svg>
+        <span class="i18n"><i lang="ru">Карта на столе</i><i lang="kk">Үстелдегі карта</i><i lang="uz">Стол устидаги карта</i></span>
+      </span>
+    </footer>
+
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="app/config.js"></script>
+<script src="app/data.js"></script>
+<script>
+(function () {
+  'use strict';
+  XD.initLang();
+
+  var HOURS_WORD = {
+    ru: { open: 'Открыто до ', shut: 'Закрыто · откроем в ', all: 'Круглосуточно' },
+    kk: { open: 'Ашық, ',      shut: 'Жабық · ашылады ',    all: 'Тәулік бойы' },
+    uz: { open: 'Очиқ, ',      shut: 'Ёпиқ · очилади ',     all: 'Кеча-кундуз' }
+  };
+
+  var place = null;
+
+  function show(el, on) { el.hidden = !on; return on; }
+
+  // Ссылки приходят из данных: заведение правит их само в админке,
+  // а пустая строка означает «этой строки на карточке нет».
+  function paintLinks(p) {
+    var any = false;
+
+    document.getElementById('name').textContent = p.name || 'Xami_Doo';
+    var kind = (p.tagline || '').split('·')[0].trim();
+    document.getElementById('kind').textContent = kind || 'Шашлык';
+
+    var gis = document.getElementById('gis');
+    gis.href = p.gis || '#';
+    show(document.getElementById('g-review'), !!p.gis);
+
+    var ig = document.getElementById('instagram');
+    ig.href = p.instagram || '#';
+    var igOn = show(ig, !!p.instagram);
+
+    var tt = document.getElementById('tiktok');
+    tt.href = p.tiktok || '#';
+    var ttOn = show(tt, !!p.tiktok);
+    show(document.getElementById('g-social'), igOn || ttOn);
+
+    var wa = document.getElementById('whatsapp');
+    var waNum = (p.whatsapp || '').replace(/[^\d]/g, '');
+    wa.href = waNum ? 'https://wa.me/' + waNum : '#';
+    any = show(wa, !!waNum) || any;
+
+    var ph = document.getElementById('phone');
+    ph.href = p.phone ? 'tel:' + p.phone.replace(/\s/g, '') : '#';
+    document.getElementById('phone-num').textContent = p.phone || '';
+    any = show(ph, !!p.phone) || any;
+
+    var wifi = document.getElementById('wifi');
+    document.getElementById('wifi-name').textContent = p.wifiName || '';
+    document.getElementById('wifi-pass').textContent = p.wifiPass || '';
+    any = show(wifi, !!p.wifiPass) || any;
+
+    show(document.getElementById('g-util'), any);
+
+    var addr = document.getElementById('addr');
+    addr.textContent = p.address || '';
+    show(addr, !!p.address);
+  }
+
+  // Плашка «открыто»: 24/7 показываем словом, обычные часы — считаем на телефоне.
+  function paintOpen() {
+    if (!place) return;
+    var el = document.getElementById('open');
+    var say = el.querySelector('.say');
+    var w = HOURS_WORD[window.XD_LANG || 'ru'] || HOURS_WORD.ru;
+
+    if (place.always || !place.hours) {
+      say.innerHTML = '';
+      say.textContent = w.all;
+      el.classList.remove('chip-halal');
+      el.classList.add('chip-open');
+      return;
+    }
+
+    var m = /^(\d{1,2}):(\d{2})\s*[-–—]\s*(\d{1,2}):(\d{2})$/.exec(place.hours.trim());
+    if (!m) { el.hidden = true; return; }
+    el.hidden = false;
+
+    var openMin = (+m[1]) * 60 + (+m[2]);
+    var shutMin = (+m[3]) * 60 + (+m[4]);
+    var now = new Date();
+    var cur = now.getHours() * 60 + now.getMinutes();
+    // закрытие после полуночи — интервал переходит через сутки
+    var isOpen = (shutMin > openMin) ? (cur >= openMin && cur < shutMin)
+                                     : (cur >= openMin || cur < shutMin);
+
+    say.innerHTML = '';
+    say.textContent = isOpen ? w.open + m[3] + ':' + m[4] : w.shut + m[1] + ':' + m[2];
+    el.classList.toggle('chip-open', isOpen);
+    el.classList.toggle('chip-halal', !isOpen);
+  }
+
+  window.onLangChange = paintOpen;
+
+  document.getElementById('wifi').addEventListener('click', function () {
+    var pass = document.getElementById('wifi-pass').textContent;
+    if (!pass) return;
+    var L = window.XD_LANG || 'ru';
+    var done = { ru: 'Пароль скопирован', kk: 'Құпиясөз көшірілді', uz: 'Парол кўчирилди' };
+    var fail = { ru: 'Не получилось скопировать', kk: 'Көшіру мүмкін болмады', uz: 'Кўчириб бўлмади' };
+    XD.copy(pass).then(function () { XD.toast(done[L]); }, function () { XD.toast(fail[L], true); });
+  });
+
+  XD.load('').then(function (data) {
+    place = data.place || {};
+    paintLinks(place);
+    paintOpen();
+    setInterval(paintOpen, 60000);
+  }).catch(function () {
+    // данные не доехали — на карточке остаются логотип и кнопка меню
+    place = { always: true };
+    paintOpen();
+  });
+})();
+</script>
+
+</body>
+</html>
