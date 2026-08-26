@@ -107,9 +107,9 @@
   }
   section + section { border-top: 1px solid var(--line); }
 
-  html.js section { opacity: 0; transform: translateY(14px);
-                    transition: opacity .5s ease, transform .5s cubic-bezier(.2, .8, .25, 1); }
-  html.js section.seen { opacity: 1; transform: none; }
+  /* Проявления при прокрутке здесь намеренно нет. Блюда рождаются уже
+     после загрузки данных, и любая задержка поверх этого — риск показать
+     гостю пустой экран. Меню обязано быть видно сразу. */
 
   .sec-head { grid-column: 1 / -1; display: flex; align-items: center; gap: 13px; margin-bottom: 4px; }
   .medal {
@@ -313,7 +313,6 @@
 <script src="../app/config.js"></script>
 <script src="../app/data.js"></script>
 <script>
-document.documentElement.className = 'js';
 (function () {
   'use strict';
   XD.initLang();
@@ -385,9 +384,11 @@ document.documentElement.className = 'js';
           (pr.was ? '<b class="flag off">−' + pr.percent + '%</b>' : '') +
           '<img class="ph" src="' + XD.esc(src) + '" alt="" loading="lazy" decoding="async" ' +
           'width="520" height="520" data-name="' + XD.esc(it.name) + '" />' +
+          // цена сразу под названием: её ищут глазами первой, описание — потом
           '<div class="body"><span class="name">' + XD.esc(it.name) + '</span>' +
+          price +
           (it.desc ? '<p class="desc">' + XD.esc(it.desc) + '</p>' : '') +
-          price + '</div></article>';
+          '</div></article>';
       }).join('');
 
       var medal = MEDAL[sec.id] || MEDAL._;
@@ -397,8 +398,10 @@ document.documentElement.className = 'js';
         html: '<section id="s-' + XD.esc(sec.id) + '">' +
           '<div class="sec-head"><span class="medal">' + medal + '</span>' +
           '<div><h2>' + XD.esc(XD.t(sec.title)) + '</h2>' +
-          '<p class="hint">' + items.length + ' в разделе</p></div></div>' +
-          cards + '</section>'
+          // подпись пишет заведение в админке; выдумывать за него, как они
+          // готовят, нельзя — пустая строка просто не выводится
+          (sec.hint ? '<p class="hint">' + XD.esc(sec.hint) + '</p>' : '') +
+          '</div></div>' + cards + '</section>'
       };
     }).filter(Boolean);
 
@@ -413,7 +416,6 @@ document.documentElement.className = 'js';
       return '<a href="#s-' + XD.esc(s.id) + '">' + XD.esc(s.title) + '</a>';
     }).join('');
 
-    reveal();
     spy();
     jumpToHash();
   }
@@ -443,27 +445,6 @@ document.documentElement.className = 'js';
     // без второго захода якорь промахивается на пару разделов
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(go);
     else setTimeout(go, 400);
-  }
-
-  /* ---------- разделы проявляются при подходе ---------- */
-  function reveal() {
-    var secs = document.querySelectorAll('section');
-    function showAll() { for (var i = 0; i < secs.length; i++) secs[i].classList.add('seen'); }
-
-    if (!('IntersectionObserver' in window) ||
-        (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
-      return showAll();
-    }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        e.target.classList.add('seen');
-        io.unobserve(e.target);
-      });
-    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
-    for (var i = 0; i < secs.length; i++) io.observe(secs[i]);
-    // страховка: если наблюдатель молчит, через две секунды показываем всё
-    setTimeout(showAll, 2000);
   }
 
   /* ---------- подсветка раздела при прокрутке ---------- */
