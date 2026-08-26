@@ -2,9 +2,9 @@ name = "xd-menu"
 main = "worker.js"
 compatibility_date = "2026-08-01"
 
-# database_id подставит команда `npx wrangler d1 create xd-menu` —
-# скопируйте её вывод сюда вместо строки ниже.
+# База создана 26 августа 2026 в регионе EEUR. Привязка называется DB —
+# именно её читает worker.js (env.DB), не переименовывайте.
 [[d1_databases]]
 binding = "DB"
 database_name = "xd-menu"
-database_id = "ВСТАВЬТЕ_ID_ИЗ_wrangler_d1_create"
+database_id = "e0c19bba-8f23-43a5-b003-9bc19567a5a7"
