@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Xami_Doo</title>
 <meta name="description" content="Xami_Doo — шашлык, лағман, пицца и суши. Меню, отзывы, соцсети и Wi-Fi." />
-<meta name="theme-color" content="#1B100C" />
+<meta name="theme-color" content="#4A1108" />
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="ru_KZ" />
 <meta property="og:title" content="Xami_Doo" />
@@ -16,68 +16,50 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@700;800&family=Onest:wght@400;500;600;700&display=swap" />
 <link rel="stylesheet" href="app/brand.css" />
 
 <style>
-  .hub {
-    /* Пламя лежит внутри .wrap, поэтому содержимое поднимаем над ним слоем:
-       позиционированная картинка иначе рисуется поверх обычных блоков. */
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: calc(14px + env(safe-area-inset-top)) var(--pad)
-             calc(22px + env(safe-area-inset-bottom));
-  }
+  .hub { overflow: hidden; }
 
-  .top { display: flex; justify-content: flex-end; }
+  .band { padding-bottom: 46px; text-align: center; }
+  .band .lang { position: absolute; z-index: 3; top: calc(14px + env(safe-area-inset-top)); right: var(--pad); }
 
-  /* ---------- шапка ---------- */
-  .brand {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-    padding: 10px 0 22px;
-    text-align: center;
-  }
+  .brand { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 13px; }
 
   .mark {
     position: relative;
-    width: 148px;
-    height: 148px;
-    animation: pop .55s cubic-bezier(.2,.8,.25,1) both;
+    width: 118px;
+    height: 118px;
+    margin-top: 34px;
+    animation: pop .5s cubic-bezier(.2, .8, .25, 1) both;
   }
-  .mark img { width: 100%; height: 100%; display: block; border-radius: 50%; }
-  /* тёплое свечение позади печати — она белая и иначе висит в пустоте */
-  .mark::before {
-    content: "";
-    position: absolute;
-    inset: -18px;
+  .mark img {
+    width: 100%; height: 100%;
+    display: block;
     border-radius: 50%;
-    background: radial-gradient(circle, #FF6A1E44 0%, #FF6A1E00 68%);
-    z-index: -1;
+    background: #fff;
+    box-shadow: 0 0 0 5px rgba(255, 255, 255, .92), 0 14px 30px -12px rgba(0, 0, 0, .5);
   }
   /* волна, как от приложенной карты */
   .mark::after {
     content: "";
     position: absolute;
-    inset: -2px;
+    inset: -5px;
     border-radius: 50%;
-    border: 2px solid #F0CB4CB3;
-    animation: tap 2.1s cubic-bezier(.2,.7,.3,1) .45s 1 both;
+    border: 2px solid rgba(255, 255, 255, .75);
+    animation: tap 2.1s cubic-bezier(.2, .7, .3, 1) .45s 1 both;
   }
-  @keyframes pop { from { opacity: 0; transform: scale(.9); } to { opacity: 1; transform: none; } }
-  @keyframes tap { from { transform: scale(1); opacity: .75; } to { transform: scale(1.65); opacity: 0; } }
+  @keyframes pop { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: none; } }
+  @keyframes tap { from { transform: scale(1); opacity: .7; } to { transform: scale(1.6); opacity: 0; } }
 
-  .brand h1 {
+  .band h1 {
     margin: 0;
-    font-size: clamp(34px, 11vw, 44px);
-    font-weight: 900;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(34px, 10vw, 42px);
     line-height: 1;
-    letter-spacing: -.03em;
+    letter-spacing: -.025em;
   }
   .kind {
     margin: 0;
@@ -85,67 +67,69 @@
     align-items: center;
     gap: 11px;
     font-size: 10.5px;
-    font-weight: 800;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: .24em;
     text-indent: .24em;
-    color: var(--ink-2);
+    color: rgba(255, 255, 255, .68);
   }
-  .kind i { display: block; width: 20px; height: 2px; background: var(--gold); }
+  .kind i { display: block; width: 20px; height: 1px; background: #FBBF24; opacity: .9; }
 
-  .marks { display: flex; gap: 8px; }
-  .chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 12px;
-    border-radius: 999px;
-    font-size: 11.5px;
-    font-weight: 800;
-    letter-spacing: .02em;
+  .marks { display: flex; gap: 8px; margin-top: 2px; }
+
+  /* ---------- белый лист ---------- */
+  .sheet {
+    position: relative;
+    z-index: 4;
+    flex: 1;
+    margin-top: -26px;
+    padding: 24px var(--pad) calc(22px + env(safe-area-inset-bottom));
+    background: var(--paper);
+    border-radius: 34px 34px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    animation: lift .55s cubic-bezier(.2, .8, .25, 1) .1s both;
   }
-  .chip-open { background: #29A85526; color: #6FE39B; }
-  .chip-open .dot {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: #6FE39B; box-shadow: 0 0 0 3px #29A85533;
-  }
-  .chip-halal { background: #FFFFFF12; color: var(--ink-2); }
+  @keyframes lift { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
   /* ---------- главная кнопка ---------- */
   .cta {
     display: flex;
     align-items: center;
-    gap: 14px;
-    min-height: 72px;
-    padding: 14px 18px;
+    gap: 15px;
+    min-height: 74px;
+    padding: 15px 18px;
     border-radius: 20px;
-    background: linear-gradient(150deg, var(--gold-2) 0%, var(--gold) 60%, #C0951E 100%);
-    color: var(--on-gold);
+    background: linear-gradient(140deg, #F0562B 0%, var(--brand) 55%, var(--brand-2) 100%);
+    color: #fff;
     text-decoration: none;
-    box-shadow: 0 18px 34px -16px #D9AE2BAA;
-    transition: transform .12s ease;
+    box-shadow: 0 14px 28px -14px rgba(220, 38, 38, .85);
+    transition: transform .15s ease, box-shadow .2s ease;
     touch-action: manipulation;
   }
   .cta:active { transform: scale(.985); }
-  .cta .t { font-size: 19px; font-weight: 900; letter-spacing: -.015em; }
-  .cta .s { font-size: 12.5px; font-weight: 600; opacity: .68; }
-  .cta .tile { background: #24150F1F; color: var(--on-gold); }
-  .cta .chev { color: #24150F80; }
+  @media (hover: hover) { .cta:hover { box-shadow: 0 18px 34px -14px rgba(220, 38, 38, .95); } }
+  .cta .t { font-size: 19px; font-weight: 700; letter-spacing: -.015em; }
+  .cta .s { font-size: 13px; font-weight: 500; color: rgba(255, 255, 255, .92); }
+  .cta .tile { background: rgba(255, 255, 255, .2); color: #fff; }
+  .cta .chev { color: rgba(255, 255, 255, .6); }
 
   /* ---------- списки ---------- */
   .group {
     border: 1px solid var(--line);
-    border-radius: 18px;
+    border-radius: 20px;
     overflow: hidden;
-    background: var(--card);
+    background: var(--paper);
+    box-shadow: var(--shadow-sm);
   }
   .row {
     display: flex;
     align-items: center;
-    gap: 13px;
+    gap: 14px;
     width: 100%;
-    min-height: 62px;
-    padding: 11px 15px;
+    min-height: 64px;
+    padding: 12px 15px;
     border: 0;
     color: inherit;
     text-align: left;
@@ -153,47 +137,51 @@
     font: inherit;
     background: transparent;
     cursor: pointer;
-    transition: background .12s ease;
+    transition: background .16s ease;
     touch-action: manipulation;
   }
-  .row + .row { border-top: 1px solid var(--line-2); }
-  .row:active { background: #FFFFFF0F; }
-  @media (hover: hover) { .row:hover { background: #FFFFFF0A; } }
+  .row + .row { border-top: 1px solid var(--line); }
+  .row:active { background: var(--brand-tint); }
+  @media (hover: hover) { .row:hover { background: #FFF6F4; } }
 
   .tile {
     flex: none;
-    width: 42px; height: 42px;
-    border-radius: 13px;
+    width: 43px; height: 43px;
+    border-radius: 14px;
     display: grid;
     place-items: center;
-    background: var(--gold-dim);
-    color: var(--gold-2);
+    background: var(--brand-tint);
+    color: var(--brand-2);
   }
   .txt { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
-  .txt .t { font-size: 15.5px; font-weight: 700; letter-spacing: -.008em; }
-  .txt .s { font-size: 12.5px; font-weight: 500; color: var(--ink-3); }
+  .txt .t { font-size: 15.5px; font-weight: 600; letter-spacing: -.008em; }
+  .txt .s { font-size: 12.5px; color: var(--ink-2); }
   .chev { margin-left: auto; flex: none; color: var(--ink-3); }
 
   /* отзыв просим отдельной карточкой — это главная цель карты */
-  .review { border-color: #D9AE2B4D; background: linear-gradient(180deg, #D9AE2B14, transparent); }
-  .review .tile { background: #FF4A1524; color: var(--flame-2); }
+  .review { border-color: #EBD5A5; background: linear-gradient(180deg, #FEFAEF, var(--paper)); }
+  .review .tile { background: var(--gold-soft); color: var(--gold); }
 
   .pass {
     margin-left: auto;
     flex: none;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 9px;
+    padding: 6px 11px;
+    border-radius: 10px;
+    background: var(--brand-tint);
     font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
     font-size: 13.5px;
-    font-weight: 700;
-    color: var(--gold-2);
+    font-weight: 600;
+    color: var(--brand-2);
   }
   .pass svg { color: var(--ink-3); }
 
   /* ---------- подвал ---------- */
   .foot {
-    margin-top: 16px;
+    margin-top: auto;
+    padding-top: 18px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -204,60 +192,51 @@
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    font-size: 9.5px;
-    font-weight: 700;
+    font-size: 10px;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: .2em;
+    letter-spacing: .18em;
     color: var(--ink-3);
   }
-  .addr { font-size: 12.5px; font-weight: 500; color: var(--ink-3); }
+  .addr { font-size: 13px; color: var(--ink-2); }
 
-  @media (min-width: 520px) {
-    body { padding: 40px 20px; }
-    .wrap { min-height: 0; border-radius: 26px; background: var(--bg-2); overflow: hidden;
-            box-shadow: 0 40px 70px -34px #000000B3; }
-    /* Карточка на широком экране короче окна телефона, и пламя во весь рост
-       лезет под логотип. Оставляем от него только языки понизу. */
-    .flame {
-      position: absolute;
-      opacity: .34;
-      -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 52%);
-              mask-image: linear-gradient(to top, #000 0%, transparent 52%);
-    }
+  @media (min-width: 500px) {
+    body { padding: 34px 20px; }
+    .hub { min-height: 0; border-radius: 28px; box-shadow: var(--shadow-lg); }
   }
 </style>
 </head>
 <body>
 
-<div class="wrap">
-  <!-- на широком экране .wrap становится карточкой со скруглением и
-       обрезает пламя по себе; на телефоне оно остаётся прижатым к низу окна -->
-  <img class="flame" src="img/flame.webp" alt="" aria-hidden="true" />
+<div class="hub">
 
-  <div class="hub">
-
-    <div class="top">
-      <div class="lang" id="lang" role="group" aria-label="Тіл / Til / Язык">
-        <button type="button" data-set="ru">RU</button>
-        <button type="button" data-set="kk">ҚАЗ</button>
-        <button type="button" data-set="uz">ЎЗ</button>
-      </div>
+  <header class="band">
+    <div class="lang" id="lang" role="group" aria-label="Тіл / Til / Язык">
+      <button type="button" data-set="ru">RU</button>
+      <button type="button" data-set="kk">ҚАЗ</button>
+      <button type="button" data-set="uz">ЎЗ</button>
     </div>
 
-    <header class="brand">
+    <div class="brand">
       <div class="mark">
-        <img src="img/logo.webp" width="148" height="148" alt="Xami_Doo" />
+        <img src="img/logo.webp" width="118" height="118" alt="Xami_Doo" />
       </div>
       <h1 id="name">Xami_Doo</h1>
       <p class="kind"><i></i><span id="kind">Шашлык</span><i></i></p>
       <div class="marks">
-        <span class="chip chip-open" id="open">
+        <span class="chip" id="open">
           <span class="dot" aria-hidden="true"></span>
           <span class="say i18n"><i lang="ru">Круглосуточно</i><i lang="kk">Тәулік бойы</i><i lang="uz">Кеча-кундуз</i></span>
         </span>
-        <span class="chip chip-halal">HALAL</span>
+        <span class="chip">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#86EFAC" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg>
+          HALAL
+        </span>
       </div>
-    </header>
+    </div>
+  </header>
+
+  <main class="sheet">
 
     <a class="cta" href="menu/">
       <span class="tile" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
@@ -347,7 +326,7 @@
         </span>
         <span class="pass">
           <span id="wifi-pass"></span>
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
             <rect x="9" y="9" width="12" height="12" rx="2.4"/>
             <path d="M15 5.5A2.5 2.5 0 0 0 12.5 3h-7A2.5 2.5 0 0 0 3 5.5v7A2.5 2.5 0 0 0 5.5 15"/>
           </svg>
@@ -358,7 +337,7 @@
     <footer class="foot">
       <span class="addr" id="addr" hidden></span>
       <span class="tap">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true">
           <path d="M6 8.5a7.5 7.5 0 0 1 0 7"/><path d="M10 6a12 12 0 0 1 0 12"/>
           <path d="M14 3.5a16.5 16.5 0 0 1 0 17"/>
         </svg>
@@ -366,7 +345,8 @@
       </span>
     </footer>
 
-  </div>
+  </main>
+
 </div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -439,17 +419,17 @@
     var say = el.querySelector('.say');
     var w = HOURS_WORD[window.XD_LANG || 'ru'] || HOURS_WORD.ru;
 
-    if (place.always || !place.hours) {
+    function dress(isOpen, text) {
       say.innerHTML = '';
-      say.textContent = w.all;
-      el.classList.remove('chip-halal');
-      el.classList.add('chip-open');
-      return;
+      say.textContent = text;
+      el.className = 'chip' + (isOpen ? '' : ' chip-shut');
+      el.hidden = false;
     }
+
+    if (place.always || !place.hours) return dress(true, w.all);
 
     var m = /^(\d{1,2}):(\d{2})\s*[-–—]\s*(\d{1,2}):(\d{2})$/.exec(place.hours.trim());
     if (!m) { el.hidden = true; return; }
-    el.hidden = false;
 
     var openMin = (+m[1]) * 60 + (+m[2]);
     var shutMin = (+m[3]) * 60 + (+m[4]);
@@ -459,10 +439,7 @@
     var isOpen = (shutMin > openMin) ? (cur >= openMin && cur < shutMin)
                                      : (cur >= openMin || cur < shutMin);
 
-    say.innerHTML = '';
-    say.textContent = isOpen ? w.open + m[3] + ':' + m[4] : w.shut + m[1] + ':' + m[2];
-    el.classList.toggle('chip-open', isOpen);
-    el.classList.toggle('chip-halal', !isOpen);
+    dress(isOpen, isOpen ? w.open + m[3] + ':' + m[4] : w.shut + m[1] + ':' + m[2]);
   }
 
   window.onLangChange = paintOpen;

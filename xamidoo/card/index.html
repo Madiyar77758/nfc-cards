@@ -8,53 +8,58 @@
 <link rel="icon" href="../img/logo-192.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@700;800&family=Onest:wght@400;500;600;700&display=swap" />
 
 <style>
   :root {
-    --bg:    #1B100C;
-    --card:  #24150F;
-    --gold:  #D9AE2B;
-    --gold2: #F0CB4C;
-    --flame: #FF4A15;
-    --ink:   #F7F0E6;
-    --ink-2: #C9B5A4;
-    --ink-3: #8E7767;
+    --bg:      #FAF3F0;
+    --paper:   #FFFFFF;
+    --band:    #4A1108;
+    --brand:   #DC2626;
+    --brand-2: #B91C1C;
+    --gold:    #A16207;
+    --green:   #15803D;
+    --ink:     #2B1310;
+    --ink-2:   #7C5A53;
+    --ink-3:   #A98C86;
+    --line:    #F1E2DE;
+    --display: "Spectral", Georgia, serif;
+    --font:    "Onest", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   }
-  * , *::before, *::after { box-sizing: border-box; }
+  *, *::before, *::after { box-sizing: border-box; }
   body {
     margin: 0;
     padding: 30px 20px 60px;
-    background: #EFEAE4;
-    color: #22160F;
-    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font);
     line-height: 1.5;
   }
-  .page { max-width: 660px; margin: 0 auto; }
-  h1 { margin: 0 0 4px; font-size: 24px; font-weight: 900; letter-spacing: -.02em; }
-  .lead { margin: 0 0 24px; font-size: 14px; color: #6B5A4C; }
+  .page { max-width: 680px; margin: 0 auto; }
+  h1 { margin: 0 0 4px; font-family: var(--display); font-size: 27px; font-weight: 800; letter-spacing: -.02em; }
+  .lead { margin: 0 0 26px; font-size: 14px; color: var(--ink-2); }
 
-  .stage { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; padding: 8px 0 24px; }
+  .stage { display: flex; flex-wrap: wrap; gap: 22px; justify-content: center; padding: 8px 0 26px; }
 
   /* ---------- карта 85,6 × 54 мм, как банковская ---------- */
   .card {
+    position: relative;
     width: 85.6mm;
     height: 54mm;
     border-radius: 3.2mm;
     overflow: hidden;
-    position: relative;
-    background: var(--card);
+    background: var(--paper);
     color: var(--ink);
-    box-shadow: 0 2px 4px #22160F26, 0 16px 34px -14px #22160F80;
+    box-shadow: 0 2px 4px rgba(43, 19, 16, .1), 0 16px 34px -14px rgba(120, 30, 20, .45);
   }
-  /* тёплый отсвет из-за логотипа — тот же приём, что на сайте */
+  /* тёплая огненная полоса слева — фирменный цвет без тёмной заливки,
+     на белом пластике печать дешевле и QR читается увереннее */
   .card::before {
     content: "";
     position: absolute;
-    left: -8mm; bottom: -14mm;
-    width: 46mm; height: 46mm;
-    border-radius: 50%;
-    background: radial-gradient(circle, #FF6A1E4D 0%, #FF6A1E00 70%);
+    left: 0; top: 0; bottom: 0;
+    width: 3.4mm;
+    background: linear-gradient(180deg, #F97316, var(--brand) 55%, var(--brand-2));
   }
 
   .face { position: relative; height: 100%; display: flex; align-items: stretch; }
@@ -62,20 +67,21 @@
   .left {
     flex: 1;
     min-width: 0;
-    padding: 4.4mm 3mm 4.4mm 5mm;
+    padding: 4.4mm 3mm 4.4mm 7.4mm;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
   .left img.logo { width: 13mm; height: 13mm; border-radius: 50%; display: block; }
-  .left h2 { margin: 2.2mm 0 0; font-size: 5.6mm; font-weight: 900; letter-spacing: -.03em; line-height: 1; }
+  .left h2 { margin: 2.2mm 0 0; font-family: var(--display); font-size: 5.8mm; font-weight: 800;
+             letter-spacing: -.03em; line-height: 1; }
   .left .kind {
     margin: 1.4mm 0 0;
     font-size: 1.9mm;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .2em;
-    color: var(--gold2);
+    color: var(--gold);
   }
   .left .hint {
     margin: 0;
@@ -83,11 +89,11 @@
     align-items: center;
     gap: 1.5mm;
     font-size: 2.4mm;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1.25;
     color: var(--ink-2);
   }
-  .left .hint svg { flex: none; color: var(--gold2); }
+  .left .hint svg { flex: none; color: var(--brand); }
 
   .right {
     flex: none;
@@ -99,18 +105,11 @@
     justify-content: center;
     gap: 1.4mm;
   }
-  /* QR печатаем на белом: на тёмном коде камера ловит его заметно хуже */
-  .qr {
-    width: 27mm;
-    height: 27mm;
-    padding: 1.6mm;
-    border-radius: 2mm;
-    background: #fff;
-  }
+  .qr { width: 27mm; height: 27mm; display: block; }
   .qr img { width: 100%; height: 100%; display: block; }
   .right span {
     font-size: 1.8mm;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .14em;
     color: var(--ink-3);
@@ -118,37 +117,38 @@
   }
 
   /* ---------- оборот ---------- */
-  .back .face { flex-direction: column; align-items: center; justify-content: center; gap: 2mm; padding: 5mm; }
+  .back { background: linear-gradient(155deg, #FFF6F2 0%, var(--paper) 60%); }
+  .back .face { flex-direction: column; align-items: center; justify-content: center; gap: 2.2mm; padding: 5mm 5mm 5mm 8mm; }
   .back img.logo { width: 22mm; height: 22mm; border-radius: 50%; }
   .back .marks { display: flex; gap: 2mm; }
   .back .chip {
-    padding: 1mm 2.6mm;
+    padding: 1mm 2.8mm;
     border-radius: 99mm;
-    background: #FFFFFF14;
+    background: #FEE9E6;
+    color: var(--brand-2);
     font-size: 2mm;
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: .1em;
-    color: var(--ink-2);
   }
-  .back .chip.on { background: #29A85530; color: #6FE39B; }
-  .back .url { margin: 0; font-size: 2.2mm; font-weight: 700; color: var(--ink-3); }
+  .back .chip.on { background: #DCFCE7; color: var(--green); }
+  .back .url { margin: 0; font-size: 2.2mm; font-weight: 600; color: var(--ink-3); }
 
   /* ---------- пояснения ---------- */
   .note {
-    border: 1px solid #DAD1C7;
-    border-radius: 14px;
-    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--paper);
     padding: 18px 20px;
     font-size: 13.5px;
   }
   .note + .note { margin-top: 14px; }
-  .note h3 { margin: 0 0 9px; font-size: 14px; font-weight: 800; }
+  .note h3 { margin: 0 0 9px; font-size: 14.5px; font-weight: 700; }
   .note ul { margin: 0; padding-left: 18px; }
   .note li + li { margin-top: 6px; }
   .note code {
     font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
     font-size: 12px;
-    background: #F2EEE9;
+    background: #FCF0EC;
     padding: 1px 5px;
     border-radius: 4px;
     word-break: break-all;
@@ -158,17 +158,18 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    margin: 18px 0 0;
-    padding: 12px 22px;
+    margin: 20px 0 0;
+    padding: 13px 24px;
     border: 0;
-    border-radius: 12px;
-    background: var(--flame);
+    border-radius: 13px;
+    background: var(--brand);
     color: #fff;
     font: inherit;
-    font-size: 14.5px;
-    font-weight: 800;
+    font-size: 15px;
+    font-weight: 700;
     cursor: pointer;
   }
+  .print:hover { background: var(--brand-2); }
 
   /* ---------- лист для печати ---------- */
   .sheet { display: none; }
@@ -187,7 +188,6 @@
       box-shadow: none;
       /* тонкая рамка — линия реза для типографии */
       outline: .2mm dashed #B9AFA4;
-      outline-offset: 0;
       break-inside: avoid;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
@@ -257,6 +257,7 @@
     <h3>Печать</h3>
     <ul>
       <li>Пластик 0,76 мм, полноцветная печать с двух сторон, скругление 3,2 мм.</li>
+      <li>Ламинация <b>матовая</b>: глянец бликует, и QR перестаёт ловиться.</li>
       <li>Если печатаете на наклейке поверх готовой NFC-карты — берите на 1 мм меньше
         по каждой стороне, иначе края задираются.</li>
       <li>QR собран с уровнем коррекции H: читается, даже если четверть кода

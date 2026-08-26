@@ -1,155 +1,187 @@
 /* ============================================================
    Xami_Doo — общий стиль хаба, меню и админки.
-   Палитра снята с печатного меню: копчёно-коричневый фон,
-   оранжевое пламя в заголовках, горчичные плашки под цены.
-   Страницы всегда тёмные: это фирменный цвет, а не тема системы.
+
+   Устройство взято с «Мадияра»: светлая страница на белом листе,
+   тёмная плашка-шапка сверху, блюда — карточками в два столбца.
+   Цвет другой: вместо зелени чайханы — огонь с логотипа, красный
+   с тёплым золотом под цены.
+
+   Шрифты: Spectral (крупные заголовки) и Onest (всё остальное).
+   Оба везут расширенную кириллицу — казахские ғ, қ, ә, ң, ү рисует
+   сам шрифт, а не подставляет системный.
    ============================================================ */
 
 :root,
 :root[data-theme="dark"],
 :root[data-theme="light"] {
-  color-scheme: dark;
+  color-scheme: light;
 
-  --bg:        #1B100C;
-  --bg-2:      #24150F;
-  --card:      #2B1A13;
-  --card-2:    #35211896;
-  --line:      #FFFFFF1A;
-  --line-2:    #FFFFFF0D;
+  --bg:          #FAF3F0;   /* тёплый светлый фон вокруг листа */
+  --paper:       #FFFFFF;
 
-  --gold:      #D9AE2B;
-  --gold-2:    #F0CB4C;
-  --gold-dim:  #D9AE2B26;
-  --on-gold:   #24150F;
+  --band:        #4A1108;   /* тёмная плашка шапки */
+  --band-2:      #7F1D1D;
 
-  --flame:     #FF4A15;
-  --flame-2:   #FF8A1F;
-  --red:       #E42C2C;
-  --green:     #29A855;
+  --brand:       #DC2626;
+  --brand-2:     #B91C1C;
+  --brand-tint:  #FEE9E6;
 
-  --ink:       #F7F0E6;
-  --ink-2:     #CBB6A3;
-  --ink-3:     #94796A;
+  --gold:        #A16207;
+  --gold-soft:   #FDF3D7;
 
-  --pad:       18px;
-  --wrap:      460px;
-  --font:      "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --green:       #15803D;
+  --green-tint:  #DCFCE7;
+
+  --ink:         #2B1310;   /* основной текст */
+  --ink-2:       #7C5A53;   /* подписи, 5.1:1 на белом */
+  --ink-3:       #A98C86;   /* мелкие подписи, 3.5:1 — только 12px+ вторичное */
+  --line:        #F1E2DE;
+
+  --shadow-sm:   0 1px 2px rgba(43, 19, 16, .05);
+  --shadow-md:   0 1px 2px rgba(43, 19, 16, .05), 0 10px 24px -14px rgba(120, 30, 20, .45);
+  --shadow-lg:   0 2px 4px rgba(43, 19, 16, .06), 0 26px 50px -24px rgba(120, 30, 20, .5);
+
+  --pad:         20px;
+  --wrap:        430px;
+  --display:     "Spectral", Georgia, "Times New Roman", serif;
+  --font:        "Onest", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+
+  /* лёгкая шумовая плёнка на плашке — иначе градиент выглядит пластиковым */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 /* правило браузера для [hidden] слабее авторского display — усиливаем */
 [hidden] { display: none !important; }
-html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
 
 body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font);
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.45;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
-  overscroll-behavior-y: none;
+  overscroll-behavior: none;
 }
 
 a { color: inherit; -webkit-touch-callout: none; }
 :where(a, button, input, select, textarea):focus-visible {
-  outline: 2px solid var(--gold-2);
+  outline: 2px solid var(--brand);
   outline-offset: 2px;
+  border-radius: 6px;
 }
 
 /* ---------- три языка ----------
-   Видимой остаётся только та вставка <i>, чей lang совпадает с корнем. */
+   Видимой остаётся только та вставка <i>, чей lang совпадает с корнем.
+   Без JavaScript страница остаётся на русском и читается целиком. */
 .i18n > i { font-style: normal; display: none; }
 html[data-lang="ru"] .i18n > i[lang="ru"],
 html[data-lang="kk"] .i18n > i[lang="kk"],
 html[data-lang="uz"] .i18n > i[lang="uz"] { display: inline; }
+
+/* ---------- лист ---------- */
+.hub {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- тёмная плашка шапки ---------- */
+.band {
+  position: relative;
+  padding: calc(16px + env(safe-area-inset-top)) var(--pad) 26px;
+  color: #fff;
+  overflow: hidden;
+  background:
+    radial-gradient(95% 75% at 10% -5%,  rgba(249, 115, 22, .55), rgba(249, 115, 22, 0) 62%),
+    radial-gradient(85% 65% at 92% 6%,   rgba(220, 38, 38, .5),   rgba(220, 38, 38, 0)  64%),
+    radial-gradient(90% 80% at 55% 108%, rgba(180, 40, 20, .6),   rgba(180, 40, 20, 0)  72%),
+    var(--band);
+}
+.band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--grain);
+  opacity: .07;
+  pointer-events: none;
+}
+
+.topbar {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 40px;
+  margin-left: -6px;
+  padding: 0 6px;
+  color: rgba(255, 255, 255, .8);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 500;
+  touch-action: manipulation;
+}
+.back:active { color: #fff; }
 
 .lang {
   display: flex;
   gap: 2px;
   padding: 2px;
   border-radius: 999px;
-  background: #FFFFFF14;
+  background: rgba(255, 255, 255, .15);
 }
 .lang button {
   appearance: none;
   border: 0;
   margin: 0;
-  padding: 5px 10px;
-  min-height: 30px;
+  padding: 6px 11px;
+  min-height: 32px;
   border-radius: 999px;
   background: transparent;
-  color: #FFFFFFB3;
+  color: rgba(255, 255, 255, .75);
   font: inherit;
-  font-size: 11px;
-  font-weight: 800;
+  font-size: 11.5px;
+  font-weight: 700;
   letter-spacing: .06em;
   cursor: pointer;
   transition: background .15s ease, color .15s ease;
   touch-action: manipulation;
 }
-.lang button.on { background: var(--gold); color: var(--on-gold); }
+.lang button.on { background: var(--paper); color: var(--brand-2); }
 
-/* ---------- пламя ----------
-   Та же картинка, что стоит фоном в печатном меню. Тянется по низу
-   экрана и не мешает тексту: живёт в отдельном слое под контентом. */
-.flame {
-  position: fixed;
-  left: 50%;
-  bottom: 0;
-  z-index: 0;
-  width: min(100%, 720px);
-  transform: translateX(-50%);
-  pointer-events: none;
-  opacity: .42;
-  -webkit-mask-image: linear-gradient(to top, #000 35%, transparent 100%);
-          mask-image: linear-gradient(to top, #000 35%, transparent 100%);
-}
-
-.wrap {
-  position: relative;
-  z-index: 1;
-  max-width: var(--wrap);
-  margin: 0 auto;
-  min-height: 100vh;
-  min-height: 100dvh;
-}
-
-/* ---------- заголовок раздела ---------- */
-.h-sec {
-  margin: 0;
-  font-size: clamp(26px, 8vw, 34px);
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: -.01em;
-  text-transform: uppercase;
-  color: var(--flame);
-  text-shadow: 0 0 26px #FF4A1533;
-}
-
-/* ---------- горчичная плашка с ценой ---------- */
-.price {
-  flex: none;
+/* ---------- метки ---------- */
+.chip {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
   gap: 6px;
-  padding: 7px 13px;
+  padding: 6px 13px;
   border-radius: 999px;
-  background: var(--gold);
-  color: var(--on-gold);
-  font-size: 14px;
-  font-weight: 800;
-  white-space: nowrap;
-  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, .16);
+  color: #fff;
 }
-.price .was {
-  font-size: 11.5px;
-  font-weight: 700;
-  opacity: .55;
-  text-decoration: line-through;
+.chip .dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #86EFAC;
+  box-shadow: 0 0 0 3px rgba(134, 239, 172, .25);
 }
+.chip-shut .dot { background: #FDBA74; box-shadow: 0 0 0 3px rgba(253, 186, 116, .22); }
 
 /* ---------- кнопки ---------- */
 .btn {
@@ -162,23 +194,28 @@ html[data-lang="uz"] .i18n > i[lang="uz"] { display: inline; }
   padding: 11px 18px;
   border: 1px solid var(--line);
   border-radius: 14px;
-  background: var(--card);
+  background: var(--paper);
   color: var(--ink);
   font: inherit;
-  font-size: 14.5px;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 600;
   text-decoration: none;
   cursor: pointer;
-  transition: transform .12s ease, background .12s ease, border-color .12s ease;
+  transition: transform .15s ease, background .18s ease, border-color .18s ease;
   touch-action: manipulation;
 }
 .btn:active { transform: scale(.985); }
-.btn-gold { border-color: transparent; background: var(--gold); color: var(--on-gold); }
-.btn-flame { border-color: transparent; background: var(--flame); color: #fff; }
+.btn-red { border-color: transparent; background: var(--brand); color: #fff; }
+.btn-gold { border-color: transparent; background: var(--gold); color: #fff; }
 .btn-ghost { background: transparent; }
-.btn-danger { border-color: #E42C2C55; background: transparent; color: #FF8A80; }
+.btn-danger { border-color: #FCA5A5; background: transparent; color: var(--brand-2); }
 .btn:disabled { opacity: .45; cursor: default; }
-.btn-sm { min-height: 36px; padding: 7px 12px; font-size: 13px; border-radius: 11px; }
+.btn-sm { min-height: 38px; padding: 8px 13px; font-size: 13.5px; border-radius: 11px; }
+@media (hover: hover) {
+  .btn:hover { border-color: var(--ink-3); }
+  .btn-red:hover { background: var(--brand-2); border-color: transparent; }
+  .btn-gold:hover { background: #854D0E; border-color: transparent; }
+}
 
 /* ---------- уведомление ---------- */
 .toast {
@@ -187,23 +224,25 @@ html[data-lang="uz"] .i18n > i[lang="uz"] { display: inline; }
   bottom: calc(24px + env(safe-area-inset-bottom));
   z-index: 60;
   transform: translate(-50%, 14px);
-  padding: 11px 18px;
+  padding: 12px 20px;
   border-radius: 12px;
-  background: var(--gold);
-  color: var(--on-gold);
-  font-size: 13.5px;
-  font-weight: 800;
+  background: var(--ink);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: var(--shadow-lg);
   opacity: 0;
   pointer-events: none;
-  transition: opacity .2s ease, transform .2s ease;
+  transition: opacity .22s ease, transform .22s ease;
 }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
-.toast.bad { background: var(--red); color: #fff; }
+.toast.bad { background: var(--brand-2); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .001ms !important;
     animation-delay: 0ms !important;
     transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
   }
 }
