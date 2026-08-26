@@ -329,7 +329,6 @@
 
   <div class="pane" id="pane-place">
     <label class="fld"><span>Название</span><input id="f-name" placeholder="Xami_Doo" /></label>
-    <label class="fld"><span>Подпись под названием</span><input id="f-tagline" placeholder="Шашлык · Halal · 24/7" /></label>
     <label class="fld"><span>Адрес</span><input id="f-address" placeholder="Шымкент, ул. ..." /></label>
     <label class="check"><input type="checkbox" id="f-always" /> Работаем круглосуточно</label>
     <label class="fld" id="w-hours"><span>Часы работы</span><input id="f-hours" placeholder="10:00-23:00" /></label>
@@ -759,7 +758,7 @@
   /* ============================================================
      Заведение
      ============================================================ */
-  var PLACE_FIELDS = ['name', 'tagline', 'address', 'hours', 'phone', 'whatsapp',
+  var PLACE_FIELDS = ['name', 'address', 'hours', 'phone', 'whatsapp',
                       'gis', 'instagram', 'tiktok', 'wifiName', 'wifiPass'];
 
   function renderPlace() {
