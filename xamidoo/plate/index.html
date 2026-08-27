@@ -316,24 +316,38 @@
 
       <svg class="arch" viewBox="0 0 400 128" preserveAspectRatio="none" fill="none" aria-hidden="true">
         <defs>
-          <!-- шампур с языком огня: тот же мотив, что на логотипе -->
-          <pattern id="fire" width="44" height="44" patternUnits="userSpaceOnUse">
-            <g stroke="currentColor" stroke-width="1.1" fill="none" opacity=".8">
-              <path d="M22 10c0 0 7 6 7 11a7 7 0 0 1-14 0c0-3 1.5-4.5 3-6 0 3 1.5 4.5 3 4.5 0-4.5 1-7.5 1-9.5Z"/>
-              <path d="M6 34h32"/>
-              <circle cx="6" cy="34" r="1.6"/>
-              <path d="M14 31.5v5M22 31.5v5M30 31.5v5"/>
-            </g>
+          <!-- Тонкая решётка с ромбами вместо ряда иконок: на табличке
+               этот угол должен читаться фактурой, а не картинками —
+               огонь и так есть на логотипе в центре арки. -->
+          <pattern id="lace" width="17" height="17" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <path d="M0 8.5h17M8.5 0v17" stroke="currentColor" stroke-width=".6" opacity=".4"/>
+            <path d="M8.5 6 11 8.5 8.5 11 6 8.5Z" fill="currentColor" opacity=".5"/>
           </pattern>
+          <!-- к низу узор растворяется, чтобы не спорить с названием -->
+          <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fff" stop-opacity="1"/>
+            <stop offset=".72" stop-color="#fff" stop-opacity=".35"/>
+            <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+          </linearGradient>
+          <mask id="soft">
+            <path d="M0 0H400V106C400 68 342 42 268 33C232 28 214 22 200 9C186 22 168 28 132 33C58 42 0 68 0 106Z"
+                  fill="url(#fade)"/>
+          </mask>
         </defs>
 
-        <!-- узор заполняет верхние углы, арка над логотипом остаётся пустой -->
-        <path d="M0 0H400V106C400 68 342 42 268 33C232 28 214 22 200 9C186 22 168 28 132 33C58 42 0 68 0 106Z"
-              fill="url(#fire)" color="currentColor"/>
+        <rect width="400" height="128" fill="url(#lace)" mask="url(#soft)"/>
+
+        <!-- сама арка: основная линия и тонкая подложка под ней -->
         <path d="M0 106C0 68 58 42 132 33C168 28 186 22 200 9C214 22 232 28 268 33C342 42 400 68 400 106"
-              stroke="currentColor" stroke-width="1.8" fill="none"/>
-        <path d="M0 112C0 74 60 48 134 39C170 35 187 27 200 15C213 27 230 35 266 39C340 48 400 74 400 112"
-              stroke="currentColor" stroke-width=".8" opacity=".45" fill="none"/>
+              stroke="currentColor" stroke-width="1.6" fill="none"/>
+        <path d="M0 113C0 75 60 49 134 40C170 36 187 28 200 16C213 28 230 36 266 40C340 49 400 75 400 113"
+              stroke="currentColor" stroke-width=".7" opacity=".4" fill="none"/>
+
+        <!-- ромбы в местах, где арка выходит на края: точка, а не обрыв -->
+        <g fill="currentColor" opacity=".75">
+          <path d="M0 100 4.5 106 0 112Z"/>
+          <path d="M400 100 395.5 106 400 112Z"/>
+        </g>
       </svg>
 
       <div class="mono">
@@ -341,7 +355,7 @@
       </div>
 
       <p class="name">Xami_Doo</p>
-      <p class="kind"><i></i>шашлык · halal · 24/7<i></i></p>
+      <p class="kind"><i></i>halal · 24/7<i></i></p>
 
       <div class="mid">
 
