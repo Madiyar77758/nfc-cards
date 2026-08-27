@@ -38,29 +38,9 @@
     color: rgba(255, 255, 255, .66);
   }
 
-  /* ---------- акция ---------- */
-  .promos { position: relative; z-index: 2; margin-top: 18px; display: flex; flex-direction: column; gap: 8px; }
-  .promo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 11px 14px;
-    border-radius: 15px;
-    background: rgba(255, 255, 255, .14);
-    border: 1px solid rgba(255, 255, 255, .2);
-  }
-  .promo .pc {
-    flex: none;
-    padding: 6px 10px;
-    border-radius: 10px;
-    background: #fff;
-    color: var(--brand-2);
-    font-size: 14px;
-    font-weight: 800;
-    letter-spacing: -.02em;
-  }
-  .promo .pt { font-size: 14px; font-weight: 700; }
-  .promo .ps { font-size: 12px; color: rgba(255, 255, 255, .72); }
+  /* Плашки акции в шапке нет намеренно: широкий полупустой прямоугольник
+     под названием только занимал место. Скидка видна там, где она нужна
+     гостю, — на самой карточке блюда. */
 
   /* ---------- липкие категории ---------- */
   .cats-wrap {
@@ -380,7 +360,6 @@
       </div>
     </div>
 
-    <div class="promos" id="promos"></div>
   </header>
 
   <div class="cats-wrap">
@@ -423,7 +402,6 @@
   var data = null;
   var listEl = document.getElementById('list');
   var catsEl = document.getElementById('cats');
-  var promoEl = document.getElementById('promos');
 
   var WORD = {
     ru: { empty: 'Меню пока пустое', fail: 'Не получилось загрузить меню' },
@@ -455,13 +433,6 @@
     var live = XD.livePromos(data);
 
     document.getElementById('who').textContent = (data.place && data.place.name) || 'Xami_Doo';
-
-    promoEl.innerHTML = live.map(function (p) {
-      return '<div class="promo"><span class="pc">−' + XD.esc(p.percent) + '%</span>' +
-        '<span><span class="pt">' + XD.esc(p.title || 'Акция') + '</span>' +
-        (p.note ? '<br><span class="ps">' + XD.esc(p.note) + '</span>' : '') +
-        '</span></div>';
-    }).join('');
 
     var secs = (data.sections || []).map(function (sec) {
       var items = (sec.items || []).filter(function (it) { return !it.off; });
