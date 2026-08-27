@@ -20,6 +20,12 @@ const PLACES = {
   dostar:  HOST + '/dostar'
 };
 
+/* Ключ кэша на краю сети — это адрес, по которому воркер ходит на хостинг.
+   Поднимите число, чтобы разом сбросить кэш всех страниц: адреса станут
+   другими, и край сходит за свежими. GitHub Pages лишний параметр
+   игнорирует. Нужно редко — например, если там что-то залипло. */
+const REV = 2;
+
 const PAGE = `<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,9 +62,11 @@ export default {
 
     const base = PLACES[slug];
     if (!base) {
+      // no-store обязателен: иначе браузер запомнит эту ошибку, и гость
+      // не увидит заведение даже после того, как его добавят в PLACES.
       return new Response('Такого заведения нет: ' + slug, {
         status: 404,
-        headers: { 'content-type': 'text/plain; charset=utf-8' }
+        headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'no-store' }
       });
     }
 
@@ -69,22 +77,30 @@ export default {
     }
 
     const tail = parts.slice(1).join('/');
-    const target = base + '/' + tail + (tail && url.pathname.endsWith('/') ? '/' : '') + url.search;
+    const target = new URL(base + '/' + tail + (tail && url.pathname.endsWith('/') ? '/' : ''));
+    target.search = url.search;
+    target.searchParams.set('v', String(REV));
 
-    const upstream = await fetch(target, {
+    const upstream = await fetch(target.toString(), {
       method: req.method,
       headers: { 'accept': req.headers.get('accept') || '*/*',
                  'accept-encoding': req.headers.get('accept-encoding') || '' },
-      // Тело статики одинаково для всех гостей — держим его на краю сети,
-      // иначе каждый снимок блюда ездил бы до GitHub заново.
-      cf: { cacheEverything: true, cacheTtl: 300 }
+      cf: {
+        // Тело статики одинаково для всех гостей — держим его на краю сети,
+        // иначе каждый снимок блюда ездил бы до GitHub заново. Но кэшируем
+        // только удачные ответы: закэшированная 404 держалась бы пять минут
+        // и после того, как страница уже появилась на хостинге.
+        cacheEverything: true,
+        cacheTtlByStatus: { '200-299': 300, '300-399': 0, '400-499': 0, '500-599': 0 }
+      }
     });
 
     // Заголовки исходного ответа переносим, но управление кэшем ставим своё:
     // GitHub отдаёт короткий срок, а меню меняется через воркер API, не здесь.
+    const good = upstream.status >= 200 && upstream.status < 300;
     const out = new Headers(upstream.headers);
     out.delete('content-security-policy');
-    out.set('cache-control', 'public, max-age=300');
+    out.set('cache-control', good ? 'public, max-age=300' : 'no-store');
 
     return new Response(upstream.body, { status: upstream.status, headers: out });
   }
