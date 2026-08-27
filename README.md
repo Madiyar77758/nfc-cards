@@ -77,6 +77,7 @@ xamidoo/menu/index.html   меню, рисуется из данных
 xamidoo/menu/photo/       фотографии блюд
 xamidoo/admin/            админка: блюда, цены, акции, ссылки заведения
 xamidoo/card/             макет карты для печати + qr.svg
+xamidoo/plate/            настольная табличка, 100/110/150 мм
 xamidoo/data/menu.json    сами данные
 xamidoo/app/config.js     адрес API — единственное, что правится руками
 api/                      воркер Cloudflare + инструкция
