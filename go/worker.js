@@ -1,23 +1,24 @@
 /* ============================================================
-   Короткие адреса для карт: menyukz.com/<заведение>.
+   menyukz.com — собственный адрес карт заведений.
 
-   Зачем: в NFC-метку и в QR попадает физический предмет на столе
-   у клиента, удалённо его не поменять. Поэтому в карту пишется
-   этот адрес, а куда он ведёт — правится здесь одной строкой.
-   Переезд хостинга больше не требует объезжать кафе с телефоном.
+   Это не перенаправление, а прокси: воркер сам забирает страницу
+   с хостинга и отдаёт её от имени домена. Поэтому в адресной строке
+   у гостя остаётся menyukz.com/xamidoo, а не адрес GitHub.
 
-   Добавить заведение — одна строка в PLACES и `npx wrangler deploy`.
+   Зачем вообще: метка и QR — физический предмет на столе у клиента,
+   удалённо его не поменять. В карту пишется этот адрес, а где реально
+   лежат страницы — правится здесь одной строкой.
+
+   Добавить заведение: строка в PLACES и `npx wrangler deploy` из go/.
    ============================================================ */
 
-const PLACES = {
-  xamidoo: 'https://madiyar77758.github.io/nfc-cards/xamidoo/',
-  madiyar: 'https://madiyar77758.github.io/nfc-cards/madiyar/',
-  dostar:  'https://madiyar77758.github.io/nfc-cards/dostar/'
-};
+const HOST = 'https://madiyar77758.github.io/nfc-cards';
 
-// 302, а не 301: постоянный редирект браузеры кэшируют месяцами, и при
-// следующем переезде часть гостей продолжала бы уходить на старый адрес.
-const CODE = 302;
+const PLACES = {
+  xamidoo: HOST + '/xamidoo',
+  madiyar: HOST + '/madiyar',
+  dostar:  HOST + '/dostar'
+};
 
 const PAGE = `<!doctype html>
 <meta charset="utf-8">
@@ -36,32 +37,55 @@ const PAGE = `<!doctype html>
   <p><small>Меню заведений по карте на столе</small></p>
 </div>`;
 
+const html = (body, status) => new Response(body, {
+  status: status || 200,
+  headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=300' }
+});
+
 export default {
   async fetch(req) {
     const url = new URL(req.url);
+    if (req.method !== 'GET' && req.method !== 'HEAD') {
+      return new Response('Только GET', { status: 405 });
+    }
+
     const parts = url.pathname.split('/').filter(Boolean);
     const slug = (parts[0] || '').toLowerCase();
 
-    if (!slug) {
-      return new Response(PAGE, {
-        headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=300' }
-      });
-    }
+    if (!slug) return html(PAGE);
 
-    const target = PLACES[slug];
-    if (!target) {
+    const base = PLACES[slug];
+    if (!base) {
       return new Response('Такого заведения нет: ' + slug, {
         status: 404,
         headers: { 'content-type': 'text/plain; charset=utf-8' }
       });
     }
 
-    // Хвост пути переносим как есть: menyukz.com/xamidoo/menu/ ведёт
-    // прямо в меню, а не на карточку. Пригодится для ссылок в соцсетях.
-    const tail = parts.slice(1).join('/');
-    const to = new URL(tail ? tail + (url.pathname.endsWith('/') ? '/' : '') : '', target);
-    to.search = url.search;
+    // Без завершающей косой относительные ссылки на странице (app/brand.css,
+    // menu/, img/…) считались бы от корня домена и вели в никуда.
+    if (parts.length === 1 && !url.pathname.endsWith('/')) {
+      return Response.redirect(url.origin + '/' + slug + '/' + url.search, 301);
+    }
 
-    return Response.redirect(to.toString(), CODE);
+    const tail = parts.slice(1).join('/');
+    const target = base + '/' + tail + (tail && url.pathname.endsWith('/') ? '/' : '') + url.search;
+
+    const upstream = await fetch(target, {
+      method: req.method,
+      headers: { 'accept': req.headers.get('accept') || '*/*',
+                 'accept-encoding': req.headers.get('accept-encoding') || '' },
+      // Тело статики одинаково для всех гостей — держим его на краю сети,
+      // иначе каждый снимок блюда ездил бы до GitHub заново.
+      cf: { cacheEverything: true, cacheTtl: 300 }
+    });
+
+    // Заголовки исходного ответа переносим, но управление кэшем ставим своё:
+    // GitHub отдаёт короткий срок, а меню меняется через воркер API, не здесь.
+    const out = new Headers(upstream.headers);
+    out.delete('content-security-policy');
+    out.set('cache-control', 'public, max-age=300');
+
+    return new Response(upstream.body, { status: upstream.status, headers: out });
   }
 };
