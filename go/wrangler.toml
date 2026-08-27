@@ -1,0 +1,13 @@
+name = "go"
+main = "worker.js"
+compatibility_date = "2026-08-01"
+
+# Домен куплен в Cloudflare Registrar, поэтому зона уже в аккаунте и
+# DNS-запись wrangler заводит сам — отдельно в панели ничего не нужно.
+[[routes]]
+pattern = "menyukz.com"
+custom_domain = true
+
+[[routes]]
+pattern = "www.menyukz.com"
+custom_domain = true
