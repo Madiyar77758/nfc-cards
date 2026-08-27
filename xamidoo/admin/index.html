@@ -289,7 +289,11 @@
   <img src="../img/logo.webp" width="96" height="96" alt="" />
   <h1>Админка</h1>
   <p id="gate-sub">Введите пароль администратора</p>
-  <form id="gate-form">
+  <!-- onsubmit прямо в разметке: он действует с момента разбора страницы.
+       Обработчик из скрипта внизу привязывается позже, и если на медленном
+       интернете нажать «Войти» раньше, форма ушла бы обычным GET и страница
+       перезагрузилась бы с пустым полем. -->
+  <form id="gate-form" onsubmit="return false">
     <input type="password" id="pass" placeholder="Пароль" autocomplete="current-password" />
     <button class="btn btn-red" type="submit" id="gate-go">Войти</button>
   </form>
@@ -410,10 +414,18 @@
     document.body.appendChild(bg);
     document.body.style.overflow = 'hidden';
 
-    function close() {
+    // Системная кнопка «назад» должна закрывать редактор, а не выкидывать
+    // из админки: правки при этом теряются целиком, и это очень обидно.
+    var release = XD.trapBack(function () { teardown(); });
+
+    function teardown() {
       bg.remove();
       document.body.style.overflow = '';
       document.removeEventListener('keydown', onKey);
+    }
+    function close() {
+      teardown();
+      release();
     }
     function onKey(e) { if (e.key === 'Escape') close(); }
     document.addEventListener('keydown', onKey);

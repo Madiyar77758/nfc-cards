@@ -193,6 +193,37 @@
 
   /* ---------- мелочи ---------- */
 
+  /* Системная кнопка «назад» на телефоне закрывает страницу целиком —
+     для гостя это выглядит как вылет из меню, хотя он всего лишь хотел
+     закрыть фотографию или редактор. Пока поверх страницы что-то открыто,
+     держим для этого отдельную запись в истории: «назад» съедает её,
+     а не уводит с сайта.
+
+     onBack вызывается, когда закрыли системной кнопкой. Возвращённую
+     функцию вызывают, когда закрыли из интерфейса, — она убирает запись,
+     чтобы «назад» потом не срабатывала вхолостую. */
+  function trapBack(onBack) {
+    var popped = false;
+    // Браузер сам возвращает прокрутку при переходе по истории. Наш
+    // history.back() при закрытии — тоже переход, и он откатывал страницу
+    // наверх сразу после того, как мы перевели её на выбранный раздел.
+    try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch (e) {}
+    try { history.pushState({ xdOverlay: 1 }, ''); } catch (e) { return function () {}; }
+
+    function pop() {
+      popped = true;
+      window.removeEventListener('popstate', pop);
+      onBack();
+    }
+    window.addEventListener('popstate', pop);
+
+    return function release() {
+      if (popped) return;                 // запись уже съедена кнопкой «назад»
+      window.removeEventListener('popstate', pop);
+      history.back();
+    };
+  }
+
   var toastTimer;
   function toast(text, bad) {
     var el = document.getElementById('toast');
@@ -241,6 +272,6 @@
     money: money, esc: esc, t: t,
     isLive: isLive, livePromos: livePromos, promoFor: promoFor, priceOf: priceOf,
     load: load, login: login, save: save, getToken: getToken, setToken: setToken,
-    toast: toast, copy: copy
+    toast: toast, copy: copy, trapBack: trapBack
   };
 })(window);
