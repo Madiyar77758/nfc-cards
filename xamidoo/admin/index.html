@@ -210,16 +210,18 @@
   .pr .t { flex: 1; min-width: 0; }
   .pr .t b { display: block; font-size: 15px; font-weight: 700; }
   .pr .t small { font-size: 12px; color: var(--ink-3); }
-  .live {
+  .live, .sleep {
     display: inline-block;
     margin-left: 6px;
     padding: 1px 7px;
     border-radius: 6px;
-    background: var(--green-tint);
-    color: var(--green);
     font-size: 9.5px;
     font-weight: 800;
+    vertical-align: 1px;
   }
+  .live { background: var(--green-tint); color: var(--green); }
+  /* Почему акция молчит — видно сразу, а не после разглядывания дат */
+  .sleep { background: var(--gold-soft); color: #8A6415; text-transform: none; }
 
   /* ---------- шторка редактора ---------- */
   .sheet-bg {
@@ -647,9 +649,45 @@
     return 'Всё меню';
   }
 
+  var MONTH = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+               'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+
+  function dateWord(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
+    if (!m) return iso || '';
+    return (+m[3]) + ' ' + MONTH[(+m[2]) - 1];
+  }
+
+  /* Почему акция сейчас не действует. Раньше админка просто не рисовала
+     метку «идёт», и это читалось как «ничего не работает»: заведение
+     ставило даты в прошлом и не понимало, куда делась скидка. */
+  function whyOff(p) {
+    if (p.on === false) return 'выключена';
+
+    var now = new Date();
+    var ymd = now.getFullYear() + '-' +
+      ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2);
+
+    if (p.from && ymd < p.from) return 'начнётся ' + dateWord(p.from);
+    if (p.to && ymd > p.to) return 'закончилась ' + dateWord(p.to);
+
+    if (p.days && p.days.length && p.days.length < 7) {
+      var dow = now.getDay() || 7;
+      if (p.days.indexOf(dow) === -1) {
+        return 'только по: ' + p.days.slice().sort().map(function (d) { return DAYS[d - 1]; }).join(' ');
+      }
+    }
+    if (p.hours && !XD.isLive({ percent: 1, scope: 'all', hours: p.hours, on: true })) {
+      return 'только с ' + p.hours.replace('-', ' до ');
+    }
+    return '';
+  }
+
   function whenWord(p) {
     var bits = [];
-    if (p.from || p.to) bits.push((p.from || '…') + ' → ' + (p.to || '…'));
+    if (p.from && p.to) bits.push('с ' + dateWord(p.from) + ' по ' + dateWord(p.to));
+    else if (p.from) bits.push('с ' + dateWord(p.from));
+    else if (p.to) bits.push('по ' + dateWord(p.to));
     if (p.days && p.days.length && p.days.length < 7) {
       bits.push(p.days.slice().sort().map(function (d) { return DAYS[d - 1]; }).join(' '));
     }
@@ -667,10 +705,12 @@
     }
     host.innerHTML = list.map(function (p, i) {
       var live = XD.isLive(p);
+      var off = live ? '' : whyOff(p);
       return '<div class="pr' + (p.on === false ? ' dead' : '') + '" style="margin-bottom:10px">' +
         '<span class="pc">−' + XD.esc(p.percent) + '%</span>' +
         '<span class="t"><b>' + XD.esc(p.title || 'Акция') +
-        (live ? '<span class="live">идёт</span>' : '') + '</b>' +
+        (live ? '<span class="live">идёт</span>'
+              : '<span class="sleep">' + XD.esc(off || 'не идёт') + '</span>') + '</b>' +
         '<small>' + XD.esc(scopeWord(p)) + (whenWord(p) ? ' · ' + XD.esc(whenWord(p)) : '') + '</small></span>' +
         '<button class="ico-btn" type="button" data-p="' + i + ',toggle" aria-label="Включить или выключить">' +
         (p.on === false ? ICON.eyeOff : ICON.eye) + '</button>' +
@@ -729,6 +769,8 @@
       '<div class="fld" id="w-secs"' + (p.scope === 'section' ? '' : ' hidden') + '><span>Разделы</span><div class="picks">' + secPicks + '</div></div>' +
       '<div class="fld" id="w-items"' + (p.scope === 'items' ? '' : ' hidden') + '><span>Блюда</span><div>' + itemPicks + '</div></div>' +
       '<div class="two">' + fld('Действует с', 'p-from', p.from, '', 'date') + fld('по', 'p-to', p.to, '', 'date') + '</div>' +
+      '<p class="hint">Оставьте даты пустыми — акция будет идти постоянно, пока не выключите. ' +
+      'Если дата «по» уже прошла, акция перестаёт показываться сама.</p>' +
       '<div class="fld"><span>Дни недели (пусто — все дни)</span><div class="picks">' + dayPicks + '</div></div>' +
       fld('Часы (пусто — весь день)', 'p-hours', p.hours, '12:00-16:00') +
       chk('Акция включена', 'p-on', p.on !== false),
