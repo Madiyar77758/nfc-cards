@@ -61,6 +61,19 @@
 
   .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
+  /* ---------- выбор снимка ---------- */
+  .pick { display: flex; align-items: center; gap: 12px; }
+  .pv {
+    flex: none;
+    width: 78px; height: 78px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: #F6EEEB center / cover no-repeat;
+  }
+  .pick-act { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .pick-act .btn { justify-content: center; }
+  label.btn { cursor: pointer; }
+
   /* ---------- шапка ---------- */
   .head {
     position: sticky;
@@ -591,6 +604,26 @@
       });
   }
 
+  function photoSrc(v) { return /^https?:/.test(v) ? v : '../menu/photo/' + v; }
+
+  /* Кафе снимает блюдо на телефон и выбирает снимок из галереи.
+     Имя файла оно вводить не должно — этого никто не понимает. */
+  function photoField(it) {
+    var has = !!it.photo;
+    return '<div class="fld"><span>Фото</span><div class="pick">' +
+      '<span class="pv" id="i-pv"' +
+      (has ? ' style="background-image:url(\'' + XD.esc(photoSrc(it.photo)) + '\')"' : '') + '></span>' +
+      '<span class="pick-act">' +
+      '<label class="btn btn-sm btn-red" for="i-file">Выбрать фото</label>' +
+      '<button class="btn btn-sm btn-ghost" type="button" id="i-clear"' + (has ? '' : ' hidden') + '>Убрать</button>' +
+      '</span>' +
+      '<input type="file" id="i-file" accept="image/*" hidden />' +
+      '<input type="hidden" id="i-photo" value="' + XD.esc(it.photo || '') + '" />' +
+      '</div>' +
+      '<p class="hint" id="i-photo-hint">Снимите блюдо или выберите из галереи — сожмём сами.</p>' +
+      '</div>';
+  }
+
   function editItem(si, ii) {
     var isNew = ii === null;
     var sec = model.sections[si];
@@ -598,13 +631,11 @@
       ? { id: uid('i'), name: '', price: 0, photo: '', desc: '', hit: false, off: false }
       : sec.items[ii];
 
-    sheet(isNew ? 'Новое блюдо' : 'Блюдо',
+    var bg = sheet(isNew ? 'Новое блюдо' : 'Блюдо',
       fld('Название', 'i-name', it.name, 'Лағман') +
       fld('Цена, ₸', 'i-price', it.price || '', '1750', 'tel') +
       area('Описание (необязательно)', 'i-desc', it.desc, 'Тянутая лапша, говядина, редька') +
-      fld('Фото', 'i-photo', it.photo, 'guyru.webp или https://…') +
-      '<p class="hint">Имя файла из папки <b>menu/photo/</b> либо полный адрес картинки. ' +
-      'Пусто — блюдо покажется строкой без фото.</p>' +
+      photoField(it) +
       chk('Отметить как «хит»', 'i-hit', it.hit) +
       chk('Временно скрыть из меню', 'i-off', it.off),
       function (bg) {
@@ -618,9 +649,15 @@
         // резервирует место заранее. Сменили фотографию — старые размеры
         // стали враньём и страницу будет дёргать. Чистим их: без размеров
         // меню обойдётся, с чужими — нет.
-        var photo = bg.querySelector('#i-photo').value.trim();
+        var hidden = bg.querySelector('#i-photo');
+        var photo = hidden.value.trim();
         if (photo !== it.photo) { delete it.w; delete it.h; }
         it.photo = photo;
+
+        // У только что загруженного снимка размеры уже известны — их
+        // посчитал браузер, когда сжимал.
+        var nw = +hidden.getAttribute('data-w'), nh = +hidden.getAttribute('data-h');
+        if (nw && nh) { it.w = nw; it.h = nh; }
         it.hit = bg.querySelector('#i-hit').checked;
         it.off = bg.querySelector('#i-off').checked;
         if (isNew) sec.items.push(it);
@@ -630,6 +667,46 @@
         sec.items.splice(ii, 1);
         renderMenu();
       });
+
+    /* ---- выбор и загрузка снимка ---- */
+    var hint = bg.querySelector('#i-photo-hint');
+    var pv = bg.querySelector('#i-pv');
+    var hidden = bg.querySelector('#i-photo');
+    var clear = bg.querySelector('#i-clear');
+
+    bg.querySelector('#i-file').addEventListener('change', function () {
+      var f = this.files && this.files[0];
+      this.value = '';                       // чтобы тот же файл можно было выбрать снова
+      if (!f) return;
+
+      hint.textContent = 'Сжимаем…';
+      XD.shrink(f).then(function (r) {
+        // Показываем результат сразу, не дожидаясь загрузки: человеку
+        // важно увидеть, что взялся именно тот кадр.
+        pv.style.backgroundImage = 'url(' + URL.createObjectURL(r.blob) + ')';
+        hint.textContent = 'Загружаем, ' + Math.round(r.blob.size / 1024) + ' КБ…';
+
+        return XD.uploadPhoto(r.blob).then(function (res) {
+          hidden.value = res.url;
+          hidden.setAttribute('data-w', r.w);
+          hidden.setAttribute('data-h', r.h);
+          clear.hidden = false;
+          hint.textContent = 'Готово: ' + r.w + '×' + r.h + ', ' + Math.round(res.bytes / 1024) + ' КБ';
+        });
+      }).catch(function (err) {
+        hint.textContent = 'Не вышло: ' + err.message;
+        XD.toast('Снимок не загрузился', true);
+      });
+    });
+
+    clear.addEventListener('click', function () {
+      hidden.value = '';
+      hidden.removeAttribute('data-w');
+      hidden.removeAttribute('data-h');
+      pv.style.backgroundImage = '';
+      this.hidden = true;
+      hint.textContent = 'Без фото блюдо покажется строкой.';
+    });
   }
 
   $('add-sec').addEventListener('click', function () { editSection(null); });

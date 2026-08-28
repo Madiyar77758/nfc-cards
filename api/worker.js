@@ -6,6 +6,8 @@
      POST /v1/login            {c, pass} -> {token}
      PUT  /v1/menu?c=slug      сохранить меню (Bearer token)
      POST /v1/password         {c, pass, newPass} сменить пароль
+     POST /v1/photo?c=slug     загрузить снимок блюда (Bearer token)
+     GET  /v1/photo/slug/имя   отдать снимок гостю (кэш навсегда)
      POST /v1/client           завести заведение (заголовок x-admin-key)
      GET  /v1/health           жив ли воркер
 
@@ -13,6 +15,7 @@
    ============================================================ */
 
 const MAX_BODY = 512 * 1024;          // меню с описаниями не бывает больше
+const MAX_PHOTO = 2 * 1024 * 1024;    // браузер сжимает до ~100 КБ, это потолок на всякий
 const TOKEN_DAYS = 30;
 const PBKDF2_ITERS = 100000;
 
@@ -235,6 +238,55 @@ export default {
       await env.DB.prepare('UPDATE clients SET pass = ? WHERE slug = ?')
         .bind(await hashPassword(body.newPass), body.c).run();
       return json({ ok: true, token: await makeToken(secret, body.c) });
+    }
+
+    /* ---- снимок блюда: отдаём гостю ----
+       Имя содержит время загрузки, поэтому один и тот же адрес всегда
+       означает одну и ту же картинку — кэшируем навсегда. Заменили фото
+       у блюда — в меню появится новый адрес, старый просто перестанет
+       запрашиваться. */
+    if (path.startsWith('/v1/photo/') && req.method === 'GET') {
+      const parts = path.slice('/v1/photo/'.length).split('/');
+      if (parts.length !== 2 || !slugOk(parts[0]) || !/^[a-z0-9.-]{3,60}$/.test(parts[1])) {
+        return fail(400, 'неверный адрес снимка');
+      }
+      const key = 'photo:' + parts[0] + ':' + parts[1];
+      const obj = await env.PHOTOS.getWithMetadata(key, { type: 'arrayBuffer' });
+      if (!obj || !obj.value) return fail(404, 'снимок не найден');
+
+      return new Response(obj.value, {
+        headers: {
+          'content-type': (obj.metadata && obj.metadata.type) || 'image/webp',
+          'cache-control': 'public, max-age=31536000, immutable',
+          ...CORS
+        }
+      });
+    }
+
+    /* ---- снимок блюда: загрузка из админки ----
+       Сжимает картинку сам браузер заведения, сюда приходит уже готовый
+       небольшой файл. Верхнюю границу всё равно держим: телефон мог
+       прислать что угодно, а бесплатный KV не резиновый. */
+    if (path === '/v1/photo' && req.method === 'POST') {
+      const slug = url.searchParams.get('c');
+      if (!slugOk(slug)) return fail(400, 'неверный код заведения');
+
+      const tok = await readToken(secret, bearer(req));
+      if (!tok || tok.c !== slug) return fail(401, 'нужен вход');
+      if (!env.PHOTOS) return fail(500, 'хранилище снимков не привязано');
+
+      const type = (req.headers.get('content-type') || '').split(';')[0].trim();
+      const EXT = { 'image/webp': 'webp', 'image/jpeg': 'jpg', 'image/png': 'png' };
+      if (!EXT[type]) return fail(400, 'поддерживаются webp, jpeg и png');
+
+      const body = await req.arrayBuffer();
+      if (!body.byteLength) return fail(400, 'пустой файл');
+      if (body.byteLength > MAX_PHOTO) return fail(413, 'снимок больше допустимого');
+
+      const name = Date.now().toString(36) + Math.random().toString(36).slice(2, 8) + '.' + EXT[type];
+      await env.PHOTOS.put('photo:' + slug + ':' + name, body, { metadata: { type } });
+
+      return json({ ok: true, url: url.origin + '/v1/photo/' + slug + '/' + name, bytes: body.byteLength });
     }
 
     /* ---- завести заведение (только владелец воркера) ---- */

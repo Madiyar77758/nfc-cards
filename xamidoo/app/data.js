@@ -191,6 +191,90 @@
     });
   }
 
+  /* ---------- снимки блюд ----------
+     Телефон снимает кадр на 3–5 мегабайт. Отправлять такое в хранилище
+     и потом гостям нельзя, поэтому ужимаем прямо в браузере заведения:
+     до 900 точек по длинной стороне и в WebP. Выходит около 100 КБ,
+     и в сеть уходит уже готовый маленький файл. */
+  /* toBlob обязан позвать обратно всегда, но на деле встречаются сборки,
+     где для webp он молчит — ни картинки, ни ошибки. Без сторожа окно
+     заведения навсегда зависло бы на «Сжимаем…». Молчание считаем отказом
+     от формата и идём дальше. */
+  function encode(canvas, type, quality) {
+    return new Promise(function (resolve) {
+      var done = false;
+      var timer = setTimeout(function () {
+        if (done) return;
+        done = true;
+        resolve(null);
+      }, 5000);
+
+      canvas.toBlob(function (blob) {
+        if (done) return;
+        done = true;
+        clearTimeout(timer);
+        resolve(blob);
+      }, type, quality);
+    });
+  }
+
+  function shrink(file, maxSide, quality) {
+    maxSide = maxSide || 900;
+    quality = quality || 0.78;
+
+    return new Promise(function (resolve, reject) {
+      if (!/^image\//.test(file.type)) return reject(new Error('это не картинка'));
+
+      var src = URL.createObjectURL(file);
+      var img = new Image();
+
+      // Картинка может не загрузиться и молча: тогда тоже нужен ответ.
+      var guard = setTimeout(function () {
+        URL.revokeObjectURL(src);
+        reject(new Error('картинка не открылась'));
+      }, 15000);
+
+      img.onload = function () {
+        clearTimeout(guard);
+        var k = Math.min(1, maxSide / Math.max(img.naturalWidth, img.naturalHeight));
+        var w = Math.max(1, Math.round(img.naturalWidth * k));
+        var h = Math.max(1, Math.round(img.naturalHeight * k));
+
+        var c = document.createElement('canvas');
+        c.width = w;
+        c.height = h;
+        c.getContext('2d').drawImage(img, 0, 0, w, h);
+        URL.revokeObjectURL(src);
+
+        // WebP жмёт заметно лучше, но умеют его не все — тогда JPEG.
+        encode(c, 'image/webp', quality).then(function (blob) {
+          if (blob && blob.type === 'image/webp') return { blob: blob, w: w, h: h };
+          return encode(c, 'image/jpeg', quality).then(function (jpg) {
+            if (!jpg) throw new Error('телефон не смог сжать снимок');
+            return { blob: jpg, w: w, h: h };
+          });
+        }).then(resolve, reject);
+      };
+
+      img.onerror = function () {
+        clearTimeout(guard);
+        URL.revokeObjectURL(src);
+        reject(new Error('файл не читается как картинка'));
+      };
+      img.src = src;
+    });
+  }
+
+  // Кладёт готовый снимок в хранилище и возвращает его постоянный адрес.
+  function uploadPhoto(blob) {
+    if (!hasApi()) return Promise.reject(new Error('воркер не подключён'));
+    return jsonFetch(api('/v1/photo?c=' + encodeURIComponent(CFG.SLUG)), {
+      method: 'POST',
+      headers: { 'content-type': blob.type, authorization: 'Bearer ' + getToken() },
+      body: blob
+    });
+  }
+
   /* ---------- мелочи ---------- */
 
   /* Системная кнопка «назад» на телефоне закрывает страницу целиком —
@@ -272,6 +356,7 @@
     money: money, esc: esc, t: t,
     isLive: isLive, livePromos: livePromos, promoFor: promoFor, priceOf: priceOf,
     load: load, login: login, save: save, getToken: getToken, setToken: setToken,
-    toast: toast, copy: copy, trapBack: trapBack
+    toast: toast, copy: copy, trapBack: trapBack,
+    shrink: shrink, uploadPhoto: uploadPhoto
   };
 })(window);
