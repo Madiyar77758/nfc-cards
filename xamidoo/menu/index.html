@@ -482,11 +482,16 @@
             '</div></div>';
         }
 
+        // Настоящие размеры из данных: браузер резервирует под картинку
+        // ровно её место ещё до загрузки. С общим квадратом на всех
+        // страницу дёргало по мере подгрузки, и якорь промахивался.
+        var w = it.w || 520, h = it.h || 520;
+
         return '<article class="item">' +
           (it.hit ? '<b class="flag hit">хит</b>' : '') +
           (pr.was ? '<b class="flag off">−' + pr.percent + '%</b>' : '') +
           '<img class="ph" src="' + XD.esc(srcOf(it.photo)) + '" alt="" loading="lazy" decoding="async" ' +
-          'width="520" height="520" data-name="' + XD.esc(it.name) + '" />' +
+          'width="' + w + '" height="' + h + '" data-name="' + XD.esc(it.name) + '" />' +
           // цена сразу под названием: её ищут глазами первой, описание — потом
           '<div class="body"><span class="name">' + XD.esc(it.name) + '</span>' +
           price +

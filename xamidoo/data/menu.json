@@ -31,7 +31,9 @@
           "photo": "cezar.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 560,
+          "h": 390
         },
         {
           "id": "svezhie",
@@ -40,7 +42,9 @@
           "photo": "svezhie.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 450,
+          "h": 300
         },
         {
           "id": "grecheskiy",
@@ -49,7 +53,9 @@
           "photo": "grecheskiy.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 560,
+          "h": 384
         },
         {
           "id": "olivie",
@@ -58,7 +64,9 @@
           "photo": "olivie.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 560,
+          "h": 280
         },
         {
           "id": "achuchuk",
@@ -67,7 +75,9 @@
           "photo": "achuchuk.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 560,
+          "h": 371
         },
         {
           "id": "fruktovyy",
@@ -76,7 +86,9 @@
           "photo": "fruktovyy.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 512,
+          "h": 288
         },
         {
           "id": "tayskiy",
@@ -85,7 +97,9 @@
           "photo": "tayskiy.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 512,
+          "h": 288
         },
         {
           "id": "baklazhan",
@@ -94,7 +108,9 @@
           "photo": "baklazhan.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 560,
+          "h": 373
         }
       ]
     },
@@ -113,7 +129,9 @@
           "photo": "guyru.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 252,
+          "h": 560
         },
         {
           "id": "hoho",
@@ -122,7 +140,9 @@
           "photo": "hoho.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 252,
+          "h": 560
         },
         {
           "id": "suyru",
@@ -131,7 +151,9 @@
           "photo": "suyru.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 231,
+          "h": 332
         },
         {
           "id": "atush",
@@ -140,7 +162,9 @@
           "photo": "atush.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 225,
+          "h": 225
         },
         {
           "id": "moguru",
@@ -149,7 +173,9 @@
           "photo": "moguru.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 236,
+          "h": 236
         },
         {
           "id": "degyandyak",
@@ -158,7 +184,9 @@
           "photo": "degyandyak.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 300,
+          "h": 300
         },
         {
           "id": "domashniy",
@@ -167,7 +195,9 @@
           "photo": "domashniy.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 393,
+          "h": 262
         },
         {
           "id": "zhusay",
@@ -176,7 +206,9 @@
           "photo": "zhusay.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 252,
+          "h": 560
         }
       ]
     },
@@ -195,7 +227,9 @@
           "photo": "comyan-guyru.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 300,
+          "h": 300
         },
         {
           "id": "moguru-comyan",
@@ -204,7 +238,9 @@
           "photo": "moguru-comyan.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 560,
+          "h": 373
         },
         {
           "id": "gabyan-comyan",
@@ -213,7 +249,9 @@
           "photo": "gabyan-comyan.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 300,
+          "h": 300
         },
         {
           "id": "suyru-comyan",
@@ -222,7 +260,9 @@
           "photo": "suyru-comyan.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 300,
+          "h": 300
         },
         {
           "id": "mampar-comyan",
@@ -231,7 +271,9 @@
           "photo": "mampar-comyan.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 300,
+          "h": 300
         },
         {
           "id": "dindin-comyan",
@@ -240,7 +282,9 @@
           "photo": "dindin-comyan.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 383,
+          "h": 256
         },
         {
           "id": "lapsha-yaico",
@@ -249,7 +293,9 @@
           "photo": "lapsha-yaico.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 300,
+          "h": 300
         }
       ]
     },
@@ -268,7 +314,9 @@
           "photo": "mua-ru.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 512,
+          "h": 342
         },
         {
           "id": "chezyru",
@@ -277,7 +325,9 @@
           "photo": "chezyru.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 560,
+          "h": 373
         },
         {
           "id": "funchoza",
@@ -286,7 +336,9 @@
           "photo": "funchoza.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 400,
+          "h": 400
         },
         {
           "id": "moshu-ru",
@@ -295,7 +347,9 @@
           "photo": "moshu-ru.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 560,
+          "h": 373
         },
         {
           "id": "chin-syay-ru",
@@ -304,7 +358,9 @@
           "photo": "chin-syay-ru.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 512,
+          "h": 342
         },
         {
           "id": "lazru",
@@ -313,7 +369,9 @@
           "photo": "lazru.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 497,
+          "h": 421
         },
         {
           "id": "lazdzhi",
@@ -322,7 +380,9 @@
           "photo": "lazdzhi.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 512,
+          "h": 342
         },
         {
           "id": "tuhum-syay",
@@ -331,7 +391,9 @@
           "photo": "tuhum-syay.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 512,
+          "h": 342
         },
         {
           "id": "shou-shu-ryan",
@@ -340,7 +402,9 @@
           "photo": "shou-shu-ryan.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 560,
+          "h": 373
         },
         {
           "id": "mogu-ru",
@@ -349,7 +413,9 @@
           "photo": "mogu-ru.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 512,
+          "h": 342
         }
       ]
     },
@@ -368,7 +434,9 @@
           "photo": "hanskiy-plov.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 420,
+          "h": 560
         },
         {
           "id": "sazan",
@@ -377,7 +445,9 @@
           "photo": "sazan.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 420,
+          "h": 560
         },
         {
           "id": "plov",
@@ -477,7 +547,9 @@
           "photo": "pizza-assorti.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 277,
+          "h": 277
         },
         {
           "id": "pizza-ostryy",
@@ -486,7 +558,9 @@
           "photo": "pizza-ostryy.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 400,
+          "h": 267
         },
         {
           "id": "pizza-kuritsa-griby",
@@ -495,7 +569,9 @@
           "photo": "pizza-kuritsa-griby.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 330,
+          "h": 342
         },
         {
           "id": "pizza-bolonez",
@@ -504,7 +580,9 @@
           "photo": "pizza-bolonez.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 285,
+          "h": 285
         },
         {
           "id": "pizza-margarita",
@@ -513,7 +591,9 @@
           "photo": "pizza-margarita.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 432,
+          "h": 300
         },
         {
           "id": "pizza-syrnaya",
@@ -522,7 +602,9 @@
           "photo": "pizza-syrnaya.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 375,
+          "h": 375
         },
         {
           "id": "pizza-pepperoni",
@@ -531,7 +613,9 @@
           "photo": "pizza-pepperoni.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 560,
+          "h": 560
         },
         {
           "id": "pizza-losos",
@@ -540,7 +624,9 @@
           "photo": "pizza-losos.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 448,
+          "h": 427
         },
         {
           "id": "pizza-kurinyy",
@@ -549,7 +635,9 @@
           "photo": "pizza-kurinyy.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 384,
+          "h": 348
         },
         {
           "id": "pizza-4-sezona",
@@ -558,7 +646,9 @@
           "photo": "pizza-4-sezona.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 375,
+          "h": 375
         }
       ]
     },
@@ -579,7 +669,9 @@
           "photo": "combo-mini.webp",
           "desc": "Донер лаваш · фри · соус · кола 0,5 л",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 760
         },
         {
           "id": "combo-top",
@@ -588,7 +680,9 @@
           "photo": "combo-top.webp",
           "desc": "Бургер куриный · фри · соус красный · кола 0,5 л",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 760
         },
         {
           "id": "combo-antaliya",
@@ -597,7 +691,9 @@
           "photo": "combo-antaliya.webp",
           "desc": "Саке темпура 10 шт · цезарь темпура 10 шт · фри · соус красный · имбирь, соевый соус, васаби · кола 1 л",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 787
         },
         {
           "id": "combo-student",
@@ -606,7 +702,9 @@
           "photo": "combo-student.webp",
           "desc": "Донер лавашпен 2 шт · айран 2 шт · фри · соус красный",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 837
         },
         {
           "id": "combo-udovno",
@@ -615,7 +713,9 @@
           "photo": "combo-udovno.webp",
           "desc": "Гүйру цомян · гүйру лағман · ладжан соус · нан · кола 1 л",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 829
         },
         {
           "id": "combo-damdi",
@@ -624,7 +724,9 @@
           "photo": "combo-damdi.webp",
           "desc": "Шаурма из тандырного нана · батон · фри · соус красный · кола 1 л",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 760
         },
         {
           "id": "combo-big",
@@ -633,7 +735,9 @@
           "photo": "combo-big.webp",
           "desc": "Крылышки 10 шт · наггетсы 10 шт · фри · 2 соуса · кола 1 л",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 760
         },
         {
           "id": "combo-standart",
@@ -642,7 +746,9 @@
           "photo": "combo-standart.webp",
           "desc": "Донер лавашпен 2 шт · крылышки 8 шт · кола 1 л",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 760
         },
         {
           "id": "combo-toyymdy",
@@ -651,7 +757,9 @@
           "photo": "combo-toyymdy.webp",
           "desc": "Батон донер 2 шт · наггетсы 8 шт · компот 0,5 л 2 шт · соус красный",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 760
         },
         {
           "id": "combo-zhareniy",
@@ -660,7 +768,9 @@
           "photo": "combo-zhareniy.webp",
           "desc": "Цезарь темпура 10 шт · Америка 10 шт · краб темпура 20 шт · кола 1 л",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 822
         },
         {
           "id": "combo-bakyt",
@@ -669,7 +779,9 @@
           "photo": "combo-bakyt.webp",
           "desc": "Крылышки хрустящие 12 шт · пицца пепперони с колбасой · фри · 2 соуса · компот 1 л",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 760
         },
         {
           "id": "combo-grand",
@@ -678,7 +790,9 @@
           "photo": "combo-grand.webp",
           "desc": "Крылышки 10 шт · пицца куриная · фри · 2 соуса · кола 1 л",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 760
         },
         {
           "id": "combo-rim",
@@ -687,7 +801,9 @@
           "photo": "combo-rim.webp",
           "desc": "Саке темпура 10 шт · цезарь темпура 10 шт · пицца пепперони · чикен 8 шт · фри · 2 соуса · имбирь, соевый соус, васаби · кола 1 л",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 869
         },
         {
           "id": "combo-semeynyy",
@@ -696,7 +812,9 @@
           "photo": "combo-semeynyy.webp",
           "desc": "Домашний лағман 2 шт · гүйру лағман · пицца сырная · ладжан соус 2 шт · нан · кола 1 л",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 850
         },
         {
           "id": "combo-maks",
@@ -705,7 +823,9 @@
           "photo": "combo-maks.webp",
           "desc": "Бургер говяжий и куриный · крылышки 8 шт · фри · 2 соуса · кола 1 л",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 760
         },
         {
           "id": "combo-lyuks",
@@ -714,7 +834,9 @@
           "photo": "combo-lyuks.webp",
           "desc": "Крылышки 20 шт · пицца пепперони · фри · 3 соуса · кола 1 л",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 760
         },
         {
           "id": "combo-korol",
@@ -723,7 +845,9 @@
           "photo": "combo-korol.webp",
           "desc": "Батон 2 шт · чикен 8 шт · фри 2 шт · 3 соуса · кола 1 л",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 861
         },
         {
           "id": "combo-fast",
@@ -732,7 +856,9 @@
           "photo": "combo-fast.webp",
           "desc": "Батон ассорти донер 2 шт · крылышки 8 шт · фри 2 шт · кола 1 л",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 760
         },
         {
           "id": "combo-hitmaks",
@@ -741,7 +867,9 @@
           "photo": "combo-hitmaks.webp",
           "desc": "Донер лавашпен 3 шт · айран 3 шт · фри 3 шт · 3 соуса",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 857
         },
         {
           "id": "combo-lazzat",
@@ -750,7 +878,9 @@
           "photo": "combo-lazzat.webp",
           "desc": "Донер лавашпен 2 шт · пицца пепперони с колбасой · фри · соус красный · кола 1 л",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 760
         },
         {
           "id": "combo-trio",
@@ -759,7 +889,9 @@
           "photo": "combo-trio.webp",
           "desc": "Крылышки 16 шт · пицца сырная · фри 2 шт · 4 соуса · айран 3 шт",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 861
         },
         {
           "id": "combo-boss",
@@ -768,7 +900,9 @@
           "photo": "combo-boss.webp",
           "desc": "Бургеры 3 шт (говяжий, куриный, говяжий) · пицца пепперони с колбасой · фри 2 шт · 2 соуса · кола 1 л 2 шт",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 837
         },
         {
           "id": "combo-hit",
@@ -777,7 +911,9 @@
           "photo": "combo-hit.webp",
           "desc": "Пицца пепперони 2 шт · крылышки хрустящие 16 шт · фри 2 шт · 4 соуса · кола 1 л 2 шт",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 760
         },
         {
           "id": "combo-klassik",
@@ -786,7 +922,9 @@
           "photo": "combo-klassik.webp",
           "desc": "Донер лавашпен «Полтава» 2 шт · донер лавашпен стандарт 2 шт · фри 2 шт · айран 2 шт · 2 соуса · кола 1 л",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 760
         },
         {
           "id": "combo-mega",
@@ -795,7 +933,9 @@
           "photo": "combo-mega.webp",
           "desc": "Крылышки 30 шт · пиццы 2 шт (пепперони, маргарита) · фри · 4 соуса · кола 1 л",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 760
         },
         {
           "id": "combo-plus",
@@ -804,7 +944,9 @@
           "photo": "combo-plus.webp",
           "desc": "Пиццы 3 шт (курица, маргарита, пепперони) · крылышки 16 шт · 3 соуса · кола 1 л 2 шт",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 760
         },
         {
           "id": "combo-super",
@@ -813,7 +955,9 @@
           "photo": "combo-super.webp",
           "desc": "Крылышки 60 шт · пиццы 2 шт (пепперони, маргарита) · фри 2 шт · 6 соусов · кола 1 л",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 760,
+          "h": 760
         }
       ]
     },
@@ -832,7 +976,9 @@
           "photo": "geysha.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 300,
+          "h": 200
         },
         {
           "id": "filadelfiya",
@@ -841,7 +987,9 @@
           "photo": "filadelfiya.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 384,
+          "h": 384
         },
         {
           "id": "amerika",
@@ -850,7 +998,9 @@
           "photo": "amerika.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 384,
+          "h": 384
         },
         {
           "id": "syake-tempura",
@@ -859,7 +1009,9 @@
           "photo": "syake-tempura.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 384,
+          "h": 384
         },
         {
           "id": "chiz-krab",
@@ -868,7 +1020,9 @@
           "photo": "chiz-krab.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 384,
+          "h": 384
         },
         {
           "id": "ponchik",
@@ -877,7 +1031,9 @@
           "photo": "ponchik.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 384,
+          "h": 384
         },
         {
           "id": "kappa-maki",
@@ -886,7 +1042,9 @@
           "photo": "kappa-maki.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 384,
+          "h": 384
         },
         {
           "id": "roll-cezar",
@@ -895,7 +1053,9 @@
           "photo": "roll-cezar.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 384,
+          "h": 384
         },
         {
           "id": "cezar-zapechennyy",
@@ -904,7 +1064,9 @@
           "photo": "cezar-zapechennyy.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 384,
+          "h": 384
         },
         {
           "id": "kaliforniya-zapechennaya",
@@ -913,7 +1075,9 @@
           "photo": "kaliforniya-zapechennaya.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 384,
+          "h": 384
         }
       ]
     },
@@ -932,7 +1096,9 @@
           "photo": "set-1.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 315,
+          "h": 560
         },
         {
           "id": "set-2",
@@ -941,7 +1107,9 @@
           "photo": "set-2.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 560,
+          "h": 313
         },
         {
           "id": "set-3",
@@ -950,7 +1118,9 @@
           "photo": "set-3.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 384,
+          "h": 256
         },
         {
           "id": "set-4",
@@ -959,7 +1129,9 @@
           "photo": "set-4.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 560,
+          "h": 560
         }
       ]
     },
@@ -978,7 +1150,9 @@
           "photo": "shakshuka.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 540,
+          "h": 360
         },
         {
           "id": "zavtrak-1",
@@ -987,7 +1161,9 @@
           "photo": "zavtrak-1.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 520,
+          "h": 382
         },
         {
           "id": "zavtrak-2",
@@ -996,7 +1172,9 @@
           "photo": "zavtrak-2.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 390,
+          "h": 260
         },
         {
           "id": "kasha-risovaya",
@@ -1005,7 +1183,9 @@
           "photo": "kasha-risovaya.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 320,
+          "h": 240
         },
         {
           "id": "kasha-mannaya",
@@ -1014,7 +1194,9 @@
           "photo": "kasha-mannaya.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 400,
+          "h": 300
         },
         {
           "id": "kasha-ovsyanaya",
@@ -1023,7 +1205,9 @@
           "photo": "kasha-ovsyanaya.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 560,
+          "h": 280
         }
       ]
     },
@@ -1042,7 +1226,9 @@
           "photo": "chay-moloko.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 440,
+          "h": 294
         },
         {
           "id": "chay-chernyy",
@@ -1051,7 +1237,9 @@
           "photo": "chay-chernyy.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 360,
+          "h": 480
         },
         {
           "id": "chay-tureckiy",
@@ -1060,7 +1248,9 @@
           "photo": "chay-tureckiy.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 480,
+          "h": 322
         },
         {
           "id": "chay-tashkentskiy",
@@ -1069,7 +1259,9 @@
           "photo": "chay-tashkentskiy.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 400,
+          "h": 269
         },
         {
           "id": "kofe-3v1",
@@ -1078,7 +1270,9 @@
           "photo": "kofe-3v1.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 420,
+          "h": 560
         },
         {
           "id": "mohito",
@@ -1087,7 +1281,9 @@
           "photo": "mohito.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 400,
+          "h": 266
         },
         {
           "id": "mango-marakuyya",
@@ -1096,7 +1292,9 @@
           "photo": "mango-marakuyya.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 392,
+          "h": 295
         },
         {
           "id": "yagody",
@@ -1105,7 +1303,9 @@
           "photo": "yagody.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 308,
+          "h": 308
         },
         {
           "id": "kivi-laym",
@@ -1114,7 +1314,9 @@
           "photo": "kivi-laym.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 410,
+          "h": 274
         },
         {
           "id": "klubnichnyy",
@@ -1123,7 +1325,9 @@
           "photo": "klubnichnyy.webp",
           "desc": "",
           "hit": false,
-          "off": false
+          "off": false,
+          "w": 560,
+          "h": 560
         }
       ]
     }
