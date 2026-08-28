@@ -613,7 +613,14 @@
         it.name = name;
         it.price = num(bg.querySelector('#i-price').value);
         it.desc = bg.querySelector('#i-desc').value.trim();
-        it.photo = bg.querySelector('#i-photo').value.trim();
+
+        // Рядом с фотографией в данных лежат её размеры — по ним страница
+        // резервирует место заранее. Сменили фотографию — старые размеры
+        // стали враньём и страницу будет дёргать. Чистим их: без размеров
+        // меню обойдётся, с чужими — нет.
+        var photo = bg.querySelector('#i-photo').value.trim();
+        if (photo !== it.photo) { delete it.w; delete it.h; }
+        it.photo = photo;
         it.hit = bg.querySelector('#i-hit').checked;
         it.off = bg.querySelector('#i-off').checked;
         if (isNew) sec.items.push(it);
