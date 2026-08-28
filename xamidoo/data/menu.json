@@ -1,6 +1,6 @@
 {
   "v": 1,
-  "updated": "2026-08-26",
+  "updated": "2026-08-28",
   "place": {
     "name": "Xami_Doo",
     "always": true,
@@ -557,6 +557,261 @@
           "price": 2800,
           "photo": "pizza-4-sezona.webp",
           "desc": "",
+          "hit": false,
+          "off": false
+        }
+      ]
+    },
+    {
+      "id": "combo",
+      "title": {
+        "ru": "Комбо",
+        "kk": "Комбо",
+        "en": "Combo"
+      },
+      "hint": "",
+      "wide": true,
+      "items": [
+        {
+          "id": "combo-mini",
+          "name": "Мини",
+          "price": 2490,
+          "photo": "combo-mini.webp",
+          "desc": "Донер лаваш · фри · соус · кола 0,5 л",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-top",
+          "name": "Топ",
+          "price": 2600,
+          "photo": "combo-top.webp",
+          "desc": "Бургер куриный · фри · соус красный · кола 0,5 л",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-antaliya",
+          "name": "Анталия",
+          "price": 3990,
+          "photo": "combo-antaliya.webp",
+          "desc": "Саке темпура 10 шт · цезарь темпура 10 шт · фри · соус красный · имбирь, соевый соус, васаби · кола 1 л",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-student",
+          "name": "Студент",
+          "price": 3990,
+          "photo": "combo-student.webp",
+          "desc": "Донер лавашпен 2 шт · айран 2 шт · фри · соус красный",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-udovno",
+          "name": "Удовно",
+          "price": 4000,
+          "photo": "combo-udovno.webp",
+          "desc": "Гүйру цомян · гүйру лағман · ладжан соус · нан · кола 1 л",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-damdi",
+          "name": "Дәмді",
+          "price": 4290,
+          "photo": "combo-damdi.webp",
+          "desc": "Шаурма из тандырного нана · батон · фри · соус красный · кола 1 л",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-big",
+          "name": "Биг",
+          "price": 4990,
+          "photo": "combo-big.webp",
+          "desc": "Крылышки 10 шт · наггетсы 10 шт · фри · 2 соуса · кола 1 л",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-standart",
+          "name": "Стандарт",
+          "price": 4990,
+          "photo": "combo-standart.webp",
+          "desc": "Донер лавашпен 2 шт · крылышки 8 шт · кола 1 л",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-toyymdy",
+          "name": "Тойымды",
+          "price": 4990,
+          "photo": "combo-toyymdy.webp",
+          "desc": "Батон донер 2 шт · наггетсы 8 шт · компот 0,5 л 2 шт · соус красный",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-zhareniy",
+          "name": "Жареный",
+          "price": 4990,
+          "photo": "combo-zhareniy.webp",
+          "desc": "Цезарь темпура 10 шт · Америка 10 шт · краб темпура 20 шт · кола 1 л",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-bakyt",
+          "name": "Бақыт",
+          "price": 5990,
+          "photo": "combo-bakyt.webp",
+          "desc": "Крылышки хрустящие 12 шт · пицца пепперони с колбасой · фри · 2 соуса · компот 1 л",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-grand",
+          "name": "Гранд",
+          "price": 5990,
+          "photo": "combo-grand.webp",
+          "desc": "Крылышки 10 шт · пицца куриная · фри · 2 соуса · кола 1 л",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-rim",
+          "name": "Рим",
+          "price": 5990,
+          "photo": "combo-rim.webp",
+          "desc": "Саке темпура 10 шт · цезарь темпура 10 шт · пицца пепперони · чикен 8 шт · фри · 2 соуса · имбирь, соевый соус, васаби · кола 1 л",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-semeynyy",
+          "name": "Семейный",
+          "price": 5990,
+          "photo": "combo-semeynyy.webp",
+          "desc": "Домашний лағман 2 шт · гүйру лағман · пицца сырная · ладжан соус 2 шт · нан · кола 1 л",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-maks",
+          "name": "Макс",
+          "price": 6000,
+          "photo": "combo-maks.webp",
+          "desc": "Бургер говяжий и куриный · крылышки 8 шт · фри · 2 соуса · кола 1 л",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-lyuks",
+          "name": "Люкс",
+          "price": 6190,
+          "photo": "combo-lyuks.webp",
+          "desc": "Крылышки 20 шт · пицца пепперони · фри · 3 соуса · кола 1 л",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-korol",
+          "name": "Король",
+          "price": 6600,
+          "photo": "combo-korol.webp",
+          "desc": "Батон 2 шт · чикен 8 шт · фри 2 шт · 3 соуса · кола 1 л",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-fast",
+          "name": "Фаст",
+          "price": 6990,
+          "photo": "combo-fast.webp",
+          "desc": "Батон ассорти донер 2 шт · крылышки 8 шт · фри 2 шт · кола 1 л",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-hitmaks",
+          "name": "Хитмакс",
+          "price": 6990,
+          "photo": "combo-hitmaks.webp",
+          "desc": "Донер лавашпен 3 шт · айран 3 шт · фри 3 шт · 3 соуса",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-lazzat",
+          "name": "Ләззат",
+          "price": 6990,
+          "photo": "combo-lazzat.webp",
+          "desc": "Донер лавашпен 2 шт · пицца пепперони с колбасой · фри · соус красный · кола 1 л",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-trio",
+          "name": "Трио",
+          "price": 6990,
+          "photo": "combo-trio.webp",
+          "desc": "Крылышки 16 шт · пицца сырная · фри 2 шт · 4 соуса · айран 3 шт",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-boss",
+          "name": "Босс",
+          "price": 9990,
+          "photo": "combo-boss.webp",
+          "desc": "Бургеры 3 шт (говяжий, куриный, говяжий) · пицца пепперони с колбасой · фри 2 шт · 2 соуса · кола 1 л 2 шт",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-hit",
+          "name": "Хит",
+          "price": 9990,
+          "photo": "combo-hit.webp",
+          "desc": "Пицца пепперони 2 шт · крылышки хрустящие 16 шт · фри 2 шт · 4 соуса · кола 1 л 2 шт",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-klassik",
+          "name": "Классик",
+          "price": 9990,
+          "photo": "combo-klassik.webp",
+          "desc": "Донер лавашпен «Полтава» 2 шт · донер лавашпен стандарт 2 шт · фри 2 шт · айран 2 шт · 2 соуса · кола 1 л",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-mega",
+          "name": "Мега",
+          "price": 10990,
+          "photo": "combo-mega.webp",
+          "desc": "Крылышки 30 шт · пиццы 2 шт (пепперони, маргарита) · фри · 4 соуса · кола 1 л",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-plus",
+          "name": "Плюс",
+          "price": 11000,
+          "photo": "combo-plus.webp",
+          "desc": "Пиццы 3 шт (курица, маргарита, пепперони) · крылышки 16 шт · 3 соуса · кола 1 л 2 шт",
+          "hit": false,
+          "off": false
+        },
+        {
+          "id": "combo-super",
+          "name": "Супер",
+          "price": 15990,
+          "photo": "combo-super.webp",
+          "desc": "Крылышки 60 шт · пиццы 2 шт (пепперони, маргарита) · фри 2 шт · 6 соусов · кола 1 л",
           "hit": false,
           "off": false
         }

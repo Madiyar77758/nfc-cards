@@ -249,10 +249,18 @@
   section.list { display: block; }
   section.list .sec-head { margin-bottom: 10px; }
 
+  /* ---------- раздел в один столбец ----------
+     Плакат комбо сам себе описание: состав, цена и вид набора нарисованы
+     на нём. В колонке шириной в пол-экрана читать его невозможно, поэтому
+     такой раздел идёт одним столбцом, а картинка показывается целиком,
+     без обрезки в квадрат — иначе срежется как раз текст. */
+  section.wide { grid-template-columns: 1fr; gap: 14px; }
+  section.wide .ph { aspect-ratio: auto; }
+
   .plain {
     grid-column: 1 / -1;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 11px;
     padding: 10px 2px;
     border-bottom: 1px solid var(--line);
@@ -261,14 +269,20 @@
   .plain .thumb {
     flex: none;
     width: 52px; height: 52px;
+    margin-top: 1px;
     border-radius: 50%;
     object-fit: cover;
     background: #F6EEEB;
     cursor: zoom-in;
   }
-  .plain .name { flex: none; }
-  .plain .dots { flex: 1; border-bottom: 1.5px dotted #E3CDC8; transform: translateY(-3px); }
-  .plain .price { margin: 0; font-size: 15.5px; }
+  .pbody { flex: 1; min-width: 0; }
+  /* Название и цена — одной строкой с отточием, состав уходит под неё:
+     у комбо состав длинный, в одну строку с ценой он не помещается. */
+  .pline { display: flex; align-items: baseline; gap: 10px; }
+  .pline .name { flex: none; }
+  .pline .dots { flex: 1; border-bottom: 1.5px dotted #E3CDC8; transform: translateY(-3px); }
+  .pline .price { margin: 0; font-size: 15.5px; }
+  .plain .desc { margin: 3px 0 0; }
   .plain .tag {
     margin-left: 6px;
     padding: 2px 7px;
@@ -459,10 +473,13 @@
               ? '<img class="thumb" src="' + XD.esc(srcOf(it.photo)) + '" alt="" loading="lazy" ' +
                 'decoding="async" width="52" height="52" data-name="' + XD.esc(it.name) + '" />'
               : '') +
+            '<div class="pbody"><div class="pline">' +
             '<span class="name">' + XD.esc(it.name) +
             (it.hit ? '<b class="tag">хит</b>' : '') +
             (pr.was ? '<b class="tag off">−' + pr.percent + '%</b>' : '') +
-            '</span><span class="dots"></span>' + price + '</div>';
+            '</span><span class="dots"></span>' + price + '</div>' +
+            (it.desc ? '<p class="desc">' + XD.esc(it.desc) + '</p>' : '') +
+            '</div></div>';
         }
 
         return '<article class="item">' +
@@ -483,7 +500,8 @@
         title: XD.t(sec.title),
         count: items.length,
         medal: medal,
-        html: '<section id="s-' + XD.esc(sec.id) + '"' + (asList ? ' class="list"' : '') + '>' +
+        html: '<section id="s-' + XD.esc(sec.id) + '"' +
+          (asList ? ' class="list"' : (sec.wide ? ' class="wide"' : '')) + '>' +
           '<div class="sec-head"><span class="medal">' + medal + '</span>' +
           '<div><h2>' + XD.esc(XD.t(sec.title)) + '</h2>' +
           // подпись пишет заведение в админке; выдумывать за него, как они
